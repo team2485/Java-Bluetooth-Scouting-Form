@@ -10,7 +10,7 @@ import javax.swing.JOptionPane;
 
 public class SendViaBluetooth {
 
-	private static void send(String fileName, String dataToSend) {
+	public static void send(String fileName, String dataToSend) {
 
 		RemoteDevice[] alreadyPaired = BluetoothSystem.pairedDevices();
 
