@@ -1,5 +1,7 @@
 package org.first.team2485.scoutingform;
 
+import java.awt.FlowLayout;
+
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -40,8 +42,12 @@ public class ScoutingForm extends JPanel {
 		
 		this.add(tabbedPane);
 
-		this.add(new SubmitButton(this));
-		this.add(new QuitButton(this.frame));//this handles all quitting logic
+		JPanel buttonPane = new JPanel();
+		buttonPane.setLayout(new FlowLayout());
+		buttonPane.add(new SubmitButton(this));
+		buttonPane.add(new QuitButton(this.frame));//this handles all quitting logic
+		this.add(buttonPane);
+
 
 		frame.pack(); 
 		frame.setVisible(true);
@@ -70,18 +76,46 @@ public class ScoutingForm extends JPanel {
 		);
 		
 		ScoutingFormTab autonomous = new ScoutingFormTab("Autonomous", 
-			new CheckboxQuestion("Autonomous", "Approach defense", "Cross Defense", "Score Boulder")
+			new CheckboxQuestion("Autonomous", "Approach defense", "Cross Defense", 
+					"Score Boulder in High Goal", "Score Boulder in Low Goal")
 		);
 		
 		ScoutingFormTab teleop = new ScoutingFormTab("Teleop", 
 			new QuestionGroup(false, "Defense Category A", 
-				new MultipleChoiceQuestion("How many seconds did it take?", "0 - 5", "5 - 10", "10 - 15", "15+", "Failed"),
+				new MultipleChoiceQuestion("Which defense is up?", "Cheval de Frise", "Portcullis"),
+				new MultipleChoiceQuestion("How long did it take to cross on avg (seconds)?", "0 - 5", "5 - 10", "10 - 15", "15+", "Failed"),
 				new SpinnerQuestion("How many times did they cross it?")
 			),
-			new FreeResponseQuestion("Comments: ")
-		);//<--- sad winky face
+			new QuestionGroup(false, "Defense Category B", 
+				new MultipleChoiceQuestion("Which defense is up?", "Moat", "Ramparts"),
+				new MultipleChoiceQuestion("How long did it take to cross on avg (seconds)?", "0 - 5", "5 - 10", "10 - 15", "15+", "Failed"),
+				new SpinnerQuestion("How many times did they cross it?")
+			),
+			new QuestionGroup(false, "Defense Category C", 
+				new MultipleChoiceQuestion("Which defense is up?", "Drawbridge", "Sally Port"),
+				new MultipleChoiceQuestion("How long did it take to cross on avg (seconds)?", "0 - 5", "5 - 10", "10 - 15", "15+", "Failed"),
+				new SpinnerQuestion("How many times did they cross it?")
+			),
+			new QuestionGroup(false, "Defense Category D", 
+				new MultipleChoiceQuestion("Which defense is up?", "Rough Terrain", "Rock Wall"),
+				new MultipleChoiceQuestion("How long did it take to cross on avg (seconds)?", "0 - 5", "5 - 10", "10 - 15", "15+", "Failed"),
+				new SpinnerQuestion("How many times did they cross it?")
+			),
+			new QuestionGroup(false, "Low Bar", 
+				new MultipleChoiceQuestion("How long did it take to cross on avg (seconds)?", "0 - 5", "5 - 10", "10 - 15", "15+", "Failed"),
+				new SpinnerQuestion("How many times did they cross it?")
+			),
+			new SpinnerQuestion("How many high goals did they make?"),
+			new SpinnerQuestion("How many low goals did they make?")
+		);//<--- sad winky face 
 		
-		new ScoutingForm(prematch, autonomous, teleop);
+		ScoutingFormTab misc = new ScoutingFormTab("Miscellaneous", 
+			new SpinnerQuestion("How many tech fouls did they get?"),
+			new SpinnerQuestion("How many other fouls did they get"),
+			new FreeResponseQuestion("Comments:")
+		);
+		
+		new ScoutingForm(prematch, autonomous, teleop, misc);
 		
 	}
 }

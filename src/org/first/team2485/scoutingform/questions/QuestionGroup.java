@@ -1,10 +1,16 @@
 package org.first.team2485.scoutingform.questions;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Graphics;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.JCheckBox;
+import javax.swing.border.Border;
 
 import org.jdesktop.swingx.JXCollapsiblePane;
 
@@ -39,6 +45,7 @@ public class QuestionGroup extends Question {
 			pane.add(question);
 		}
 		pane.setCollapsed(true);
+		pane.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		this.add(pane, BorderLayout.SOUTH);
 		
 	}
