@@ -1,8 +1,15 @@
+package org.first.team2485.scoutingform;
+
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
+import org.first.team2485.scoutingform.questions.CheckboxQuestion;
+import org.first.team2485.scoutingform.questions.FreeResponseQuestion;
+import org.first.team2485.scoutingform.questions.MultipleChoiceQuestion;
+import org.first.team2485.scoutingform.questions.QuestionGroup;
+import org.first.team2485.scoutingform.questions.SpinnerQuestion;
 
 @SuppressWarnings("serial")
 public class ScoutingForm extends JPanel {

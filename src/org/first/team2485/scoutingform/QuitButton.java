@@ -1,3 +1,5 @@
+package org.first.team2485.scoutingform;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -10,7 +12,9 @@ import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
 public class QuitButton extends JPanel{
+	
 	private static JFrame comp;
+	
 	public QuitButton(JFrame frame) {
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		frame.addWindowListener(new WindowAdapter() {

@@ -1,5 +1,8 @@
+package org.first.team2485.scoutingform;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
+
+import org.first.team2485.scoutingform.questions.Question;
 
 @SuppressWarnings("serial")
 public class ScoutingFormTab extends JPanel {
