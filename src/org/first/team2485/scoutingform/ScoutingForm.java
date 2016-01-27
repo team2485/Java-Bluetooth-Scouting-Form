@@ -11,6 +11,11 @@ import org.first.team2485.scoutingform.questions.MultipleChoiceQuestion;
 import org.first.team2485.scoutingform.questions.QuestionGroup;
 import org.first.team2485.scoutingform.questions.SpinnerQuestion;
 
+/**
+ * 
+ * @author Jeremy McCulloch
+ *
+ */
 @SuppressWarnings("serial")
 public class ScoutingForm extends JPanel {
   
@@ -73,7 +78,7 @@ public class ScoutingForm extends JPanel {
 				new SpinnerQuestion("How many times did they cross it?")
 			),
 			new FreeResponseQuestion("Comments: ")
-		);//<--- sad face
+		);//<--- sad winky face
 		
 		new ScoutingForm(prematch, autonomous, teleop);
 		

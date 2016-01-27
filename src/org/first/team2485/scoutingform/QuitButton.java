@@ -8,14 +8,20 @@ import java.awt.event.WindowEvent;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 
+/**
+ * 
+ * @author Troy Appel
+ *
+ */
 @SuppressWarnings("serial")
-public class QuitButton extends JPanel{
+public class QuitButton extends JButton{
 	
 	private static JFrame comp;
 	
 	public QuitButton(JFrame frame) {
+		super("Quit");
+		
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		frame.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
@@ -30,9 +36,8 @@ public class QuitButton extends JPanel{
 			}
 		});
 		comp = frame;
-		JButton quit = new JButton("Quit");
 
-		quit.addActionListener(new ActionListener() {
+		this.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int status = JOptionPane.showConfirmDialog(QuitButton.comp, "Are you sure you want to quit?", "Confirmation", JOptionPane.YES_NO_OPTION);
 			
@@ -44,7 +49,6 @@ public class QuitButton extends JPanel{
 				}
 			}
 		});
-		this.add(quit);
 		
 	}
 

@@ -3,7 +3,11 @@ import javax.swing.ButtonGroup;
 import javax.swing.JLabel;
 import javax.swing.JRadioButton;
 
-
+/**
+ * 
+ * @author Jeremy McCulloch
+ *
+ */
 public class MultipleChoiceQuestion extends Question {
 	
 	private static final long serialVersionUID = -3014924975352089209L;

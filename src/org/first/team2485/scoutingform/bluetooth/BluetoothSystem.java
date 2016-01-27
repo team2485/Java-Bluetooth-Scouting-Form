@@ -1,11 +1,7 @@
 package org.first.team2485.scoutingform.bluetooth;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -26,6 +22,11 @@ import javax.obex.ClientSession;
 import javax.obex.HeaderSet;
 import javax.obex.Operation;
 
+/**
+ * 
+ * @author Nicholas Contreras
+ *
+ */
 public class BluetoothSystem implements DiscoveryListener {
 
 	private static BluetoothSystem instance;

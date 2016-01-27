@@ -6,7 +6,11 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
-
+/**
+ * 
+ * @author Jeremy McCulloch
+ *
+ */
 public class Reciever {
 	public static void updateSpreadsheet(File downloadsFolder, File output) throws IOException {
 		File[] files = downloadsFolder.listFiles();

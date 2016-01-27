@@ -3,6 +3,11 @@ import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 
+/**
+ * 
+ * @author Jeremy McCulloch
+ *
+ */
 @SuppressWarnings("serial")
 public class CheckboxQuestion extends Question {
 		

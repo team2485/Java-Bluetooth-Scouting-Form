@@ -4,7 +4,13 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 
+import org.first.team2485.scoutingform.bluetooth.SendViaBluetooth;
 
+/**
+ * 
+ * @author Jeremy McCulloch
+ *
+ */
 @SuppressWarnings("serial")
 public class SubmitButton extends JButton implements ActionListener {
 	
@@ -22,10 +28,10 @@ public class SubmitButton extends JButton implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
-		String output = form.submit();
-		System.out.println(output);
-		String filename = "ScoutForm" + (System.currentTimeMillis() % 1000000000) + ".csv";
-		//TODO send via bluetooth
+		String dataToSend = form.submit();
+		String fileName = "ScoutForm" + (System.currentTimeMillis() % 1000000000) + ".csv";
+		
+		SendViaBluetooth.send(fileName, dataToSend);
 		
 	}
 	

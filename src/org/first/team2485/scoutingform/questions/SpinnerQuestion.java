@@ -5,7 +5,11 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.JSpinner.DefaultEditor;
 
-
+/**
+ * 
+ * @author Jeremy McCulloch
+ *
+ */
 @SuppressWarnings("serial")
 public class SpinnerQuestion extends Question{
 		

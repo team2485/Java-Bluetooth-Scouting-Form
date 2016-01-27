@@ -3,7 +3,11 @@ import javax.swing.ButtonGroup;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
 
-
+/**
+ * 
+ * @author Jeremy McCulloch
+ *
+ */
 @SuppressWarnings("serial")
 public class FreeResponseQuestion extends Question {
 		
