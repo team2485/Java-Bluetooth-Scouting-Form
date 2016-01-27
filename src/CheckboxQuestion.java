@@ -1,3 +1,4 @@
+import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 
@@ -7,7 +8,10 @@ public class CheckboxQuestion extends Question {
 	JLabel promptLabel;
 	JCheckBox[] checkboxes;
 	
-	public CheckboxQuestion(String prompt, String[] options) {
+	public CheckboxQuestion(String prompt, String... options) {
+		
+		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+		
 		promptLabel = new JLabel(prompt);
 		this.add(promptLabel);
 				

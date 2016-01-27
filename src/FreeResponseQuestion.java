@@ -1,7 +1,6 @@
 import javax.swing.ButtonGroup;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
 
 
 @SuppressWarnings("serial")
@@ -20,7 +19,7 @@ public class FreeResponseQuestion extends Question {
 	}
 	
 	public String getData() {
-		return area.getText();
+		return "\"" + area.getText() + "\",";
 	}
 	
 }

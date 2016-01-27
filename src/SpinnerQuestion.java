@@ -2,6 +2,7 @@ import javax.swing.ButtonGroup;
 import javax.swing.JLabel;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.JSpinner.DefaultEditor;
 
 
 @SuppressWarnings("serial")
@@ -12,14 +13,19 @@ public class SpinnerQuestion extends Question{
 	JSpinner spinner;
 	
 	public SpinnerQuestion(String prompt) {
+		
 		promptLabel = new JLabel(prompt);
 		this.add(promptLabel);
 		
 		spinner = new JSpinner(new SpinnerNumberModel());
+		((DefaultEditor) spinner.getEditor()).getTextField().setColumns(5);
 		this.add(spinner);
+	
 	}
 	
 	public String getData() {
-		return "" + (int) spinner.getValue();
+		
+		return (int) spinner.getValue() + ",";
+		
 	}
 }

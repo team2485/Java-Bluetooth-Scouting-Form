@@ -11,7 +11,7 @@ public class MultipleChoiceQuestion extends Question {
 	ButtonGroup optionButtonGroup;
 	JRadioButton[] optionButtons;
 	
-	public MultipleChoiceQuestion(String prompt, String[] options) {
+	public MultipleChoiceQuestion(String prompt, String... options) {
 		promptLabel = new JLabel(prompt);
 		this.add(promptLabel);
 		

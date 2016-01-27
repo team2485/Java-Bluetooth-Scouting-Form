@@ -1,0 +1,43 @@
+import javax.swing.BoxLayout;
+import javax.swing.JPanel;
+
+@SuppressWarnings("serial")
+public class ScoutingFormTab extends JPanel {
+	
+	private Question[] questions;
+	private String name;
+
+	public ScoutingFormTab(String name, Question... questions) {
+		
+		this.name = name;
+		
+		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+
+		this.questions = questions;
+		for (Question question : questions) {
+			this.add(question);
+		}
+		
+	}
+	
+	public String getName() {
+		
+		return name;
+		
+	}
+	
+	public String getData() {
+		
+		String output = "";
+
+		for (Question question : questions) {
+			output += question.getData();
+		}
+
+		return output;
+		
+	}
+	
+	
+	
+}

@@ -1,18 +1,9 @@
 import java.io.File;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import javax.bluetooth.BluetoothStateException;
-import javax.bluetooth.DiscoveryAgent;
-import javax.bluetooth.LocalDevice;
 import javax.bluetooth.RemoteDevice;
-import javax.microedition.io.Connector;
-import javax.obex.ClientSession;
-import javax.obex.HeaderSet;
-import javax.obex.Operation;
-import javax.obex.ResponseCodes;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 

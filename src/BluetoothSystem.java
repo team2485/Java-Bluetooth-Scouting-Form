@@ -1,6 +1,5 @@
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -24,9 +23,6 @@ import javax.microedition.io.Connector;
 import javax.obex.ClientSession;
 import javax.obex.HeaderSet;
 import javax.obex.Operation;
-import javax.obex.ResponseCodes;
-import javax.swing.JOptionPane;
-import javax.bluetooth.L2CAPConnection;
 
 public class BluetoothSystem implements DiscoveryListener {
 
