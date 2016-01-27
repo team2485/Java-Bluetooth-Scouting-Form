@@ -23,6 +23,9 @@ public class ScoutingForm extends JPanel {
 			this.add(question);
 		}
 		
+		//this handles all quitting logic
+		this.add(new QuitButton(this.frame));
+		
 		frame.pack();
 		frame.setVisible(true);
 		this.repaint();
