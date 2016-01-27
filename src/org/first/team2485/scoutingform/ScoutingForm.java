@@ -3,6 +3,7 @@ package org.first.team2485.scoutingform;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 
 import org.first.team2485.scoutingform.questions.CheckboxQuestion;
@@ -34,7 +35,7 @@ public class ScoutingForm extends JPanel {
 		
 		this.tabs = tabs;
 		for (ScoutingFormTab tab : tabs) {
-			tabbedPane.add(tab.getName(), tab);
+			tabbedPane.add(tab.getName(), new JScrollPane(tab));
 		}
 		
 		this.add(tabbedPane);
