@@ -77,22 +77,21 @@ public class BluetoothSystem implements DiscoveryListener {
 
 			RemoteDevice[] devices = agent.retrieveDevices(DiscoveryAgent.CACHED);
 
-			for (int i = 0; i < devices.length; i++) {
+			ArrayList<RemoteDevice> arrayList = new ArrayList<RemoteDevice>();
 
-				System.out.println("Testing Remote Device: " + devices[i].getFriendlyName(true));
+			for (RemoteDevice device : devices) {
+				arrayList.add(device);
+			}
 
-				if (devices[i] == null || devices[i].getFriendlyName(true).length() < 2) {
-
-					System.out.println("Is null or less than 2 long");
-
-					for (int j = i; j < devices.length - 1; j++) {
-						devices[j] = devices[j + 1];
-					}
-				} else {
-					System.out.println("Name is fine, next...");
+			for (int i = 0; i < arrayList.size(); i++) {
+				if (arrayList.get(i) == null || arrayList.get(i).getFriendlyName(true).length() < 2) {
+					arrayList.remove(i);
+					i--;
 				}
 			}
 			
+			devices = arrayList.toArray(new RemoteDevice[arrayList.size()]);
+
 			System.out.println("Device Inquiry Completed. ");
 
 			return devices;

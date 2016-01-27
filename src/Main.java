@@ -13,6 +13,7 @@ import javax.obex.ClientSession;
 import javax.obex.HeaderSet;
 import javax.obex.Operation;
 import javax.obex.ResponseCodes;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 public class Main {
@@ -127,8 +128,12 @@ public class Main {
 		if (deviceName == null || deviceName == "") {
 			return;
 		}
-
-		File fileToSend = new File("C:/Users/Anyone/Desktop/TestBlueCSV.csv");
+		
+		JFileChooser fileChooser = new JFileChooser();
+		
+		fileChooser.showOpenDialog(null);
+		
+		File fileToSend = fileChooser.getSelectedFile();
 
 		for (RemoteDevice device : devices) {
 			try {
