@@ -8,13 +8,9 @@ import javax.bluetooth.RemoteDevice;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
-public class Main {
+public class SendViaBluetooth {
 
-	public static void main(String[] args) {
-		new Main();
-	}
-
-	private Main() {
+	private static void send(String fileName, String dataToSend) {
 
 		RemoteDevice[] alreadyPaired = BluetoothSystem.pairedDevices();
 
@@ -48,7 +44,7 @@ public class Main {
 				String input2 = (String) JOptionPane.showInputDialog(null, "Pick A Device:", "Connected Devices",
 						JOptionPane.QUESTION_MESSAGE, null, options, null);
 				
-				attemptSend(input2, alreadyPaired);
+				attemptSend(input2, alreadyPaired, fileName, dataToSend);
 				return;
 			}
 		}
@@ -112,25 +108,19 @@ public class Main {
 
 		System.out.println("PopUp closed");
 		
-		attemptSend(input, devices);
+		attemptSend(input, devices, fileName, dataToSend);
 	}
 
-	private void attemptSend(String deviceName, RemoteDevice[] devices) {
+	private static void attemptSend(String deviceName, RemoteDevice[] devices, String fileName, String data) {
 		
 		if (deviceName == null || deviceName == "") {
 			return;
 		}
-		
-		JFileChooser fileChooser = new JFileChooser();
-		
-		fileChooser.showOpenDialog(null);
-		
-		File fileToSend = fileChooser.getSelectedFile();
 
 		for (RemoteDevice device : devices) {
 			try {
 				if (device.getFriendlyName(true).equals(deviceName)) {
-					BluetoothSystem.sendToDevice(device, fileToSend);
+					BluetoothSystem.sendToDevice(device, fileName, data);
 					break;
 				}
 			} catch (IOException e) {

@@ -1,4 +1,5 @@
 package org.first.team2485.scoutingform.bluetooth;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -86,7 +87,7 @@ public class BluetoothSystem implements DiscoveryListener {
 					i--;
 				}
 			}
-			
+
 			devices = arrayList.toArray(new RemoteDevice[arrayList.size()]);
 
 			System.out.println("Device Inquiry Completed. ");
@@ -256,7 +257,7 @@ public class BluetoothSystem implements DiscoveryListener {
 		}
 	}
 
-	public static void sendToDevice(RemoteDevice toSend, File file) {
+	public static void sendToDevice(RemoteDevice toSend, String fileName, String dataToSend) {
 
 		Set<RemoteDevice> resultSet = filterDevicesByService(new RemoteDevice[] { toSend }, OBEX);
 
@@ -284,22 +285,20 @@ public class BluetoothSystem implements DiscoveryListener {
 
 				System.out.println("OPP session created");
 
-				String fileData = readFile(file);
-
 				// Send a file with meta data to the server
-				final byte filebytes[] = fileData.getBytes();
+				final byte filebytes[] = dataToSend.getBytes();
 				final HeaderSet hs = cs.createHeaderSet();
-				hs.setHeader(HeaderSet.NAME, file.getName());
+				hs.setHeader(HeaderSet.NAME, fileName);
 				hs.setHeader(HeaderSet.TYPE, "text/plain");
 				hs.setHeader(HeaderSet.LENGTH, new Long(filebytes.length));
 
 				putOperation = cs.put(hs);
-				System.out.println("Pushing file: " + file.getName());
-				System.out.println("Total file size: " + filebytes.length + " bytes");
+				System.out.println("Pushing: " + fileName);
+				System.out.println("Total size: " + filebytes.length + " bytes");
 
 				outputStream = putOperation.openOutputStream();
 				outputStream.write(filebytes);
-				System.out.println("File push complete");
+				System.out.println("Push complete");
 			} catch (Exception e) {
 				e.printStackTrace();
 			} finally {
@@ -312,46 +311,5 @@ public class BluetoothSystem implements DiscoveryListener {
 		} catch (final Exception e) {
 			e.printStackTrace();
 		}
-
-	}
-
-	private static String readFile(File file) {
-
-		String fileContents = "";
-
-		BufferedReader bufferedReader = null;
-
-		try {
-
-			Reader reader = new FileReader(file);
-
-			bufferedReader = new BufferedReader(reader);
-
-			String currentLine = bufferedReader.readLine();
-
-			while (currentLine != null) {
-
-				fileContents += currentLine + "\n";
-
-				currentLine = bufferedReader.readLine();
-			}
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-
-			if (bufferedReader != null) {
-				try {
-					bufferedReader.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-		return fileContents;
-	}
-
-	public static void disconnect() {
-
 	}
 }
