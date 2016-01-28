@@ -14,6 +14,7 @@ import javax.swing.JOptionPane;
  * @author Troy Appel
  *
  */
+//test
 @SuppressWarnings("serial")
 public class QuitButton extends JButton{
 	
@@ -25,31 +26,28 @@ public class QuitButton extends JButton{
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		frame.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
-				int status = JOptionPane.showConfirmDialog(QuitButton.comp, "Are you sure you want to quit?", "Confirmation", JOptionPane.YES_NO_OPTION);
-				
-				if (status == JOptionPane.YES_OPTION) {
-					System.exit(0);
-				}
-				else {
-					return;
-				}
+				showConfirmation();
 			}
 		});
 		comp = frame;
 
 		this.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int status = JOptionPane.showConfirmDialog(QuitButton.comp, "Are you sure you want to quit?", "Confirmation", JOptionPane.YES_NO_OPTION);
-			
-				if (status == JOptionPane.YES_OPTION) {
-					System.exit(0);
-				}
-				else {
-					return;
-				}
+				showConfirmation();
 			}
 		});
 		
+	}
+	private void showConfirmation () {
+		int status = JOptionPane.showConfirmDialog(QuitButton.comp, "Are you sure you want to quit?", "Confirmation", JOptionPane.YES_NO_OPTION);
+		
+		if (status == JOptionPane.YES_OPTION) {
+			//TODO: Call Nick's dispose method
+			System.exit(0);
+		}
+		else {
+			return;
+		}
 	}
 
 
