@@ -35,4 +35,10 @@ public class CheckboxQuestion extends Question {
 		}
 		return data;
 	}
+	
+	public void clear() {
+		for(int i = checkboxes.length - 1; i >= 0; i--) {
+			checkboxes[i].setSelected(false);
+		}
+	}
 }

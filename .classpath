@@ -7,5 +7,7 @@
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="C:/Users/Anyone/Downloads"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/Troy/Desktop/bluecove-2.1.1-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Troy/Desktop/swingx-all-1.6.4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

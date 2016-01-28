@@ -7,6 +7,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 import org.first.team2485.scoutingform.questions.CheckboxQuestion;
 import org.first.team2485.scoutingform.questions.FreeResponseQuestion;
@@ -17,6 +19,7 @@ import org.first.team2485.scoutingform.questions.SpinnerQuestion;
 /**
  * 
  * @author Jeremy McCulloch
+ * @author Troy Appel
  *
  */
 @SuppressWarnings("serial")
@@ -27,7 +30,6 @@ public class ScoutingForm extends JPanel {
 	private JTabbedPane tabbedPane;
 
 	public ScoutingForm(ScoutingFormTab... tabs) {
-		
 		frame = new JFrame();
 		frame.add(this);
 		frame.setSize(1000, 600);
@@ -46,6 +48,7 @@ public class ScoutingForm extends JPanel {
 		buttonPane.setLayout(new FlowLayout());
 		buttonPane.add(new SubmitButton(this));
 		buttonPane.add(new QuitButton(this.frame));//this handles all quitting logic
+		buttonPane.add(new ClearButton(tabs, this.frame));
 		this.add(buttonPane);
 
 
