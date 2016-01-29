@@ -28,12 +28,13 @@ public class BluetoothActionListener implements ActionListener {
 
 		case "sendButton":
 			new SendThread().start();
+			bluetoothPanel.shutdownBluetooth();
 			break;
 
 		case "refreshButton":
 			new SearchThread().start();
 			break;
-			
+
 		case "clearButton":
 			bluetoothPanel.getConsole().setText("");
 			break;
