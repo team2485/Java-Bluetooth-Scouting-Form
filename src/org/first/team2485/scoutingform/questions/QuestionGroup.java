@@ -43,7 +43,7 @@ public class QuestionGroup extends Question {
 		pane.setCollapsed(true);
 		pane.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		this.add(pane, BorderLayout.SOUTH);
-		
+		this.questions = questions;
 	}
 	
 	public void update() {
@@ -55,5 +55,16 @@ public class QuestionGroup extends Question {
 	@Override
 	public String getData() {
 		return "";
+	}
+	
+	@Override
+	public void clear() {
+		System.out.println(questions.length);
+		for(int i = 0; i < questions.length; i++) {
+			System.out.println(questions[i].getData());
+			questions[i].clear();
+		}
+		this.pane.setCollapsed(true);
+		this.checkbox.setSelected(false);
 	}
 }

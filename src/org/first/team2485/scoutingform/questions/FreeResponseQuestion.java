@@ -26,5 +26,8 @@ public class FreeResponseQuestion extends Question {
 	public String getData() {
 		return "\"" + area.getText() + "\",";
 	}
+	public void clear() {
+		this.area.setText("");
+	}
 	
 }

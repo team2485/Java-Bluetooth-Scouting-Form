@@ -33,4 +33,8 @@ public class SpinnerQuestion extends Question{
 		return (int) spinner.getValue() + ",";
 		
 	}
+	
+	public void clear() {
+		spinner.setValue(0);
+	}
 }

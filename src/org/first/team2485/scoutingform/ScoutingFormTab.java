@@ -46,6 +46,12 @@ public class ScoutingFormTab extends JPanel {
 		
 	}
 	
+	public void clear() {
+		for (int i = 0; i < questions.length; i++) {
+			questions[i].clear();
+		}
+	}
+	
 	
 	
 }

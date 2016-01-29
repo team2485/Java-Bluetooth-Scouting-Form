@@ -38,6 +38,10 @@ public class MultipleChoiceQuestion extends Question {
 		}
 		return "-1,";
 	}
-	
+	public void clear() {
+		for (int i = optionButtons.length - 1; i >= 0; i--) {
+			optionButtons[i].setSelected(false);
+		}
+	}
 	
 }
