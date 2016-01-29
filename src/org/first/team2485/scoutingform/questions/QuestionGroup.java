@@ -2,15 +2,11 @@ package org.first.team2485.scoutingform.questions;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.Graphics;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JCheckBox;
-import javax.swing.border.Border;
 
 import org.jdesktop.swingx.JXCollapsiblePane;
 
@@ -26,7 +22,7 @@ public class QuestionGroup extends Question {
 	JCheckBox checkbox;
 	Question[] questions;
 	
-	public QuestionGroup(boolean hasButton, String title, Question... questions) {
+	public QuestionGroup(String title, Question... questions) {
 		
 		this.setLayout(new BorderLayout());
 		

@@ -76,46 +76,62 @@ public class ScoutingForm extends JPanel {
 		);
 		
 		ScoutingFormTab autonomous = new ScoutingFormTab("Autonomous", 
-			new CheckboxQuestion("Autonomous", "Approach defense", "Cross Defense", 
-					"Score Boulder in High Goal", "Score Boulder in Low Goal")
+			new CheckboxQuestion("Did they...", "Approach a Defense", "Cross a Defense"), 
+			new SpinnerQuestion("How many high goals did they make?"),
+			new SpinnerQuestion("How many low goals did they make?")
 		);
 		
 		ScoutingFormTab teleop = new ScoutingFormTab("Teleop", 
-			new QuestionGroup(false, "Defense Category A", 
+			new QuestionGroup("Defense Category A", 
 				new MultipleChoiceQuestion("Which defense is up?", "Cheval de Frise", "Portcullis"),
 				new MultipleChoiceQuestion("How long did it take to cross on avg (seconds)?", "0 - 5", "5 - 10", "10 - 15", "15+", "Failed"),
 				new SpinnerQuestion("How many times did they cross it?")
 			),
-			new QuestionGroup(false, "Defense Category B", 
+			new QuestionGroup("Defense Category B", 
 				new MultipleChoiceQuestion("Which defense is up?", "Moat", "Ramparts"),
 				new MultipleChoiceQuestion("How long did it take to cross on avg (seconds)?", "0 - 5", "5 - 10", "10 - 15", "15+", "Failed"),
 				new SpinnerQuestion("How many times did they cross it?")
 			),
-			new QuestionGroup(false, "Defense Category C", 
+			new QuestionGroup("Defense Category C", 
 				new MultipleChoiceQuestion("Which defense is up?", "Drawbridge", "Sally Port"),
 				new MultipleChoiceQuestion("How long did it take to cross on avg (seconds)?", "0 - 5", "5 - 10", "10 - 15", "15+", "Failed"),
 				new SpinnerQuestion("How many times did they cross it?")
 			),
-			new QuestionGroup(false, "Defense Category D", 
+			new QuestionGroup("Defense Category D", 
 				new MultipleChoiceQuestion("Which defense is up?", "Rough Terrain", "Rock Wall"),
 				new MultipleChoiceQuestion("How long did it take to cross on avg (seconds)?", "0 - 5", "5 - 10", "10 - 15", "15+", "Failed"),
 				new SpinnerQuestion("How many times did they cross it?")
 			),
-			new QuestionGroup(false, "Low Bar", 
+			new QuestionGroup("Low Bar", 
 				new MultipleChoiceQuestion("How long did it take to cross on avg (seconds)?", "0 - 5", "5 - 10", "10 - 15", "15+", "Failed"),
 				new SpinnerQuestion("How many times did they cross it?")
 			),
 			new SpinnerQuestion("How many high goals did they make?"),
-			new SpinnerQuestion("How many low goals did they make?")
+			new SpinnerQuestion("How many high goals did they miss?"),
+			new SpinnerQuestion("How many low goals did they make?"),
+			new SpinnerQuestion("How many low goals did they miss?"),
+			new MultipleChoiceQuestion("Did they...", "Challenge", "Scale", "Neither")
 		);//<--- sad winky face 
+		
+		ScoutingFormTab ratings = new ScoutingFormTab("Ratings", 
+			new MultipleChoiceQuestion("Speed", "Snail", "Slow", "Average", "Speedy", "Lightning"),
+			new MultipleChoiceQuestion("Manueverability", "Sluggish", "Unresponsive", "Average" , "Responsive", "Nimble"),
+			new MultipleChoiceQuestion("Shooter Repeatability", "Unreliable", "Sketchy", "Average", "Consistent", "Reliable", "N/A"), 
+			new MultipleChoiceQuestion("Shooter Speed", "Snail", "Slow", "Average", "Speedy", "Lightning", "N/A"),
+			new MultipleChoiceQuestion("Defense", "Shitty", "Decent", "Average", "Good", "Badass", "N/A"), 
+			new MultipleChoiceQuestion("Defense Evasion", "Shitty", "Decent", "Average", "Good", "Badass", "N/A"), 
+			new MultipleChoiceQuestion("Overall Impression", "Shitty", "Decent", "Average", "Good", "Badass")
+		);
 		
 		ScoutingFormTab misc = new ScoutingFormTab("Miscellaneous", 
 			new SpinnerQuestion("How many tech fouls did they get?"),
-			new SpinnerQuestion("How many other fouls did they get"),
+			new SpinnerQuestion("How many other fouls did they get?"),
+			new CheckboxQuestion("What role(s) did they play?", "Shooter", "Breacher", "Defender", "Support"),
+			new MultipleChoiceQuestion("Did they break down?", "Yes", "No"),
 			new FreeResponseQuestion("Comments:")
 		);
 		
-		new ScoutingForm(prematch, autonomous, teleop, misc);
+		new ScoutingForm(prematch, autonomous, teleop, ratings, misc);
 		
 	}
 }
