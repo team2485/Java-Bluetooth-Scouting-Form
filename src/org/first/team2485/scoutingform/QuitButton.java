@@ -1,5 +1,6 @@
 package org.first.team2485.scoutingform;
 
+import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -9,6 +10,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import org.first.team2485.scoutingform.bluetooth.BluetoothPanel;
+
 /**
  * 
  * @author Troy Appel
@@ -16,7 +19,7 @@ import javax.swing.JOptionPane;
  */
 //test
 @SuppressWarnings("serial")
-public class QuitButton extends JButton{
+public class QuitButton extends JButton {
 	
 	private static JFrame comp;
 	
@@ -42,7 +45,6 @@ public class QuitButton extends JButton{
 		int status = JOptionPane.showConfirmDialog(QuitButton.comp, "Are you sure you want to quit?", "Confirmation", JOptionPane.YES_NO_OPTION);
 		
 		if (status == JOptionPane.YES_OPTION) {
-			//TODO: Call Nick's dispose method
 			System.exit(0);
 		}
 		else {

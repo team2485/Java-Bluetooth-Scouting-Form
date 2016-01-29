@@ -1,4 +1,4 @@
-package org.first.team2485.scoutingform.bluetooth2;
+package org.first.team2485.scoutingform.bluetooth;
 
 import java.awt.Color;
 import java.awt.Component;

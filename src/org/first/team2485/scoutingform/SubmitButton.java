@@ -4,7 +4,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 
-import org.first.team2485.scoutingform.bluetooth2.BluetoothPanel;
+import org.first.team2485.scoutingform.bluetooth.BluetoothPanel;
 
 
 /**

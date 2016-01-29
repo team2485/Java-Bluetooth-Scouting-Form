@@ -1,4 +1,4 @@
-package org.first.team2485.scoutingform.bluetooth2;
+package org.first.team2485.scoutingform.bluetooth;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -38,6 +38,10 @@ public class BluetoothSystem implements DiscoveryListener {
 	private static Object lock = new Object();
 
 	private static ExpandedRemoteDevice currentDevice;
+	private static DiscoveryAgent agent;
+	private static int searchID;
+	
+	private static boolean isBusy;
 	
 	
 	private static BluetoothSystem getInstance() {
@@ -54,11 +58,14 @@ public class BluetoothSystem implements DiscoveryListener {
 
 	public static ExpandedRemoteDevice[] pairedDevices() {
 		
+		isBusy = true;
+		
 		System.out.println("Starting looking for paired devices");
 		
 		try {
-			RemoteDevice[] devices = LocalDevice.getLocalDevice().getDiscoveryAgent()
-					.retrieveDevices(DiscoveryAgent.PREKNOWN);
+			agent = LocalDevice.getLocalDevice().getDiscoveryAgent();
+			
+			RemoteDevice[] devices = agent.retrieveDevices(DiscoveryAgent.PREKNOWN);
 			
 			System.out.println("Raw Length: " + devices.length);
 
@@ -75,17 +82,21 @@ public class BluetoothSystem implements DiscoveryListener {
 		}
 		
 		System.out.println("Returning empty array");
+		
+		isBusy = false;
 
 		return new ExpandedRemoteDevice[0];
 	}
 
 	public static ExpandedRemoteDevice[] discoverDevices() {
 		
+		isBusy = true;
+		
 		System.out.println("Now discovering devices");
 
 		try {
 			LocalDevice localDevice = LocalDevice.getLocalDevice();
-			DiscoveryAgent agent = localDevice.getDiscoveryAgent();
+			agent = localDevice.getDiscoveryAgent();
 			agent.startInquiry(DiscoveryAgent.GIAC, getInstance());
 			
 			System.out.println("Started, waiting on lock...");
@@ -124,13 +135,17 @@ public class BluetoothSystem implements DiscoveryListener {
 			ExpandedRemoteDevice[] expandedDevices = arrayList.toArray(new ExpandedRemoteDevice[arrayList.size()]);
 
 			System.out.println("Device Inquiry Completed. ");
+			
+			isBusy = false;
 
 			return expandedDevices;
 		} catch (Exception e) {
+			isBusy = false;
 			e.printStackTrace();
 		}
 		System.out.println("RETURNING NULL");
-
+		
+		isBusy = false;
 		return null;
 	}
 
@@ -158,6 +173,8 @@ public class BluetoothSystem implements DiscoveryListener {
 
 	public static void setValuesForDevice(ExpandedRemoteDevice device, UUID service) {
 		
+		isBusy = true;
+		
 		System.out.println("Setting values on: " + device.getName());
 
 		UUID[] uuidSet = new UUID[] { service };
@@ -174,7 +191,7 @@ public class BluetoothSystem implements DiscoveryListener {
 			e.printStackTrace();
 		}
 
-		DiscoveryAgent agent = localDevice.getDiscoveryAgent();
+		agent = localDevice.getDiscoveryAgent();
 
 		System.out.println("------------------------------------");
 
@@ -183,7 +200,7 @@ public class BluetoothSystem implements DiscoveryListener {
 		try {
 			System.out.println("Searching Services On: " + deviceName);
 
-			agent.searchServices(attrIDs, uuidSet, device.getRemoteDevice(), getInstance());
+			searchID = agent.searchServices(attrIDs, uuidSet, device.getRemoteDevice(), getInstance());
 
 			System.out.println("Started Search...");
 
@@ -218,6 +235,8 @@ public class BluetoothSystem implements DiscoveryListener {
 			
 			currentDevice.state = ExpandedRemoteDevice.OBEX_UNSUPPORTED;
 		}
+		
+		isBusy = false;
 
 	}
 
@@ -279,6 +298,8 @@ public class BluetoothSystem implements DiscoveryListener {
 
 	public static void sendToDevice(ExpandedRemoteDevice device, String fileName, String dataToSend) {
 
+		isBusy = true;
+		
 		String serverURL = device.URL;
 
 		try {
@@ -320,5 +341,21 @@ public class BluetoothSystem implements DiscoveryListener {
 		} catch (final Exception e) {
 			e.printStackTrace();
 		}
+		
+		isBusy = false;
+	}
+	
+	public static boolean isBusy() {
+		return isBusy;
+	}
+	
+	public static void cancelAll() {
+		
+		agent.cancelInquiry(getInstance());
+		
+		agent.cancelServiceSearch(searchID);
+		
+		isBusy = false;
+		
 	}
 }

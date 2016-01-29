@@ -1,4 +1,4 @@
-package org.first.team2485.scoutingform.bluetooth2;
+package org.first.team2485.scoutingform.bluetooth;
 
 import java.awt.BorderLayout;
 import java.awt.Button;
@@ -31,6 +31,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.text.DefaultCaret;
 
+import org.first.team2485.scoutingform.QuitButton;
 import org.first.team2485.scoutingform.ScoutingForm;
 
 /**
@@ -53,10 +54,6 @@ public class BluetoothPanel extends JPanel implements ListCellRenderer<ExpandedR
 	private PrintStream oldPrintStream;
 
 	private boolean stop;
-
-	public static void main(String[] args) {
-		new BluetoothPanel("tripplecow.txt", "test test 1 2 3");
-	}
 
 	public BluetoothPanel(String fileName, String dataToSend) {
 
@@ -89,18 +86,30 @@ public class BluetoothPanel extends JPanel implements ListCellRenderer<ExpandedR
 		public void run() {
 
 			while (!stop) {
+				
+				customPaint();
 
 				frame.repaint();
 
 				try {
-					Thread.sleep(500);
+					Thread.sleep(20);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
 
 				continue;
 			}
-
+		}
+	}
+	
+	private void customPaint() {
+		
+		if (BluetoothSystem.isBusy()) {
+			refreshButton.setText("Stop Scanning");
+			refreshButton.setToolTipText("Stop scanning for new devices");
+		} else {
+			refreshButton.setText("Scan For Devices");
+			refreshButton.setToolTipText("Start looking for new devices");
 		}
 	}
 
@@ -109,6 +118,8 @@ public class BluetoothPanel extends JPanel implements ListCellRenderer<ExpandedR
 		frame = new JFrame("Bluetooth Connection Window");
 
 		frame.add(this);
+		
+		new QuitButton(frame);
 
 		this.setLayout(new BorderLayout());
 
@@ -164,12 +175,15 @@ public class BluetoothPanel extends JPanel implements ListCellRenderer<ExpandedR
 
 		sendButton.setActionCommand("sendButton");
 		sendButton.addActionListener(new BluetoothActionListener());
+		sendButton.setToolTipText("Send the scouting data to the device selected");
 
 		refreshButton.setActionCommand("refreshButton");
 		refreshButton.addActionListener(new BluetoothActionListener());
+		refreshButton.setToolTipText("Start looking for new devices");
 
 		clearConsoleButton.setActionCommand("clearButton");
 		clearConsoleButton.addActionListener(new BluetoothActionListener());
+		clearConsoleButton.setToolTipText("Clear the console window");
 
 		buttonPanel.add(sendButton);
 		buttonPanel.add(refreshButton);
@@ -195,6 +209,11 @@ public class BluetoothPanel extends JPanel implements ListCellRenderer<ExpandedR
 	}
 
 	public void preformFullScan() {
+		
+		if (BluetoothSystem.isBusy()) {
+			stopAllScans();
+			return;
+		}
 
 		ExpandedRemoteDevice[] alreadyPaired = BluetoothSystem.pairedDevices();
 
@@ -242,6 +261,11 @@ public class BluetoothPanel extends JPanel implements ListCellRenderer<ExpandedR
 
 		System.out.println("Scan complete");
 
+	}
+
+	private void stopAllScans() {
+		BluetoothSystem.cancelAll();
+		System.out.println("Canceled all actions");
 	}
 
 	private void addToList(ExpandedRemoteDevice[] newDevices) {
