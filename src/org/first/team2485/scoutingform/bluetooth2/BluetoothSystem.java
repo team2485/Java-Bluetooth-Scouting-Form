@@ -1,4 +1,4 @@
-package org.first.team2485.scoutingform.bluetooth;
+package org.first.team2485.scoutingform.bluetooth2;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -22,6 +22,8 @@ import javax.obex.ClientSession;
 import javax.obex.HeaderSet;
 import javax.obex.Operation;
 
+import com.intel.bluetooth.RemoteDeviceHelper;
+
 /**
  * 
  * @author Nicholas Contreras
@@ -35,8 +37,9 @@ public class BluetoothSystem implements DiscoveryListener {
 
 	private static Object lock = new Object();
 
-	private static HashMap<RemoteDevice, String> URLmap;
-
+	private static ExpandedRemoteDevice currentDevice;
+	
+	
 	private static BluetoothSystem getInstance() {
 
 		System.out.println("Asked for Instance: " + instance);
@@ -49,22 +52,43 @@ public class BluetoothSystem implements DiscoveryListener {
 
 	}
 
-	public static RemoteDevice[] pairedDevices() {
+	public static ExpandedRemoteDevice[] pairedDevices() {
+		
+		System.out.println("Starting looking for paired devices");
+		
 		try {
-			return LocalDevice.getLocalDevice().getDiscoveryAgent().retrieveDevices(DiscoveryAgent.PREKNOWN);
+			RemoteDevice[] devices = LocalDevice.getLocalDevice().getDiscoveryAgent()
+					.retrieveDevices(DiscoveryAgent.PREKNOWN);
+			
+			System.out.println("Raw Length: " + devices.length);
+
+			ExpandedRemoteDevice[] expandedDevices = new ExpandedRemoteDevice[devices.length];
+
+			for (int i = 0; i < devices.length; i++) {
+				expandedDevices[i] = new ExpandedRemoteDevice(devices[i]);
+			}
+
+			return expandedDevices;
+
 		} catch (BluetoothStateException e) {
 			e.printStackTrace();
 		}
+		
+		System.out.println("Returning empty array");
 
-		return new RemoteDevice[0];
+		return new ExpandedRemoteDevice[0];
 	}
 
-	public static RemoteDevice[] discoverDevices() {
+	public static ExpandedRemoteDevice[] discoverDevices() {
+		
+		System.out.println("Now discovering devices");
 
 		try {
 			LocalDevice localDevice = LocalDevice.getLocalDevice();
 			DiscoveryAgent agent = localDevice.getDiscoveryAgent();
 			agent.startInquiry(DiscoveryAgent.GIAC, getInstance());
+			
+			System.out.println("Started, waiting on lock...");
 
 			try {
 				synchronized (lock) {
@@ -73,27 +97,35 @@ public class BluetoothSystem implements DiscoveryListener {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
+			
+			System.out.println("Lock opened, waiting on timer");
+			
+			Thread.sleep(5000);
+			
+			System.out.println("Timer ended, reading...");
 
 			RemoteDevice[] devices = agent.retrieveDevices(DiscoveryAgent.CACHED);
+			
+			System.out.println("Raw length: " + devices.length);
 
-			ArrayList<RemoteDevice> arrayList = new ArrayList<RemoteDevice>();
+			ArrayList<ExpandedRemoteDevice> arrayList = new ArrayList<ExpandedRemoteDevice>();
 
 			for (RemoteDevice device : devices) {
-				arrayList.add(device);
+				arrayList.add(new ExpandedRemoteDevice(device));
 			}
 
 			for (int i = 0; i < arrayList.size(); i++) {
-				if (arrayList.get(i) == null || arrayList.get(i).getFriendlyName(true).length() < 2) {
+				if (arrayList.get(i) == null || arrayList.get(i).getName().length() < 2) {
 					arrayList.remove(i);
 					i--;
 				}
 			}
 
-			devices = arrayList.toArray(new RemoteDevice[arrayList.size()]);
+			ExpandedRemoteDevice[] expandedDevices = arrayList.toArray(new ExpandedRemoteDevice[arrayList.size()]);
 
 			System.out.println("Device Inquiry Completed. ");
 
-			return devices;
+			return expandedDevices;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -124,86 +156,68 @@ public class BluetoothSystem implements DiscoveryListener {
 		}
 	}
 
-	public static Set<RemoteDevice> filterDevicesByService(RemoteDevice[] devices, UUID service) {
+	public static void setValuesForDevice(ExpandedRemoteDevice device, UUID service) {
+		
+		System.out.println("Setting values on: " + device.getName());
 
 		UUID[] uuidSet = new UUID[] { service };
 
 		int[] attrIDs = new int[] { 0x0100 }; // Service name
 
-		URLmap = new HashMap<RemoteDevice, String>();
+		currentDevice = device;
 
 		LocalDevice localDevice = null;
+
 		try {
 			localDevice = LocalDevice.getLocalDevice();
 		} catch (BluetoothStateException e) {
 			e.printStackTrace();
 		}
+
 		DiscoveryAgent agent = localDevice.getDiscoveryAgent();
 
-		System.out.println("Array of Devices: " + Arrays.toString(devices));
+		System.out.println("------------------------------------");
 
-		for (RemoteDevice device : devices) {
+		String deviceName = device.getName();
 
-			System.out.println("------------------------------------");
+		try {
+			System.out.println("Searching Services On: " + deviceName);
 
-			String deviceName = "";
+			agent.searchServices(attrIDs, uuidSet, device.getRemoteDevice(), getInstance());
 
-			try {
-				deviceName = device.getFriendlyName(true);
+			System.out.println("Started Search...");
 
-				System.out.println("Searching Services On: " + deviceName);
-
-				agent.searchServices(attrIDs, uuidSet, device, getInstance());
-
-				System.out.println("Started Search...");
-
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-
-			System.out.println("Waiting on lock");
-
-			try {
-				synchronized (lock) {
-					lock.wait();
-				}
-
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-
-			System.out.println("Lock opened, waiting on timer...");
-
-			try {
-				Thread.sleep(5000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-
-			System.out.println("Timer ended, resuming");
-
-			System.out.println("KeySet: " + URLmap.keySet());
-
-			if (URLmap.containsKey(null)) {
-				String url = URLmap.get(null);
-
-				URLmap.put(device, url);
-
-				URLmap.remove(null);
-
-				System.out.println("Found null, swapped devices");
-			} else {
-				System.out.println("null not found, next cycle...");
-			}
-
-			System.out.println("KeySet2: " + URLmap.keySet());
-
-			System.out.println("Service Search Finished On: " + deviceName);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 
-		System.out.println("All Service Searches Finshed");
+		System.out.println("Waiting on lock");
 
-		return URLmap.keySet();
+		try {
+			synchronized (lock) {
+				lock.wait();
+			}
+
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+
+		System.out.println("Lock opened, waiting on timer...");
+
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+
+		System.out.println("Timer ended, resuming");
+		
+		if (currentDevice.state == ExpandedRemoteDevice.UNCHECKED_DEVICE) {
+			
+			System.out.println("Device returned without change, failing...");
+			
+			currentDevice.state = ExpandedRemoteDevice.OBEX_UNSUPPORTED;
+		}
 
 	}
 
@@ -248,30 +262,24 @@ public class BluetoothSystem implements DiscoveryListener {
 
 				if (serviceName.getValue().equals("OBEX Object Push")) {
 
-					System.out.println("Has Service, adding to map");
+					System.out.println("Has Service, setting values");
 
-					URLmap.put(null, url);
+					currentDevice.state = ExpandedRemoteDevice.OBEX_SUPPORTED;
+					currentDevice.URL = url;
+					return;
 				}
 			} else {
 				System.out.println("Service Found: " + url);
 			}
 		}
+		
+		System.out.println("Service not found on device, writing incompat");
+		currentDevice.state = ExpandedRemoteDevice.OBEX_UNSUPPORTED;
 	}
 
-	public static void sendToDevice(RemoteDevice toSend, String fileName, String dataToSend) {
+	public static void sendToDevice(ExpandedRemoteDevice device, String fileName, String dataToSend) {
 
-		Set<RemoteDevice> resultSet = filterDevicesByService(new RemoteDevice[] { toSend }, OBEX);
-
-		if (resultSet.isEmpty()) {
-			try {
-				System.out.println("CANNOT SEND TO: " + toSend.getFriendlyName(true));
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			return;
-		}
-
-		String serverURL = URLmap.get(resultSet.toArray(new RemoteDevice[1])[0]);
+		String serverURL = device.URL;
 
 		try {
 			Connection connection = null;
