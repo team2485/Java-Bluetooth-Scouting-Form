@@ -28,7 +28,6 @@ public class BluetoothActionListener implements ActionListener {
 
 		case "sendButton":
 			new SendThread().start();
-			bluetoothPanel.shutdownBluetooth();
 			break;
 
 		case "refreshButton":
@@ -54,7 +53,8 @@ public class BluetoothActionListener implements ActionListener {
 		@Override
 		public void run() {
 
-			if (bluetoothPanel.getSelectedDevice().state != ExpandedRemoteDevice.OBEX_SUPPORTED) {
+			if (bluetoothPanel.getSelectedDevice() == null
+					|| bluetoothPanel.getSelectedDevice().state != ExpandedRemoteDevice.OBEX_SUPPORTED) {
 				JOptionPane.showMessageDialog(null,
 						"Cannot send a file to this device\nREASON:\nUnknown or incompatable device", "Failed To Send",
 						JOptionPane.ERROR_MESSAGE, null);
@@ -63,6 +63,8 @@ public class BluetoothActionListener implements ActionListener {
 
 			BluetoothSystem.sendToDevice(bluetoothPanel.getSelectedDevice(), bluetoothPanel.getFileName(),
 					bluetoothPanel.getDataToSend());
+
+			bluetoothPanel.shutdownBluetooth();
 		}
 	}
 }
