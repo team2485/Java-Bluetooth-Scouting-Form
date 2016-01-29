@@ -31,7 +31,7 @@ public class BluetoothActionListener implements ActionListener {
 			break;
 
 		case "refreshButton":
-			new SearchThread().start();
+			new SearchThread(false).start();
 			break;
 
 		case "clearButton":
@@ -40,11 +40,22 @@ public class BluetoothActionListener implements ActionListener {
 		}
 	}
 
-	class SearchThread extends Thread {
+	static class SearchThread extends Thread {
+
+		private boolean local;
+
+		SearchThread(boolean local) {
+			this.local = local;
+		}
 
 		@Override
 		public void run() {
-			bluetoothPanel.remoteScan();
+
+			if (local) {
+				bluetoothPanel.localScan();
+			} else {
+				bluetoothPanel.remoteScan();
+			}
 		}
 	}
 
@@ -66,5 +77,9 @@ public class BluetoothActionListener implements ActionListener {
 
 			bluetoothPanel.shutdownBluetooth();
 		}
+	}
+
+	public static void startLocalScan() {
+		new SearchThread(true).start();;
 	}
 }

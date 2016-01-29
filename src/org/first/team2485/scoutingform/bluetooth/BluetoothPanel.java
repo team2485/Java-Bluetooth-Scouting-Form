@@ -80,14 +80,14 @@ public class BluetoothPanel extends JPanel implements ListCellRenderer<ExpandedR
 		frame.setVisible(true);
 
 		new PaintThread().start();
+		
+		BluetoothActionListener.startLocalScan();
 	}
 
 	class PaintThread extends Thread {
 
 		@Override
 		public void run() {
-			
-			localScan();
 
 			while (!stop) {
 
@@ -233,6 +233,7 @@ public class BluetoothPanel extends JPanel implements ListCellRenderer<ExpandedR
 	}
 
 	public void localScan() {
+		
 		if (BluetoothSystem.isBusy()) {
 			stopAllScans();
 			return;

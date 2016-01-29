@@ -77,6 +77,8 @@ public class BluetoothSystem implements DiscoveryListener {
 			for (int i = 0; i < devices.length; i++) {
 				expandedDevices[i] = new ExpandedRemoteDevice(devices[i]);
 			}
+			
+			isBusy = false;
 
 			return expandedDevices;
 
@@ -381,6 +383,12 @@ public class BluetoothSystem implements DiscoveryListener {
 
 			synchronized (lock) {
 				lock.notifyAll();
+			}
+			
+			try {
+				Thread.sleep(4000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
 			}
 		}
 	}
