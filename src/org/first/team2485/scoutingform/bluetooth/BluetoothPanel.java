@@ -51,6 +51,8 @@ public class BluetoothPanel extends JPanel implements ListCellRenderer<ExpandedR
 
 	private JButton sendButton, refreshButton, clearConsoleButton;
 
+	private JLabel status;
+
 	private PrintStream oldPrintStream;
 
 	private boolean stop;
@@ -84,9 +86,11 @@ public class BluetoothPanel extends JPanel implements ListCellRenderer<ExpandedR
 
 		@Override
 		public void run() {
+			
+			localScan();
 
 			while (!stop) {
-				
+
 				customPaint();
 
 				frame.repaint();
@@ -101,15 +105,26 @@ public class BluetoothPanel extends JPanel implements ListCellRenderer<ExpandedR
 			}
 		}
 	}
-	
+
 	private void customPaint() {
-		
+
 		if (BluetoothSystem.isBusy()) {
 			refreshButton.setText("Stop Scanning");
 			refreshButton.setToolTipText("Stop scanning for new devices");
+
+			if (BluetoothSystem.isCanceling()) {
+				refreshButton.setEnabled(false);
+				status.setText("CANCELING");
+			} else {
+				refreshButton.setEnabled(true);
+				status.setText("BUSY");
+			}
 		} else {
 			refreshButton.setText("Scan For Devices");
 			refreshButton.setToolTipText("Start looking for new devices");
+
+			refreshButton.setEnabled(true);
+			status.setText("IDLE");
 		}
 	}
 
@@ -118,7 +133,7 @@ public class BluetoothPanel extends JPanel implements ListCellRenderer<ExpandedR
 		frame = new JFrame("Bluetooth Connection Window");
 
 		frame.add(this);
-		
+
 		new QuitButton(frame);
 
 		this.setLayout(new BorderLayout());
@@ -167,7 +182,16 @@ public class BluetoothPanel extends JPanel implements ListCellRenderer<ExpandedR
 
 	private void setUpButtons() {
 
-		JPanel buttonPanel = new JPanel(new GridLayout(1, 3));
+		JPanel buttonPanel = new JPanel(new GridLayout(1, 5));
+
+		JLabel statusLabel = new JLabel("Status: ");
+		statusLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+
+		status = new JLabel("IDLE");
+		status.setHorizontalAlignment(SwingConstants.LEFT);
+
+		buttonPanel.add(statusLabel);
+		buttonPanel.add(status);
 
 		sendButton = new JButton("Send Data");
 		refreshButton = new JButton("Scan For Devices");
@@ -208,8 +232,7 @@ public class BluetoothPanel extends JPanel implements ListCellRenderer<ExpandedR
 		return console;
 	}
 
-	public void preformFullScan() {
-		
+	public void localScan() {
 		if (BluetoothSystem.isBusy()) {
 			stopAllScans();
 			return;
@@ -240,6 +263,13 @@ public class BluetoothPanel extends JPanel implements ListCellRenderer<ExpandedR
 
 			}
 		}
+	}
+
+	public void remoteScan() {
+		if (BluetoothSystem.isBusy()) {
+			stopAllScans();
+			return;
+		}
 
 		ExpandedRemoteDevice[] newDevices = BluetoothSystem.discoverDevices();
 
@@ -260,7 +290,6 @@ public class BluetoothPanel extends JPanel implements ListCellRenderer<ExpandedR
 		}
 
 		System.out.println("Scan complete");
-
 	}
 
 	private void stopAllScans() {
@@ -348,8 +377,8 @@ public class BluetoothPanel extends JPanel implements ListCellRenderer<ExpandedR
 		System.setOut(oldPrintStream);
 
 		stop = true;
-		
-		ScoutingForm.main(null); //Open up another form
+
+		ScoutingForm.main(null); // Open up another form
 
 		frame.dispose();
 	}

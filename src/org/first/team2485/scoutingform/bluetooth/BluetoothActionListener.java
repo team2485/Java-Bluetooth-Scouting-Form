@@ -44,7 +44,7 @@ public class BluetoothActionListener implements ActionListener {
 
 		@Override
 		public void run() {
-			bluetoothPanel.preformFullScan();
+			bluetoothPanel.remoteScan();
 		}
 	}
 
