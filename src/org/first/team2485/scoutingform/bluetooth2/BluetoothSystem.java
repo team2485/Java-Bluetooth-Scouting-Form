@@ -1,4 +1,4 @@
-package org.first.team2485.scoutingform.bluetooth;
+package org.first.team2485.scoutingform.bluetooth2;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -39,24 +39,7 @@ public class BluetoothSystem implements DiscoveryListener {
 
 	private static ExpandedRemoteDevice currentDevice;
 	
-	public static void callMethod() {
-		
-	}
 	
-	private class MethodThread extends Thread {
-		
-		private int method;
-		
-		public MethodThread(int method) {
-			this.method = method;
-		}
-		
-		@Override
-		public void run() {
-			
-		}
-	}
-
 	private static BluetoothSystem getInstance() {
 
 		System.out.println("Asked for Instance: " + instance);
@@ -222,12 +205,19 @@ public class BluetoothSystem implements DiscoveryListener {
 		System.out.println("Lock opened, waiting on timer...");
 
 		try {
-			Thread.sleep(5000);
+			Thread.sleep(1000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 
 		System.out.println("Timer ended, resuming");
+		
+		if (currentDevice.state == ExpandedRemoteDevice.UNCHECKED_DEVICE) {
+			
+			System.out.println("Device returned without change, failing...");
+			
+			currentDevice.state = ExpandedRemoteDevice.OBEX_UNSUPPORTED;
+		}
 
 	}
 
@@ -282,6 +272,8 @@ public class BluetoothSystem implements DiscoveryListener {
 				System.out.println("Service Found: " + url);
 			}
 		}
+		
+		System.out.println("Service not found on device, writing incompat");
 		currentDevice.state = ExpandedRemoteDevice.OBEX_UNSUPPORTED;
 	}
 

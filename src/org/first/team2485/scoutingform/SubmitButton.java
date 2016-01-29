@@ -4,7 +4,8 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 
-import org.first.team2485.scoutingform.bluetooth.SendViaBluetooth;
+import org.first.team2485.scoutingform.bluetooth2.BluetoothPanel;
+
 
 /**
  * 
@@ -31,7 +32,9 @@ public class SubmitButton extends JButton implements ActionListener {
 		String dataToSend = form.submit();
 		String fileName = "ScoutForm" + (System.currentTimeMillis() % 1000000000) + ".csv";
 		
-		SendViaBluetooth.send(fileName, dataToSend);
+		new BluetoothPanel(fileName, dataToSend);
+		
+		form.getFrame().dispose();
 		
 	}
 	

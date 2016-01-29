@@ -65,8 +65,11 @@ public class ScoutingForm extends JPanel {
 
 		return output;
 
-	} 
+	}
 	
+	public JFrame getFrame() {
+		return frame;
+	}
 
 	public static void main(String[] args) {
 

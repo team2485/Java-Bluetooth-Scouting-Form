@@ -1,4 +1,4 @@
-package org.first.team2485.scoutingform.bluetooth;
+package org.first.team2485.scoutingform.bluetooth2;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -11,9 +11,15 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.ListCellRenderer;
 
+/**
+ * 
+ * @author Nicholas Contreras
+ *
+ */
+
 public class ExpandedRemoteDevice {
 
-	public static final int OBEX_SUPPORTED = 2, PAIRED_DEVICE = 1, UNCHECKED_DEVICE = -1, OBEX_UNSUPPORTED = -2;
+	public static final int OBEX_SUPPORTED = 1, UNCHECKED_DEVICE = 0, OBEX_UNSUPPORTED = -1;
 
 	public String URL;
 	public int state;
