@@ -6,6 +6,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import org.first.team2485.scoutingform.ScoutingFormTab;
+
 @SuppressWarnings("serial")
 public class ClearButton extends JButton{
 	private static ScoutingFormTab[] tabs;
