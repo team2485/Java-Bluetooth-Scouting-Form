@@ -125,6 +125,11 @@ public class BluetoothSystem implements DiscoveryListener {
 			System.out.println("Timer ended, reading...");
 
 			RemoteDevice[] devices = agent.retrieveDevices(DiscoveryAgent.CACHED);
+			
+			if (devices == null) {
+				System.out.println("No devices found, returning empty");
+				return new ExpandedRemoteDevice[0];
+			}
 
 			System.out.println("Raw length: " + devices.length);
 

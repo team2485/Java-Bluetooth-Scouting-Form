@@ -241,6 +241,10 @@ public class BluetoothPanel extends JPanel implements ListCellRenderer<ExpandedR
 		ExpandedRemoteDevice[] alreadyPaired = BluetoothSystem.pairedDevices();
 
 		System.out.println("Scan");
+		
+		if (alreadyPaired.length == 0) {
+			return;
+		}
 
 		addToList(alreadyPaired);
 
@@ -270,6 +274,10 @@ public class BluetoothPanel extends JPanel implements ListCellRenderer<ExpandedR
 	public void remoteScan() {
 
 		ExpandedRemoteDevice[] newDevices = BluetoothSystem.discoverDevices();
+		
+		if (newDevices.length == 0) {
+			return;
+		}
 
 		addToList(newDevices);
 
