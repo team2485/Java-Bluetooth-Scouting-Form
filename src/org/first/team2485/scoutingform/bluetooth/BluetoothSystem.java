@@ -39,10 +39,8 @@ public class BluetoothSystem implements DiscoveryListener {
 
 	private static ExpandedRemoteDevice currentDevice;
 	private static DiscoveryAgent agent;
-	private static int searchID;
 
 	private static boolean isBusy;
-	private static boolean cancel;
 
 	private static BluetoothSystem getInstance() {
 
@@ -65,19 +63,21 @@ public class BluetoothSystem implements DiscoveryListener {
 
 			RemoteDevice[] devices = agent.retrieveDevices(DiscoveryAgent.PREKNOWN);
 
-			if (cancel) {
-				cancel = false;
-				return new ExpandedRemoteDevice[0];
-			}
+			System.out.println("Has devices");
 
 			System.out.println("Raw Length: " + devices.length);
 
 			ExpandedRemoteDevice[] expandedDevices = new ExpandedRemoteDevice[devices.length];
 
+			System.out.println("New List");
+
 			for (int i = 0; i < devices.length; i++) {
 				expandedDevices[i] = new ExpandedRemoteDevice(devices[i]);
+				expandedDevices[i].getName();
 			}
-			
+
+			System.out.println("Tagging not busy");
+
 			isBusy = false;
 
 			return expandedDevices;
@@ -114,14 +114,9 @@ public class BluetoothSystem implements DiscoveryListener {
 				e.printStackTrace();
 			}
 
-			if (cancel) {
-				cancel = false;
-				return new ExpandedRemoteDevice[0];
-			}
-
 			System.out.println("Lock opened, waiting on timer");
 
-			Thread.sleep(5000);
+			Thread.sleep(2500);
 
 			System.out.println("Timer ended, reading...");
 
@@ -132,10 +127,16 @@ public class BluetoothSystem implements DiscoveryListener {
 			ArrayList<ExpandedRemoteDevice> arrayList = new ArrayList<ExpandedRemoteDevice>();
 
 			for (RemoteDevice device : devices) {
-				arrayList.add(new ExpandedRemoteDevice(device));
+				
+				ExpandedRemoteDevice newDevice = new ExpandedRemoteDevice(device);
+				
+				System.out.println("Device Found: " + newDevice.getName());
+				
+				arrayList.add(newDevice);
 			}
 
 			for (int i = 0; i < arrayList.size(); i++) {
+				
 				if (arrayList.get(i) == null || arrayList.get(i).getName().length() < 2) {
 					arrayList.remove(i);
 					i--;
@@ -162,16 +163,6 @@ public class BluetoothSystem implements DiscoveryListener {
 	@Override
 	public void deviceDiscovered(RemoteDevice btDevice, DeviceClass arg1) {
 
-		String name;
-
-		try {
-			name = btDevice.getFriendlyName(false);
-		} catch (Exception e) {
-			name = btDevice.getBluetoothAddress();
-		}
-
-		System.out.println("Device Found: " + name);
-
 	}
 
 	@Override
@@ -179,8 +170,6 @@ public class BluetoothSystem implements DiscoveryListener {
 		synchronized (lock) {
 			lock.notify();
 		}
-
-		isBusy = false;
 	}
 
 	public static void setValuesForDevice(ExpandedRemoteDevice device, UUID service) {
@@ -212,7 +201,7 @@ public class BluetoothSystem implements DiscoveryListener {
 		try {
 			System.out.println("Searching Services On: " + deviceName);
 
-			searchID = agent.searchServices(attrIDs, uuidSet, device.getRemoteDevice(), getInstance());
+			agent.searchServices(attrIDs, uuidSet, device.getRemoteDevice(), getInstance());
 
 			System.out.println("Started Search...");
 
@@ -229,11 +218,6 @@ public class BluetoothSystem implements DiscoveryListener {
 
 		} catch (InterruptedException e) {
 			e.printStackTrace();
-		}
-
-		if (cancel) {
-			cancel = false;
-			return;
 		}
 
 		System.out.println("Lock opened, waiting on timer...");
@@ -315,7 +299,7 @@ public class BluetoothSystem implements DiscoveryListener {
 		isBusy = false;
 	}
 
-	public static void sendToDevice(ExpandedRemoteDevice device, String fileName, String dataToSend) {
+	public static boolean sendToDevice(ExpandedRemoteDevice device, String fileName, String dataToSend) {
 
 		isBusy = true;
 
@@ -349,7 +333,7 @@ public class BluetoothSystem implements DiscoveryListener {
 				outputStream.write(filebytes);
 				System.out.println("Push complete");
 			} catch (Exception e) {
-				e.printStackTrace();
+				System.out.println(e.getMessage());
 			} finally {
 				outputStream.close();
 				putOperation.close();
@@ -358,38 +342,15 @@ public class BluetoothSystem implements DiscoveryListener {
 				System.out.println("Connection Closed");
 			}
 		} catch (final Exception e) {
-			e.printStackTrace();
+			System.out.println(e.getMessage());
+			return false;
 		}
 
 		isBusy = false;
+		return true;
 	}
 
 	public static boolean isBusy() {
 		return isBusy;
-	}
-	
-	public static boolean isCanceling() {
-		return cancel;
-	}
-
-	public static void cancelAll() {
-
-		if (agent != null) {
-			agent.cancelInquiry(getInstance());
-
-			agent.cancelServiceSearch(searchID);
-
-			cancel = true;
-
-			synchronized (lock) {
-				lock.notifyAll();
-			}
-			
-			try {
-				Thread.sleep(4000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
 	}
 }

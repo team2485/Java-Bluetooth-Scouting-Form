@@ -80,7 +80,7 @@ public class BluetoothPanel extends JPanel implements ListCellRenderer<ExpandedR
 		frame.setVisible(true);
 
 		new PaintThread().start();
-		
+
 		BluetoothActionListener.startLocalScan();
 	}
 
@@ -108,17 +108,14 @@ public class BluetoothPanel extends JPanel implements ListCellRenderer<ExpandedR
 
 	private void customPaint() {
 
+		// System.out.println("Is Busy: " + BluetoothSystem.isBusy());
+
 		if (BluetoothSystem.isBusy()) {
-			refreshButton.setText("Stop Scanning");
+			refreshButton.setText("Please Wait");
 			refreshButton.setToolTipText("Stop scanning for new devices");
 
-			if (BluetoothSystem.isCanceling()) {
-				refreshButton.setEnabled(false);
-				status.setText("CANCELING");
-			} else {
-				refreshButton.setEnabled(true);
-				status.setText("BUSY");
-			}
+			refreshButton.setEnabled(false);
+			status.setText("BUSY");
 		} else {
 			refreshButton.setText("Scan For Devices");
 			refreshButton.setToolTipText("Start looking for new devices");
@@ -153,6 +150,7 @@ public class BluetoothPanel extends JPanel implements ListCellRenderer<ExpandedR
 		deviceList.setCellRenderer(this);
 
 		console = new JTextArea();
+		console.setEditable(false);
 
 		JScrollPane deviceListScroller = new JScrollPane(deviceList);
 		JScrollPane consoleScroller = new JScrollPane(console);
@@ -233,13 +231,12 @@ public class BluetoothPanel extends JPanel implements ListCellRenderer<ExpandedR
 	}
 
 	public void localScan() {
-		
-		if (BluetoothSystem.isBusy()) {
-			stopAllScans();
-			return;
-		}
+
+		System.out.println("About to scan");
 
 		ExpandedRemoteDevice[] alreadyPaired = BluetoothSystem.pairedDevices();
+
+		System.out.println("Scan");
 
 		addToList(alreadyPaired);
 
@@ -267,10 +264,6 @@ public class BluetoothPanel extends JPanel implements ListCellRenderer<ExpandedR
 	}
 
 	public void remoteScan() {
-		if (BluetoothSystem.isBusy()) {
-			stopAllScans();
-			return;
-		}
 
 		ExpandedRemoteDevice[] newDevices = BluetoothSystem.discoverDevices();
 
@@ -293,15 +286,14 @@ public class BluetoothPanel extends JPanel implements ListCellRenderer<ExpandedR
 		System.out.println("Scan complete");
 	}
 
-	private void stopAllScans() {
-		BluetoothSystem.cancelAll();
-		System.out.println("Canceled all actions");
-	}
-
 	private void addToList(ExpandedRemoteDevice[] newDevices) {
+
+		System.out.println("adding");
 
 		DefaultListModel<ExpandedRemoteDevice> listModel = (DefaultListModel<ExpandedRemoteDevice>) deviceList
 				.getModel();
+
+		System.out.println("Got list model");
 
 		for (ExpandedRemoteDevice newDevice : newDevices) {
 
@@ -365,6 +357,8 @@ public class BluetoothPanel extends JPanel implements ListCellRenderer<ExpandedR
 			text.setToolTipText("This device does not support file transfers");
 			break;
 		}
+
+		text.setToolTipText(text.getToolTipText() + "\n" + value.getRemoteDevice());
 
 		if (isSelected) {
 			text.setBackground(text.getBackground().darker());

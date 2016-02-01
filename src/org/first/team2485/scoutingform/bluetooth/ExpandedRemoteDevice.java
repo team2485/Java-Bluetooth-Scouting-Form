@@ -33,6 +33,8 @@ public class ExpandedRemoteDevice {
 		this.remoteDevice = remoteDevice;
 
 		state = UNCHECKED_DEVICE;
+		
+		getName();
 	}
 	
 	public RemoteDevice getRemoteDevice() {

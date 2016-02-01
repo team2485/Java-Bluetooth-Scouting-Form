@@ -72,8 +72,13 @@ public class BluetoothActionListener implements ActionListener {
 				return;
 			}
 
-			BluetoothSystem.sendToDevice(bluetoothPanel.getSelectedDevice(), bluetoothPanel.getFileName(),
+			boolean result = BluetoothSystem.sendToDevice(bluetoothPanel.getSelectedDevice(), bluetoothPanel.getFileName(),
 					bluetoothPanel.getDataToSend());
+			
+			if (!result) {
+				System.out.println("***BLUETOOTH SEND FAILED***");
+				return;
+			}
 
 			bluetoothPanel.shutdownBluetooth();
 		}
