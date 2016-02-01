@@ -64,6 +64,10 @@ public class BluetoothSystem implements DiscoveryListener {
 			RemoteDevice[] devices = agent.retrieveDevices(DiscoveryAgent.PREKNOWN);
 
 			System.out.println("Has devices");
+			
+			if (devices == null) {
+				return new ExpandedRemoteDevice[0];
+			}
 
 			System.out.println("Raw Length: " + devices.length);
 
