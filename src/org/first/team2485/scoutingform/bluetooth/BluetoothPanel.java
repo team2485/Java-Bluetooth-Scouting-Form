@@ -53,21 +53,25 @@ public class BluetoothPanel extends JPanel implements ListCellRenderer<ExpandedR
 
 	private JLabel status;
 
-	private PrintStream oldPrintStream;
+	private PrintStream oldPrintStream, oldErrorStream;
 
 	private boolean stop;
 
 	public BluetoothPanel(String fileName, String dataToSend) {
 
 		oldPrintStream = System.out;
+		oldErrorStream = System.err;
 
-		System.setOut(new PrintStream(new OutputStream() {
+		PrintStream consoleStream = new PrintStream(new OutputStream() {
 
 			@Override
 			public void write(int b) throws IOException {
 				writeToConsole(((char) b) + "");
 			}
-		}));
+		});
+
+		System.setOut(consoleStream);
+		System.setErr(consoleStream);
 
 		this.fileName = fileName;
 		this.dataToSend = dataToSend;
@@ -370,6 +374,7 @@ public class BluetoothPanel extends JPanel implements ListCellRenderer<ExpandedR
 
 	public void shutdownBluetooth() {
 		System.setOut(oldPrintStream);
+		System.setErr(oldErrorStream);
 
 		stop = true;
 
