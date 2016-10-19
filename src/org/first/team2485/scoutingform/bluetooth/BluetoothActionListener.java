@@ -85,6 +85,6 @@ public class BluetoothActionListener implements ActionListener {
 	}
 
 	public static void startLocalScan() {
-		new SearchThread(true).start();;
+		new SearchThread(true).start();
 	}
 }

@@ -116,16 +116,19 @@ public class BluetoothPanel extends JPanel implements ListCellRenderer<ExpandedR
 
 		if (BluetoothSystem.isBusy()) {
 			refreshButton.setText("Please Wait");
-			refreshButton.setToolTipText("Stop scanning for new devices");
+			refreshButton.setToolTipText("Please wait...");
 
 			refreshButton.setEnabled(false);
+			
 			status.setText("BUSY");
+			status.setForeground(new Color(255, 128, 0));
 		} else {
 			refreshButton.setText("Scan For Devices");
 			refreshButton.setToolTipText("Start looking for new devices");
 
 			refreshButton.setEnabled(true);
 			status.setText("IDLE");
+			status.setForeground(new Color(0, 200, 0));
 		}
 	}
 
@@ -243,6 +246,7 @@ public class BluetoothPanel extends JPanel implements ListCellRenderer<ExpandedR
 		System.out.println("Scan");
 		
 		if (alreadyPaired.length == 0) {
+			System.out.println("Not currently paired");
 			return;
 		}
 

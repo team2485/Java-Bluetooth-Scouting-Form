@@ -1,5 +1,6 @@
 package org.first.team2485.scoutingform;
 
+import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 
 import javax.swing.BoxLayout;
@@ -7,9 +8,11 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
+import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import org.first.team2485.scoutingform.gui.LookAndFeelSelector;
 import org.first.team2485.scoutingform.questions.CheckboxQuestion;
 import org.first.team2485.scoutingform.questions.FreeResponseQuestion;
 import org.first.team2485.scoutingform.questions.MultipleChoiceQuestion;
@@ -31,10 +34,16 @@ public class ScoutingForm extends JPanel {
 
 	public ScoutingForm(ScoutingFormTab... tabs) {
 		frame = new JFrame();
-		frame.add(this);
+		
+		frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+		
+		JPanel outerPanel = new JPanel();
+		outerPanel.setLayout(new BorderLayout());
+		
+		frame.add(outerPanel);
 		frame.setSize(1000, 600);
 		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-
+		
 		this.tabbedPane = new JTabbedPane();
 		
 		this.tabs = tabs;
@@ -43,6 +52,9 @@ public class ScoutingForm extends JPanel {
 		}
 		
 		this.add(tabbedPane);
+		
+		outerPanel.add(this, BorderLayout.CENTER);
+		outerPanel.add(new LookAndFeelSelector(this), BorderLayout.WEST);
 
 		JPanel buttonPane = new JPanel();
 		buttonPane.setLayout(new FlowLayout());
@@ -50,7 +62,6 @@ public class ScoutingForm extends JPanel {
 		buttonPane.add(new QuitButton(this.frame));//this handles all quitting logic
 		buttonPane.add(new ClearButton(tabs, this.frame));
 		this.add(buttonPane);
-
 
 		frame.pack(); 
 		frame.setVisible(true);
@@ -139,5 +150,17 @@ public class ScoutingForm extends JPanel {
 		
 		new ScoutingForm(prematch, autonomous, teleop, ratings, misc);
 		
+	}
+	
+	public void setLookAndFeel(String laf) {
+		try {
+			UIManager.setLookAndFeel(laf);
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+				| UnsupportedLookAndFeelException e) {
+			e.printStackTrace();
+		}
+		SwingUtilities.updateComponentTreeUI(frame);
+		frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+		frame.pack();
 	}
 }

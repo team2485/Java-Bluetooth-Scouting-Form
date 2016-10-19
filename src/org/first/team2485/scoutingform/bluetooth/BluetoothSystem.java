@@ -120,7 +120,7 @@ public class BluetoothSystem implements DiscoveryListener {
 
 			System.out.println("Lock opened, waiting on timer");
 
-			Thread.sleep(2500);
+			Thread.sleep(5000);
 
 			System.out.println("Timer ended, reading...");
 
@@ -251,11 +251,28 @@ public class BluetoothSystem implements DiscoveryListener {
 	}
 
 	@Override
-	public void serviceSearchCompleted(int arg0, int arg1) {
+	public void serviceSearchCompleted(int transID, int result) {
+		
+		System.out.println("Service Search with id: " + transID + " has finished:");
 
-		System.out.println("Service Search Completed, unlocking");
-
-		System.out.println("Arg0: " + arg0 + " Arg1: " + arg1);
+		switch (result) {
+		
+		case SERVICE_SEARCH_COMPLETED:
+			System.out.println("Service Search Completed Sucessfully");
+			break;
+		case SERVICE_SEARCH_DEVICE_NOT_REACHABLE:
+			System.out.println("Service Search Failed: Device Not Reachable");
+			break;
+		case SERVICE_SEARCH_ERROR:
+			System.out.println("Service Search Failed: Unknown Error");
+			break;
+		case SERVICE_SEARCH_NO_RECORDS:
+			System.out.println("Service Search Failed: No Records");
+			break;
+		case SERVICE_SEARCH_TERMINATED:
+			System.out.println("Service Search Failed: Terminated");
+			break;
+		}
 
 		synchronized (lock) {
 			lock.notify();
@@ -265,9 +282,9 @@ public class BluetoothSystem implements DiscoveryListener {
 	@Override
 	public void servicesDiscovered(int transID, ServiceRecord[] servRecord) {
 
-		System.out.println("Services Discovered... -->");
+		System.out.println("Service Search with id " + transID + "has found a service");
 
-		System.out.println("Sevices Discovered: " + transID + " | Service Record: [");
+		System.out.println("Service(s) Discovered: [");
 
 		for (ServiceRecord sr : servRecord) {
 			System.out.println(sr.toString() + ", ");
@@ -291,7 +308,7 @@ public class BluetoothSystem implements DiscoveryListener {
 
 				if (serviceName.getValue().equals("OBEX Object Push")) {
 
-					System.out.println("Has Service, setting values");
+					System.out.println("Has OBEX Service, setting values");
 
 					currentDevice.state = ExpandedRemoteDevice.OBEX_SUPPORTED;
 					currentDevice.URL = url;
