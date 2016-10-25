@@ -3,9 +3,6 @@ package org.first.team2485.scoutingform.bluetooth;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Set;
 
 import javax.bluetooth.BluetoothStateException;
 import javax.bluetooth.DataElement;
@@ -22,8 +19,6 @@ import javax.obex.ClientSession;
 import javax.obex.HeaderSet;
 import javax.obex.Operation;
 
-import com.intel.bluetooth.RemoteDeviceHelper;
-
 /**
  * 
  * @author Nicholas Contreras
@@ -33,7 +28,7 @@ public class BluetoothSystem implements DiscoveryListener {
 
 	private static BluetoothSystem instance;
 
-	public static UUID OBEX = new UUID(0x1105); // OBEX Object Push service
+	public static UUID OBEX = new UUID(0x1106); // OBEX Object Push service
 
 	private static Object lock = new Object();
 
