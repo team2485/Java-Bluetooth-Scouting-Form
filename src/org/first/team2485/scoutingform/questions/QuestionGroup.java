@@ -2,11 +2,20 @@ package org.first.team2485.scoutingform.questions;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
+import javax.swing.JSeparator;
+import javax.swing.SwingConstants;
 
 import org.jdesktop.swingx.JXCollapsiblePane;
 
@@ -17,50 +26,58 @@ import org.jdesktop.swingx.JXCollapsiblePane;
  */
 @SuppressWarnings("serial")
 public class QuestionGroup extends Question {
-	 
-	JXCollapsiblePane pane;
-	JCheckBox checkbox;
-	Question[] questions;
-	
+
+	private final JXCollapsiblePane pane;
+	private final JCheckBox checkbox;
+	private final Question[] questions;
+
 	public QuestionGroup(String title, Question... questions) {
-		
+
 		this.setLayout(new BorderLayout());
-		
+
 		checkbox = new JCheckBox(title);
 		checkbox.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				update();
 			}
 		});
-		this.add(checkbox, BorderLayout.CENTER);
 		
+		Box b = new Box(BoxLayout.Y_AXIS);
+		b.add(checkbox);
+		JSeparator seperator = new JSeparator(SwingConstants.HORIZONTAL);
+		seperator.setMaximumSize(new Dimension(Integer.MAX_VALUE, 1) );
+		b.add(seperator);
+		this.add(b, BorderLayout.NORTH);
+
 		pane = new JXCollapsiblePane();
+		pane.setLayout(new BoxLayout(pane.getContentPane(), BoxLayout.Y_AXIS));
+		// pane.setLayout(new GridLayout(0, 1));
 		for (Question question : questions) {
+			question.setAlignmentX(Component.LEFT_ALIGNMENT);
 			pane.add(question);
 		}
 		pane.setCollapsed(true);
-		pane.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		
 		this.add(pane, BorderLayout.SOUTH);
+		
 		this.questions = questions;
 	}
-	
+
 	public void update() {
-		
 		pane.setCollapsed(!checkbox.isSelected());
-		
 	}
-	
+
 	@Override
 	public String getData() {
 		return "";
 	}
-	
+
 	@Override
 	public void clear() {
 		System.out.println(questions.length);
-		for(int i = 0; i < questions.length; i++) {
+		for (int i = 0; i < questions.length; i++) {
 			System.out.println(questions[i].getData());
 			questions[i].clear();
 		}

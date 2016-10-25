@@ -1,0 +1,133 @@
+package org.first.team2485.scoutingform.gui.addons;
+
+import java.awt.BorderLayout;
+import java.awt.Button;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.regex.Pattern;
+
+import javax.swing.ButtonGroup;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.LookAndFeel;
+import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
+import javax.swing.UnsupportedLookAndFeelException;
+
+import org.first.team2485.scoutingform.ScoutingForm;
+
+import com.alee.laf.WebLookAndFeel;
+import com.jtattoo.plaf.acryl.AcrylLookAndFeel;
+import com.jtattoo.plaf.aero.AeroLookAndFeel;
+import com.jtattoo.plaf.aluminium.AluminiumBorderFactory;
+import com.jtattoo.plaf.aluminium.AluminiumLookAndFeel;
+import com.jtattoo.plaf.bernstein.BernsteinLookAndFeel;
+import com.jtattoo.plaf.fast.FastLookAndFeel;
+import com.jtattoo.plaf.hifi.HiFiLookAndFeel;
+import com.jtattoo.plaf.luna.LunaLookAndFeel;
+import com.jtattoo.plaf.mcwin.McWinLookAndFeel;
+import com.jtattoo.plaf.mint.MintLookAndFeel;
+import com.jtattoo.plaf.noire.NoireLookAndFeel;
+import com.jtattoo.plaf.smart.SmartLookAndFeel;
+import com.jtattoo.plaf.texture.TextureLookAndFeel;
+import com.seaglasslookandfeel.SeaGlassLookAndFeel;
+
+import de.javasoft.plaf.synthetica.SyntheticaStandardLookAndFeel;
+import de.javasoft.util.java2d.Synthetica2DUtils;
+
+/**
+ * 
+ * @author Nicholas Contreras
+ *
+ */
+
+@SuppressWarnings("serial")
+public class LookAndFeelSelector extends JPanel implements ActionListener {
+	
+	private final LookAndFeelInfo[] looksAndFeelsInfos;
+	
+	private ScoutingForm form;
+	
+	public LookAndFeelSelector(ScoutingForm form) {
+		
+		this.form = form;
+		
+		JPanel buttonPanel = new JPanel(new GridLayout(0, 1));
+		this.add(buttonPanel);
+		setPreferredSize(new Dimension(200, 200));
+		
+		buttonPanel.add(new JLabel("Select A Theme"));
+		
+		addAdditonalLaFs();
+		
+		looksAndFeelsInfos = UIManager.getInstalledLookAndFeels();
+		
+		ButtonGroup buttonGroup = new ButtonGroup();
+		
+		for (LookAndFeelInfo cur : looksAndFeelsInfos) {
+			
+			System.out.println(cur.getClassName());
+			
+			String fullName = cur.getClassName();
+			
+			String shortName = fullName.substring(fullName.lastIndexOf(".") + 1, fullName.length());
+			
+			shortName = shortName.replaceFirst(Pattern.quote("LookAndFeel"), "");
+			
+			for (int i = 1; i < shortName.length(); i++) {
+				if (Character.isUpperCase(shortName.charAt(i))) {
+					shortName = shortName.substring(0, i) + " " + shortName.substring(i);
+					i++;
+				}
+			}
+			
+			JRadioButton radioButton = new JRadioButton(shortName);
+			radioButton.setToolTipText(fullName);
+			radioButton.addActionListener(this);
+			radioButton.setActionCommand(fullName);
+			
+			buttonGroup.add(radioButton);
+			buttonPanel.add(radioButton, BorderLayout.CENTER);
+			
+			if (fullName.contains(UIManager.getLookAndFeel().getClass().getName())) {
+				buttonGroup.setSelected(radioButton.getModel(), true);
+			}
+		}
+		repaint();
+	}
+	
+	@Override
+	protected void paintComponent(Graphics g) {
+		
+	}
+	
+	private void addAdditonalLaFs() {
+		UIManager.installLookAndFeel("Web", WebLookAndFeel.class.getCanonicalName());
+		UIManager.installLookAndFeel("Sea Glass", SeaGlassLookAndFeel.class.getCanonicalName());
+		UIManager.installLookAndFeel("Synthetica", SyntheticaStandardLookAndFeel.class.getCanonicalName());
+		UIManager.installLookAndFeel("Acryl", AcrylLookAndFeel.class.getCanonicalName());
+		UIManager.installLookAndFeel("Fast", FastLookAndFeel.class.getCanonicalName());
+		UIManager.installLookAndFeel("Bernstein", BernsteinLookAndFeel.class.getCanonicalName());
+		UIManager.installLookAndFeel("Aluminium", AluminiumLookAndFeel.class.getCanonicalName());
+		UIManager.installLookAndFeel("Aero", AeroLookAndFeel.class.getCanonicalName());
+		UIManager.installLookAndFeel("HiFi", HiFiLookAndFeel.class.getCanonicalName());
+		UIManager.installLookAndFeel("McWin", McWinLookAndFeel.class.getCanonicalName());
+		UIManager.installLookAndFeel("Mint", MintLookAndFeel.class.getCanonicalName());
+		UIManager.installLookAndFeel("Noire", NoireLookAndFeel.class.getCanonicalName());
+		UIManager.installLookAndFeel("Smart", SmartLookAndFeel.class.getCanonicalName());
+		UIManager.installLookAndFeel("Luna", LunaLookAndFeel.class.getCanonicalName());
+		UIManager.installLookAndFeel("Texture", TextureLookAndFeel.class.getCanonicalName());
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		
+		if (e.getSource() instanceof JRadioButton) {
+			form.setLookAndFeel(e.getActionCommand());
+		}
+	}
+}

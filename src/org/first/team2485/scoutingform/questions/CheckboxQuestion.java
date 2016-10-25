@@ -16,7 +16,7 @@ public class CheckboxQuestion extends Question {
 	
 	public CheckboxQuestion(String prompt, String... options) {
 		
-		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+//		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 		
 		promptLabel = new JLabel(prompt);
 		this.add(promptLabel);

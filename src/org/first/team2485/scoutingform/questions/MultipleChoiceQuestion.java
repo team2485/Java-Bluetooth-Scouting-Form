@@ -1,7 +1,16 @@
 package org.first.team2485.scoutingform.questions;
+import java.awt.Component;
+import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.GridLayout;
+
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.SwingConstants;
 
 /**
  * 
@@ -17,14 +26,24 @@ public class MultipleChoiceQuestion extends Question {
 	JRadioButton[] optionButtons;
 	
 	public MultipleChoiceQuestion(String prompt, String... options) {
+		
 		promptLabel = new JLabel(prompt);
 		this.add(promptLabel);
 		
+//		this.add(Box.createRigidArea(new Dimension(10, 0)));
+//		this.add(Box.createHorizontalGlue());
+//		this.add(Box.createRigidArea(new Dimension(10, 0)));
+		
 		optionButtonGroup = new ButtonGroup();
+		
+		JPanel c = new JPanel();
+		c.setLayout(new BoxLayout(c, BoxLayout.X_AXIS));
+		c.setAlignmentX(Component.RIGHT_ALIGNMENT);
 		
 		optionButtons = new JRadioButton[options.length];
 		for (int i = 0; i < options.length; i++) {
-			optionButtons[i] = new JRadioButton(options[i]);		
+			optionButtons[i] = new JRadioButton(options[i]);
+//			optionButtons[i].setAlignmentX(Component.RIGHT_ALIGNMENT);
 			this.add(optionButtons[i]);
 			optionButtonGroup.add(optionButtons[i]);
 		}
