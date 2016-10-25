@@ -1,9 +1,12 @@
 package org.first.team2485.scoutingform.questions;
+import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 
+import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -35,10 +38,6 @@ public class MultipleChoiceQuestion extends Question {
 //		this.add(Box.createRigidArea(new Dimension(10, 0)));
 		
 		optionButtonGroup = new ButtonGroup();
-		
-		JPanel c = new JPanel();
-		c.setLayout(new BoxLayout(c, BoxLayout.X_AXIS));
-		c.setAlignmentX(Component.RIGHT_ALIGNMENT);
 		
 		optionButtons = new JRadioButton[options.length];
 		for (int i = 0; i < options.length; i++) {

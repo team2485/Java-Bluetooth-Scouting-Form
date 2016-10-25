@@ -58,7 +58,6 @@ public class LookAndFeelSelector extends JPanel implements ActionListener {
 		
 		JPanel buttonPanel = new JPanel(new GridLayout(0, 1));
 		this.add(buttonPanel);
-		setPreferredSize(new Dimension(200, 200));
 		
 		buttonPanel.add(new JLabel("Select A Theme"));
 		
@@ -69,8 +68,6 @@ public class LookAndFeelSelector extends JPanel implements ActionListener {
 		ButtonGroup buttonGroup = new ButtonGroup();
 		
 		for (LookAndFeelInfo cur : looksAndFeelsInfos) {
-			
-			System.out.println(cur.getClassName());
 			
 			String fullName = cur.getClassName();
 			
@@ -98,11 +95,6 @@ public class LookAndFeelSelector extends JPanel implements ActionListener {
 			}
 		}
 		repaint();
-	}
-	
-	@Override
-	protected void paintComponent(Graphics g) {
-		
 	}
 	
 	private void addAdditonalLaFs() {

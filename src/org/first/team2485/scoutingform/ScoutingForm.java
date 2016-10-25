@@ -12,6 +12,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
+import org.first.team2485.scoutingform.gui.QuestionAligner;
 import org.first.team2485.scoutingform.gui.QuestionSeperator;
 import org.first.team2485.scoutingform.gui.addons.LookAndFeelSelector;
 import org.first.team2485.scoutingform.questions.CheckboxQuestion;
@@ -38,8 +39,8 @@ public class ScoutingForm extends JPanel {
 		
 		JPanel outerPanel = new JPanel();
 		outerPanel.setLayout(new BorderLayout());
-		
 		frame.add(outerPanel);
+		
 		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 		
 		this.tabbedPane = new JTabbedPane();
@@ -52,7 +53,7 @@ public class ScoutingForm extends JPanel {
 		this.add(tabbedPane);
 		
 		outerPanel.add(this, BorderLayout.CENTER);
-		outerPanel.add(new LookAndFeelSelector(this), BorderLayout.WEST);
+		outerPanel.add(new JScrollPane(new LookAndFeelSelector(this)), BorderLayout.WEST);
 
 		JPanel buttonPane = new JPanel();
 		buttonPane.setLayout(new FlowLayout());
@@ -63,7 +64,7 @@ public class ScoutingForm extends JPanel {
 
 		frame.pack(); 
 		frame.setVisible(true);
-		this.repaint(); 
+		frame.repaint(); 
 		
 	}
 
@@ -133,17 +134,19 @@ public class ScoutingForm extends JPanel {
 			new SpinnerQuestion("How many low goals did they make?"),
 			new SpinnerQuestion("How many low goals did they miss?"),
 			new QuestionSeperator(),
-			new MultipleChoiceQuestion("Did they...", "Challenge", "Scale", "Neither")
+			new MultipleChoiceQuestion("End Game State:", "Challenge", "Scale", "Neither")
 		);
 		
-		ScoutingFormTab postMatch = new ScoutingFormTab("Post Match", 
-			new MultipleChoiceQuestion("Speed", "Snail", "Slow", "Average", "Speedy", "Lightning"),
-			new MultipleChoiceQuestion("Manueverability", "Sluggish", "Unresponsive", "Average" , "Responsive", "Nimble"),
-			new MultipleChoiceQuestion("Shooter Repeatability", "Unreliable", "Sketchy", "Average", "Consistent", "Reliable", "N/A"), 
-			new MultipleChoiceQuestion("Shooter Speed", "Snail", "Slow", "Average", "Speedy", "Lightning", "N/A"),
-			new MultipleChoiceQuestion("Defense", "Shitty", "Decent", "Average", "Good", "Badass", "N/A"), 
-			new MultipleChoiceQuestion("Defense Evasion", "Shitty", "Decent", "Average", "Good", "Badass", "N/A"), 
-			new MultipleChoiceQuestion("Overall Impression", "Shitty", "Decent", "Average", "Good", "Badass"),
+		ScoutingFormTab postMatch = new ScoutingFormTab("Post Match",
+			new QuestionAligner(
+				new MultipleChoiceQuestion("Speed", "Snail", "Slow", "Average", "Speedy", "Lightning", "N/A"),
+				new MultipleChoiceQuestion("Manueverability", "Sluggish", "Unresponsive", "Average" , "Responsive", "Nimble", "N/A"),
+				new MultipleChoiceQuestion("Shooter Repeatability", "Unreliable", "Sketchy", "Average", "Consistent", "Reliable", "N/A"), 
+				new MultipleChoiceQuestion("Shooter Speed", "Snail", "Slow", "Average", "Speedy", "Lightning", "N/A"),
+				new MultipleChoiceQuestion("Defense", "Shitty", "Decent", "Average", "Good", "Badass", "N/A"), 
+				new MultipleChoiceQuestion("Defense Evasion", "Shitty", "Decent", "Average", "Good", "Badass", "N/A"), 
+				new MultipleChoiceQuestion("Overall Impression", "Shitty", "Decent", "Average", "Good", "Badass", "N/A")
+			),
 			new SpinnerQuestion("How many tech fouls did they get?"),
 			new SpinnerQuestion("How many other fouls did they get?"),
 			new CheckboxQuestion("What role(s) did they play?", "Shooter", "Breacher", "Defender", "Support"),

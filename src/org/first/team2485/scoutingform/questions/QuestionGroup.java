@@ -60,7 +60,7 @@ public class QuestionGroup extends Question {
 		}
 		pane.setCollapsed(true);
 		
-		this.add(pane, BorderLayout.SOUTH);
+		this.add(pane, BorderLayout.CENTER);
 		
 		this.questions = questions;
 	}

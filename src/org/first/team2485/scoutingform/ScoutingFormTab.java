@@ -66,7 +66,4 @@ public class ScoutingFormTab extends JPanel {
 			questions[i].clear();
 		}
 	}
-	
-	
-	
 }
