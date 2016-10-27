@@ -1,17 +1,9 @@
 package org.first.team2485.scoutingform;
 import java.awt.Component;
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
-import java.util.ArrayList;
 
-import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
-import javax.swing.JSeparator;
-import javax.swing.SwingConstants;
 
 import org.first.team2485.scoutingform.questions.Question;
 
@@ -27,22 +19,17 @@ public class ScoutingFormTab extends JPanel {
 	private Question[] questions;
 	private String name;
 
-	public ScoutingFormTab(String name, JComponent... items) {
+	public ScoutingFormTab(String name, Question... questions) {
 		
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		
 		this.name = name;
-		
-		ArrayList<Question> questionAL = new ArrayList<Question>();
 
-		for (JComponent item : items) {
+		for (JComponent item : questions) {
 			item.setAlignmentX(Component.LEFT_ALIGNMENT);
 			this.add(item);
-			if (item instanceof Question) {
-				questionAL.add((Question) item);
-			}
 		}
-		questions = questionAL.toArray(new Question[0]);
+		this.questions = questions;
 	}
 	
 	public String getName() {

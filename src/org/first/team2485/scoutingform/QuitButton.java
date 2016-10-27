@@ -1,6 +1,5 @@
 package org.first.team2485.scoutingform;
 
-import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -10,14 +9,11 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-import org.first.team2485.scoutingform.bluetooth.BluetoothPanel;
-
 /**
  * 
  * @author Troy Appel
  *
  */
-//test
 @SuppressWarnings("serial")
 public class QuitButton extends JButton {
 	

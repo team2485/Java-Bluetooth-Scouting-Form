@@ -1,5 +1,4 @@
 package org.first.team2485.scoutingform.questions;
-import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 
@@ -11,12 +10,14 @@ import javax.swing.JLabel;
 @SuppressWarnings("serial")
 public class CheckboxQuestion extends Question {
 		
-	JLabel promptLabel;
-	JCheckBox[] checkboxes;
+	private JLabel promptLabel;
+	private JCheckBox[] checkboxes;
 	
-	public CheckboxQuestion(String prompt, String... options) {
+	private String internalName;
+	
+	public CheckboxQuestion(String prompt, String internalName, String... options) {
 		
-//		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+		this.internalName = internalName;
 		
 		promptLabel = new JLabel(prompt);
 		this.add(promptLabel);
@@ -29,10 +30,13 @@ public class CheckboxQuestion extends Question {
 	}
 	
 	public String getData() {
-		String data = "";
+		String data = internalName + ",";
 		for (int i = 0; i < checkboxes.length; i++) {
-			data += checkboxes[i].isSelected() ? "1," : "0,";
+			data += checkboxes[i].isSelected() ? "1^" : "0^";
 		}
+		
+		data = data.substring(0, data.length() - 1) + ",";
+		
 		return data;
 	}
 	

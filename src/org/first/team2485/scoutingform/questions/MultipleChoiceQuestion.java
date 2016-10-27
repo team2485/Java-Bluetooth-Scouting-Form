@@ -1,34 +1,25 @@
 package org.first.team2485.scoutingform.questions;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.GridLayout;
-
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-import javax.swing.SwingConstants;
 
 /**
  * 
  * @author Jeremy McCulloch
  *
  */
+@SuppressWarnings("serial")
 public class MultipleChoiceQuestion extends Question {
 	
-	private static final long serialVersionUID = -3014924975352089209L;
+	private JLabel promptLabel;
+	private ButtonGroup optionButtonGroup;
+	private JRadioButton[] optionButtons;
 	
-	JLabel promptLabel;
-	ButtonGroup optionButtonGroup;
-	JRadioButton[] optionButtons;
+	private String internalName;
 	
-	public MultipleChoiceQuestion(String prompt, String... options) {
+	public MultipleChoiceQuestion(String prompt, String internalName, String... options) {
+		
+		this.internalName = internalName;
 		
 		promptLabel = new JLabel(prompt);
 		this.add(promptLabel);
@@ -51,10 +42,10 @@ public class MultipleChoiceQuestion extends Question {
 	public String getData() {
 		for (int i = 0; i < optionButtons.length; i++) {
 			if (optionButtons[i].isSelected()) {
-				return i + ",";
+				return internalName + "," + i + ",";
 			}
 		}
-		return "-1,";
+		return internalName + "," + "-1,";
 	}
 	public void clear() {
 		optionButtonGroup.clearSelection();

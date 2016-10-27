@@ -1,17 +1,8 @@
 package org.first.team2485.scoutingform.questions;
-import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JComponent;
-import javax.swing.JPanel;
-
 import org.first.team2485.scoutingform.gui.LockedSizeJPanel;
-import org.first.team2485.scoutingform.gui.QuestionAligner;
 
 /**
  * 

@@ -1,12 +1,9 @@
 package org.first.team2485.scoutingform.bluetooth;
 
 import java.awt.BorderLayout;
-import java.awt.Button;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.GridLayout;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
@@ -19,16 +16,12 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ListCellRenderer;
-import javax.swing.ListModel;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.text.DefaultCaret;
 
 import org.first.team2485.scoutingform.QuitButton;
@@ -40,6 +33,7 @@ import org.first.team2485.scoutingform.ScoutingForm;
  *
  */
 
+@SuppressWarnings("serial")
 public class BluetoothPanel extends JPanel implements ListCellRenderer<ExpandedRemoteDevice> {
 
 	private JFrame frame;
@@ -127,6 +121,7 @@ public class BluetoothPanel extends JPanel implements ListCellRenderer<ExpandedR
 			refreshButton.setToolTipText("Start looking for new devices");
 
 			refreshButton.setEnabled(true);
+			
 			status.setText("IDLE");
 			status.setForeground(new Color(0, 200, 0));
 		}
@@ -276,8 +271,12 @@ public class BluetoothPanel extends JPanel implements ListCellRenderer<ExpandedR
 	}
 
 	public void remoteScan() {
+		
+		System.out.println("Beginning remote scan");
 
 		ExpandedRemoteDevice[] newDevices = BluetoothSystem.discoverDevices();
+		
+		System.out.println("Remote scaan finished");
 		
 		if (newDevices.length == 0) {
 			return;
@@ -389,9 +388,9 @@ public class BluetoothPanel extends JPanel implements ListCellRenderer<ExpandedR
 		System.setErr(oldErrorStream);
 
 		stop = true;
-
-		ScoutingForm.main(null); // Open up another form
-
+		
 		frame.dispose();
+
+		ScoutingForm.displayForm(); // Open up another form
 	}
 }

@@ -1,16 +1,11 @@
 package org.first.team2485.scoutingform.questions;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Timer;
-import java.util.TimerTask;
 
-import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
@@ -48,7 +43,7 @@ public class QuestionGroup extends Question {
 		b.add(checkbox);
 		JSeparator seperator = new JSeparator(SwingConstants.HORIZONTAL);
 		seperator.setMaximumSize(new Dimension(Integer.MAX_VALUE, 1) );
-		b.add(seperator);
+//		b.add(seperator);
 		this.add(b, BorderLayout.NORTH);
 
 		pane = new JXCollapsiblePane();
@@ -71,7 +66,14 @@ public class QuestionGroup extends Question {
 
 	@Override
 	public String getData() {
-		return "";
+		
+		String data = "";
+		
+		for (Question q :  questions) {
+			data += q.getData() + ",";
+		}
+		
+		return data;
 	}
 
 	@Override

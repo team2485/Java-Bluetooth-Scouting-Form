@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 * @author Nicholas Contreras
 */
 
+@SuppressWarnings("serial")
 public class LockedSizeJPanel extends JPanel {
 	
 	public Dimension getMaximumSize() {

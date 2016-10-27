@@ -1,15 +1,8 @@
 package org.first.team2485.scoutingform.bluetooth;
 
-import java.awt.Color;
-import java.awt.Component;
 import java.io.IOException;
 
 import javax.bluetooth.RemoteDevice;
-import javax.swing.JComponent;
-import javax.swing.JList;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.ListCellRenderer;
 
 /**
  * 

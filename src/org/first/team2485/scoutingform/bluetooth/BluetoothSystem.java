@@ -18,6 +18,7 @@ import javax.microedition.io.Connector;
 import javax.obex.ClientSession;
 import javax.obex.HeaderSet;
 import javax.obex.Operation;
+import javax.obex.ResponseCodes;
 
 /**
  * 
@@ -28,7 +29,7 @@ public class BluetoothSystem implements DiscoveryListener {
 
 	private static BluetoothSystem instance;
 
-	public static UUID OBEX = new UUID(0x1106); // OBEX Object Push service
+	public static UUID OBEX = new UUID(0x1105); // OBEX Object Push service
 
 	private static Object lock = new Object();
 
@@ -59,8 +60,9 @@ public class BluetoothSystem implements DiscoveryListener {
 			RemoteDevice[] devices = agent.retrieveDevices(DiscoveryAgent.PREKNOWN);
 
 			System.out.println("Has devices");
-			
+
 			if (devices == null) {
+				isBusy = false;
 				return new ExpandedRemoteDevice[0];
 			}
 
@@ -120,7 +122,7 @@ public class BluetoothSystem implements DiscoveryListener {
 			System.out.println("Timer ended, reading...");
 
 			RemoteDevice[] devices = agent.retrieveDevices(DiscoveryAgent.CACHED);
-			
+
 			if (devices == null) {
 				System.out.println("No devices found, returning empty");
 				return new ExpandedRemoteDevice[0];
@@ -131,16 +133,16 @@ public class BluetoothSystem implements DiscoveryListener {
 			ArrayList<ExpandedRemoteDevice> arrayList = new ArrayList<ExpandedRemoteDevice>();
 
 			for (RemoteDevice device : devices) {
-				
+
 				ExpandedRemoteDevice newDevice = new ExpandedRemoteDevice(device);
-				
+
 				System.out.println("Device Found: " + newDevice.getName());
-				
+
 				arrayList.add(newDevice);
 			}
 
 			for (int i = 0; i < arrayList.size(); i++) {
-				
+
 				if (arrayList.get(i) == null || arrayList.get(i).getName().length() < 2) {
 					arrayList.remove(i);
 					i--;
@@ -149,7 +151,7 @@ public class BluetoothSystem implements DiscoveryListener {
 
 			ExpandedRemoteDevice[] expandedDevices = arrayList.toArray(new ExpandedRemoteDevice[arrayList.size()]);
 
-			System.out.println("Device Inquiry Completed. ");
+			System.out.println("Device Inquiry Completed.");
 
 			isBusy = false;
 
@@ -166,7 +168,6 @@ public class BluetoothSystem implements DiscoveryListener {
 
 	@Override
 	public void deviceDiscovered(RemoteDevice btDevice, DeviceClass arg1) {
-
 	}
 
 	@Override
@@ -184,7 +185,7 @@ public class BluetoothSystem implements DiscoveryListener {
 
 		UUID[] uuidSet = new UUID[] { service };
 
-		int[] attrIDs = new int[] { 0x0100 }; // Service name
+		int[] attrIDs = new int[] { 0x0100 }; // Service name (0x0100)
 
 		currentDevice = device;
 
@@ -207,7 +208,7 @@ public class BluetoothSystem implements DiscoveryListener {
 
 			agent.searchServices(attrIDs, uuidSet, device.getRemoteDevice(), getInstance());
 
-			System.out.println("Started Search...");
+			System.out.println("Started Search on: " + device.getRemoteDevice());
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -242,16 +243,15 @@ public class BluetoothSystem implements DiscoveryListener {
 		}
 
 		isBusy = false;
-
 	}
 
 	@Override
 	public void serviceSearchCompleted(int transID, int result) {
-		
+
 		System.out.println("Service Search with id: " + transID + " has finished:");
 
 		switch (result) {
-		
+
 		case SERVICE_SEARCH_COMPLETED:
 			System.out.println("Service Search Completed Sucessfully");
 			break;
@@ -282,7 +282,7 @@ public class BluetoothSystem implements DiscoveryListener {
 		System.out.println("Service(s) Discovered: [");
 
 		for (ServiceRecord sr : servRecord) {
-			System.out.println(sr.toString() + ", ");
+			System.out.println(sr.toString() + " [[NEXT SERVICE]] ");
 		}
 
 		System.out.println("]");
@@ -298,12 +298,22 @@ public class BluetoothSystem implements DiscoveryListener {
 
 			DataElement serviceName = servRecord[i].getAttributeValue(0x0100);
 
+			System.out.println("Service: " + serviceName);
+
 			if (serviceName != null) {
-				System.out.println("Service: " + serviceName.getValue() + " Found: " + url);
+				
+				System.out.println("Service Data Type: " + serviceName.getDataType());
+				
+				System.out.println("Service URL: " + url);
 
-				if (serviceName.getValue().equals("OBEX Object Push")) {
+				System.out.println("Service Name: " + serviceName.getValue());
 
-					System.out.println("Has OBEX Service, setting values");
+				System.out.println("Is PIM: " + ((String) serviceName.getValue()).equals("PIM Item Transfer"));
+
+				if (serviceName.getValue().equals("OBEX Object Push")
+						|| serviceName.getValue().equals("PIM Item Transfer")) {
+
+					System.out.println("Has OBEX/PIM Service, setting values");
 
 					currentDevice.state = ExpandedRemoteDevice.OBEX_SUPPORTED;
 					currentDevice.URL = url;
@@ -311,7 +321,7 @@ public class BluetoothSystem implements DiscoveryListener {
 					return;
 				}
 			} else {
-				System.out.println("Service Found: " + url);
+				System.out.println("Null Service Found: " + url);
 			}
 		}
 
@@ -335,11 +345,17 @@ public class BluetoothSystem implements DiscoveryListener {
 				// Send a request to the server to open a connection
 				connection = Connector.open(serverURL);
 				cs = (ClientSession) connection;
-				cs.connect(null);
+				HeaderSet hsConnectReply = cs.connect(null);
+
+				if (hsConnectReply.getResponseCode() != ResponseCodes.OBEX_HTTP_OK) {
+					System.out.println("Failed to connect: " + hsConnectReply);
+					return false;
+				}
 
 				System.out.println("OPP session created");
 
 				// Send a file with meta data to the server
+				System.out.println("Data: " + dataToSend);
 				final byte filebytes[] = dataToSend.getBytes();
 				final HeaderSet hs = cs.createHeaderSet();
 				hs.setHeader(HeaderSet.NAME, fileName);

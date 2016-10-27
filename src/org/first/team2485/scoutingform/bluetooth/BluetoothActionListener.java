@@ -56,6 +56,8 @@ public class BluetoothActionListener implements ActionListener {
 			} else {
 				bluetoothPanel.remoteScan();
 			}
+			
+			System.out.println("Exiting scan thread");
 		}
 	}
 
@@ -80,7 +82,7 @@ public class BluetoothActionListener implements ActionListener {
 				return;
 			}
 
-			bluetoothPanel.shutdownBluetooth();
+//			bluetoothPanel.shutdownBluetooth();
 		}
 	}
 

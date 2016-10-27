@@ -1,5 +1,4 @@
 package org.first.team2485.scoutingform.questions;
-import javax.swing.ButtonGroup;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
 
@@ -11,11 +10,15 @@ import javax.swing.JTextArea;
 @SuppressWarnings("serial")
 public class FreeResponseQuestion extends Question {
 		
-	JLabel promptLabel;
-	ButtonGroup optionButtonGroup;
-	JTextArea area;
+	private JLabel promptLabel;
+	private JTextArea area;
 	
-	public FreeResponseQuestion(String prompt) {
+	private String internalName;
+	
+	public FreeResponseQuestion(String prompt, String internalName) {
+		
+		this.internalName = internalName;
+		
 		promptLabel = new JLabel(prompt);
 		this.add(promptLabel);
 		
@@ -24,7 +27,7 @@ public class FreeResponseQuestion extends Question {
 	}
 	
 	public String getData() {
-		return "\"" + area.getText() + "\",";
+		return internalName + ",\"" + area.getText() + "\",";
 	}
 	public void clear() {
 		this.area.setText("");

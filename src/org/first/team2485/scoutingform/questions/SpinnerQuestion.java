@@ -1,9 +1,8 @@
 package org.first.team2485.scoutingform.questions;
-import javax.swing.ButtonGroup;
 import javax.swing.JLabel;
 import javax.swing.JSpinner;
-import javax.swing.SpinnerNumberModel;
 import javax.swing.JSpinner.DefaultEditor;
+import javax.swing.SpinnerNumberModel;
 
 /**
  * 
@@ -13,11 +12,14 @@ import javax.swing.JSpinner.DefaultEditor;
 @SuppressWarnings("serial")
 public class SpinnerQuestion extends Question{
 		
-	JLabel promptLabel;
-	ButtonGroup optionButtonGroup;
-	JSpinner spinner;
+	private JLabel promptLabel;
+	private JSpinner spinner;
 	
-	public SpinnerQuestion(String prompt) {
+	private String internalName;
+	
+	public SpinnerQuestion(String prompt, String internalName) {
+		
+		this.internalName = internalName;
 		
 		promptLabel = new JLabel(prompt);
 		this.add(promptLabel);
@@ -29,9 +31,7 @@ public class SpinnerQuestion extends Question{
 	}
 	
 	public String getData() {
-		
-		return (int) spinner.getValue() + ",";
-		
+		return internalName + "," + ((int) spinner.getValue()) + ",";	
 	}
 	
 	public void clear() {
