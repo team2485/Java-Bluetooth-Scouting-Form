@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
 
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -373,11 +374,14 @@ public class BluetoothPanel extends JPanel implements ListCellRenderer<ExpandedR
 			break;
 		}
 
-		text.setToolTipText(text.getToolTipText() + "\n" + value.getRemoteDevice());
+		text.setToolTipText("Address: " + value.getRemoteDevice() + " Status: " + text.getToolTipText());
 
 		if (isSelected) {
-			text.setBackground(text.getBackground().darker());
+//			text.setBackground(text.getBackground().darker());
 			text.setText(text.getText() + " <--- SELECTED");
+			text.setBorder(BorderFactory.createLoweredBevelBorder());
+		} else {
+			text.setBorder(BorderFactory.createRaisedBevelBorder());
 		}
 
 		return text;

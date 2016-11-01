@@ -15,6 +15,7 @@ import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 
 import org.first.team2485.scoutingform.ScoutingForm;
+import org.first.team2485.scoutingform.gui.LockedSizeJPanel;
 
 import com.alee.laf.WebLookAndFeel;
 import com.jtattoo.plaf.acryl.AcrylLookAndFeel;
@@ -40,7 +41,7 @@ import de.javasoft.plaf.synthetica.SyntheticaStandardLookAndFeel;
  */
 
 @SuppressWarnings("serial")
-public class LookAndFeelSelector extends JPanel implements ActionListener {
+public class LookAndFeelSelector extends LockedSizeJPanel implements ActionListener {
 
 	private final LookAndFeelInfo[] looksAndFeelsInfos;
 

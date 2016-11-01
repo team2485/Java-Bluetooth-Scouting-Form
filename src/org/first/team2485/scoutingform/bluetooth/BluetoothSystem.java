@@ -277,7 +277,7 @@ public class BluetoothSystem implements DiscoveryListener {
 	@Override
 	public void servicesDiscovered(int transID, ServiceRecord[] servRecord) {
 
-		System.out.println("Service Search with id " + transID + "has found a service");
+		System.out.println("Service Search with id " + transID + " has found a service");
 
 		System.out.println("Service(s) Discovered: [");
 
@@ -308,10 +308,10 @@ public class BluetoothSystem implements DiscoveryListener {
 
 				System.out.println("Service Name: " + serviceName.getValue());
 
-				System.out.println("Is PIM: " + ((String) serviceName.getValue()).equals("PIM Item Transfer"));
+				System.out.println("Is PIM: " + ( serviceName.getValue().toString()).contains("PIM Item Transfer"));
 
 				if (serviceName.getValue().equals("OBEX Object Push")
-						|| serviceName.getValue().equals("PIM Item Transfer")) {
+						|| serviceName.getValue().toString().contains("PIM Item Transfer")) {
 
 					System.out.println("Has OBEX/PIM Service, setting values");
 

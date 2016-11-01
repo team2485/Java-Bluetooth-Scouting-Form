@@ -11,7 +11,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
+import org.first.team2485.scoutingform.gui.LockedSizeJPanel;
 import org.first.team2485.scoutingform.gui.addons.LookAndFeelSelector;
 import org.first.team2485.scoutingform.questions.CheckboxQuestion;
 import org.first.team2485.scoutingform.questions.FreeResponseQuestion;
@@ -28,7 +30,7 @@ import org.first.team2485.scoutingform.questions.SpinnerQuestion;
  *
  */
 @SuppressWarnings("serial")
-public class ScoutingForm extends JPanel {
+public class ScoutingForm extends LockedSizeJPanel {
 	
 	public static ScoutingForm scoutingForm;
   
@@ -107,8 +109,8 @@ public class ScoutingForm extends JPanel {
 			ScoutingFormTab postMatch = new ScoutingFormTab("Post Match",
 				new QuestionAligner(
 					new MultipleChoiceQuestion("Intake Speed", "intakeSpeed", "Snail", "Slow", "Average", "Speedy", "Lightning", "N/A"),
-					new MultipleChoiceQuestion("Manueverability", "manueverability", "Sluggish", "Unresponsive"/*, "Average" , "Responsive", "Nimble"*/),
-					new MultipleChoiceQuestion("Shooter Repeatability", "shooterRepeat", "Unreliable"/*, "Sketchy", "Average", "Consistent", "Reliable", "N/A"*/), 
+					new MultipleChoiceQuestion("Manueverability", "manueverability", "Sluggish", "Unresponsive", "Average" , "Responsive", "Nimble"),
+					new MultipleChoiceQuestion("Shooter Repeatability", "shooterRepeat", "Unreliable", "Sketchy", "Average", "Consistent", "Reliable", "N/A"), 
 					new MultipleChoiceQuestion("Shooter Speed", "shooterSpeed", "Snail", "Slow", "Average", "Speedy", "Lightning", "N/A"),
 					new MultipleChoiceQuestion("Defense", "defence", "Shitty", "Decent", "Average", "Good", "Badass", "N/A"), 
 					new MultipleChoiceQuestion("Defense Evasion", "defenceEvade", "Shitty", "Decent", "Average", "Good", "Badass", "N/A"), 
@@ -151,10 +153,17 @@ public class ScoutingForm extends JPanel {
 		JPanel buttonPane = new JPanel();
 		buttonPane.setLayout(new FlowLayout());
 		buttonPane.add(new SubmitButton(this));
-		buttonPane.add(new QuitButton(this.frame));//this handles all quitting logic
+		buttonPane.add(new QuitButton(this.frame));// this handles all quitting logic
 		buttonPane.add(new ClearButton(tabs, this.frame));
 		this.add(buttonPane);
 
+		try {
+			UIManager.setLookAndFeel(UIManager.getLookAndFeel());
+		} catch (UnsupportedLookAndFeelException e) {
+			e.printStackTrace();
+		}
+		SwingUtilities.updateComponentTreeUI(frame);
+		
 		frame.pack(); 
 		frame.setVisible(true);
 		frame.repaint(); 
@@ -170,7 +179,6 @@ public class ScoutingForm extends JPanel {
 		}
 
 		return output;
-
 	}
 	
 	public JFrame getFrame() {
@@ -178,20 +186,16 @@ public class ScoutingForm extends JPanel {
 	}
 
 	public void setLookAndFeel(String laf) {
-		
-		
 		try {
 			UIManager.setLookAndFeel(Class.forName(laf).newInstance().getClass().getCanonicalName());
 			SwingUtilities.updateComponentTreeUI(frame);
 			frame.pack();
 		} catch (Exception e) {
-//			e.printStackTrace();
 			JOptionPane.showMessageDialog(null, "Something went very wrong loading that theme");
 		}
 	}
 	
 	public void restart() {
-		
 		frame.dispose();
 		displayForm();
 	}
