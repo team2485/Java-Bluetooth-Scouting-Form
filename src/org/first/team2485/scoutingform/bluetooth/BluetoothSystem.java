@@ -20,6 +20,9 @@ import javax.obex.HeaderSet;
 import javax.obex.Operation;
 import javax.obex.ResponseCodes;
 
+import com.intel.bluetooth.BlueCoveConfigProperties;
+import com.intel.bluetooth.BlueCoveImpl;
+
 /**
  * 
  * @author Nicholas Contreras
@@ -42,6 +45,8 @@ public class BluetoothSystem implements DiscoveryListener {
 
 		if (instance == null) {
 			instance = new BluetoothSystem();
+			BlueCoveImpl.setConfigProperty(BlueCoveConfigProperties.PROPERTY_CONNECT_TIMEOUT, "10000");
+			BlueCoveImpl.setConfigProperty(BlueCoveConfigProperties.PROPERTY_OBEX_TIMEOUT, "10000");
 		}
 
 		return instance;
@@ -125,6 +130,7 @@ public class BluetoothSystem implements DiscoveryListener {
 
 			if (devices == null) {
 				System.out.println("No devices found, returning empty");
+				isBusy = false;
 				return new ExpandedRemoteDevice[0];
 			}
 

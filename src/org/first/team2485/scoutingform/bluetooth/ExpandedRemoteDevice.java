@@ -39,7 +39,7 @@ public class ExpandedRemoteDevice {
 		if (name == null) {
 
 			try {
-				name = remoteDevice.getFriendlyName(true);
+				name = remoteDevice.getFriendlyName(false);
 			} catch (IOException e) {
 				name = remoteDevice.getBluetoothAddress();
 			}
