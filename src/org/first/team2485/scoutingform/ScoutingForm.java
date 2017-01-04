@@ -14,6 +14,7 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import org.first.team2485.scoutingform.gui.LockedSizeJPanel;
+import org.first.team2485.scoutingform.gui.addons.GamblingPanel;
 import org.first.team2485.scoutingform.gui.addons.LookAndFeelSelector;
 import org.first.team2485.scoutingform.questions.CheckboxQuestion;
 import org.first.team2485.scoutingform.questions.FreeResponseQuestion;
@@ -149,7 +150,8 @@ public class ScoutingForm extends LockedSizeJPanel {
 		
 		outerPanel.add(this, BorderLayout.CENTER);
 		outerPanel.add(new JScrollPane(new LookAndFeelSelector(this)), BorderLayout.WEST);
-
+		outerPanel.add(new JScrollPane(new GamblingPanel(this)), BorderLayout.EAST);
+		
 		JPanel buttonPane = new JPanel();
 		buttonPane.setLayout(new FlowLayout());
 		buttonPane.add(new SubmitButton(this));

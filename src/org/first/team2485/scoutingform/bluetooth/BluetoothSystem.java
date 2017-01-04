@@ -307,14 +307,14 @@ public class BluetoothSystem implements DiscoveryListener {
 			System.out.println("Service: " + serviceName);
 
 			if (serviceName != null) {
-				
+
 				System.out.println("Service Data Type: " + serviceName.getDataType());
-				
+
 				System.out.println("Service URL: " + url);
 
 				System.out.println("Service Name: " + serviceName.getValue());
 
-				System.out.println("Is PIM: " + ( serviceName.getValue().toString()).contains("PIM Item Transfer"));
+				System.out.println("Is PIM: " + (serviceName.getValue().toString()).contains("PIM Item Transfer"));
 
 				if (serviceName.getValue().equals("OBEX Object Push")
 						|| serviceName.getValue().toString().contains("PIM Item Transfer")) {
@@ -355,6 +355,7 @@ public class BluetoothSystem implements DiscoveryListener {
 
 				if (hsConnectReply.getResponseCode() != ResponseCodes.OBEX_HTTP_OK) {
 					System.out.println("Failed to connect: " + hsConnectReply);
+					isBusy = false;
 					return false;
 				}
 
@@ -386,6 +387,7 @@ public class BluetoothSystem implements DiscoveryListener {
 			}
 		} catch (final Exception e) {
 			System.out.println(e.getMessage());
+			isBusy = false;
 			return false;
 		}
 
