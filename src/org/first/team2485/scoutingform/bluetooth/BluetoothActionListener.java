@@ -2,6 +2,10 @@ package org.first.team2485.scoutingform.bluetooth;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 import javax.swing.JOptionPane;
 
@@ -56,7 +60,7 @@ public class BluetoothActionListener implements ActionListener {
 			} else {
 				bluetoothPanel.remoteScan();
 			}
-			
+
 			System.out.println("Exiting scan thread");
 		}
 	}
@@ -74,15 +78,25 @@ public class BluetoothActionListener implements ActionListener {
 				return;
 			}
 
-			boolean result = BluetoothSystem.sendToDevice(bluetoothPanel.getSelectedDevice(), bluetoothPanel.getFileName(),
-					bluetoothPanel.getDataToSend());
-			
+			File loc = new File(System.getProperty("user.home") + "/ScoutingRecords");
+			System.out.println("Making dirs: " + loc.mkdir());
+			try {
+				BufferedWriter bw = new BufferedWriter(new FileWriter(new File(loc, bluetoothPanel.getFileName())));
+				bw.write(bluetoothPanel.getDataToSend());
+				bw.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
+			boolean result = BluetoothSystem.sendToDevice(bluetoothPanel.getSelectedDevice(),
+					bluetoothPanel.getFileName(), bluetoothPanel.getDataToSend());
+
 			if (!result) {
 				System.out.println("***BLUETOOTH SEND FAILED***");
 				return;
 			}
 
-//			bluetoothPanel.shutdownBluetooth();
+			bluetoothPanel.shutdownBluetooth();
 		}
 	}
 

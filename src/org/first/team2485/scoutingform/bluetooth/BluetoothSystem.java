@@ -347,6 +347,9 @@ public class BluetoothSystem implements DiscoveryListener {
 			OutputStream outputStream = null;
 			Operation putOperation = null;
 			ClientSession cs = null;
+			
+			boolean success = false;
+			
 			try {
 				// Send a request to the server to open a connection
 				connection = Connector.open(serverURL);
@@ -376,6 +379,7 @@ public class BluetoothSystem implements DiscoveryListener {
 				outputStream = putOperation.openOutputStream();
 				outputStream.write(filebytes);
 				System.out.println("Push complete");
+				success = true;
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
 			} finally {
@@ -385,14 +389,13 @@ public class BluetoothSystem implements DiscoveryListener {
 				connection.close();
 				System.out.println("Connection Closed");
 			}
+			isBusy = false;
+			return success;
 		} catch (final Exception e) {
 			System.out.println(e.getMessage());
 			isBusy = false;
 			return false;
 		}
-
-		isBusy = false;
-		return true;
 	}
 
 	public static boolean isBusy() {

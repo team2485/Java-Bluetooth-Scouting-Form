@@ -61,7 +61,8 @@ public class QuestionAligner extends Question {
 
 	@Override
 	public void clear() {
-		// TODO Auto-generated method stub
-
+		for (Question q : questions) {
+			q.clear();
+		}
 	}
 }

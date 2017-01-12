@@ -112,16 +112,20 @@ public class BluetoothPanel extends JPanel implements ListCellRenderer<ExpandedR
 		if (BluetoothSystem.isBusy()) {
 			refreshButton.setText("Please Wait");
 			refreshButton.setToolTipText("Please wait...");
-
+			sendButton.setToolTipText("Cannot send while busy");
+			
 			refreshButton.setEnabled(false);
+			sendButton.setEnabled(false);
 			
 			status.setText("BUSY");
 			status.setForeground(new Color(255, 128, 0));
 		} else {
 			refreshButton.setText("Scan For Devices");
 			refreshButton.setToolTipText("Start looking for new devices");
-
+			sendButton.setToolTipText("Send the scouting data to the device selected");
+			
 			refreshButton.setEnabled(true);
+			sendButton.setEnabled(true);
 			
 			status.setText("IDLE");
 			status.setForeground(new Color(0, 200, 0));
