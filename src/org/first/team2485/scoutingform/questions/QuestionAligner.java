@@ -53,7 +53,7 @@ public class QuestionAligner extends Question {
 		String data = "";
 
 		for (Question q : questions) {
-			data += q.getData() + ",";
+			data += q.getData();
 		}
 
 		return data;
