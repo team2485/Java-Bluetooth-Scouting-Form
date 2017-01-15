@@ -79,6 +79,7 @@ public class BluetoothActionListener implements ActionListener {
 			}
 
 			File loc = new File(System.getProperty("user.home") + "/ScoutingRecords");
+			System.out.println(loc);
 			System.out.println("Making dirs: " + loc.mkdir());
 			try {
 				BufferedWriter bw = new BufferedWriter(new FileWriter(new File(loc, bluetoothPanel.getFileName())));
