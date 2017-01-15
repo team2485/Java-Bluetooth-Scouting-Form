@@ -76,14 +76,14 @@ public class LocationQuestion extends Question {
 
 		clearButton = new JButton("Clear All Flags");
 		clearButton.addActionListener((ActionEvent e) -> clear());
-		
+
 		Box b = new Box(BoxLayout.X_AXIS);
-		
+
 		b.add(Box.createHorizontalStrut(5));
 		b.add(new JLabel(question));
 		b.add(Box.createHorizontalGlue());
 		b.add(clearButton);
-		
+
 		this.add(b);
 
 		ImagePanel imagePanel = new ImagePanel();
@@ -131,10 +131,10 @@ public class LocationQuestion extends Question {
 
 		@Override
 		public void paintComponent(Graphics g) {
-			
+
 			g.setColor(this.getBackground());
 			g.fillRect(0, 0, image.getWidth(), image.getHeight());
-			
+
 			g.drawImage(image, 0, 0, null);
 
 			for (Point p : selectedPoints) {
