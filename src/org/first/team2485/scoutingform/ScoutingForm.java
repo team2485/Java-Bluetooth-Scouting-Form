@@ -2,6 +2,7 @@ package org.first.team2485.scoutingform;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.Font;
 
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
@@ -66,72 +67,53 @@ public class ScoutingForm extends LockedSizeJPanel {
 	public static void displayForm() {
 
 		//@formatter:off
+		
+		setUIFont(new javax.swing.plaf.FontUIResource("Serif", Font.BOLD, 24));
 
-		ScoutingFormTab prematch = new ScoutingFormTab("Prematch", 
-				new SpinnerQuestion("Team Number:", "teamNumber"),
-				new QuestionSeperator(), 
-				new SpinnerQuestion("Match Number:", "matchNumber")
+		ScoutingFormTab prematch = new ScoutingFormTab("Prematch",
+				new QuestionAligner(
+						new SpinnerQuestion("Team Number:", "teamNumber"),
+						new SpinnerQuestion("Match Number:", "matchNumber")
+				)
+		);
+		
+		ScoutingFormTab auto = new ScoutingFormTab("Automous", 
+				new CheckboxQuestion("Did they...", "autoAction", "Cross the Baseline", "Enter Opponents Launchpad"),
+				new MultipleChoiceQuestion ("Hoppers Dumped:", "hoppersDumped", "0", "1", "2", "3", "4"),
+				new QuestionSeperator(),
+				new QuestionAligner(
+						new SpinnerQuestion("Low Goals", "autoLow"),
+						new SpinnerQuestion("High Goals", "autoHigh")
+				),
+				new QuestionSeperator(),
+				new LocationQuestion("If they shot high goals, where did they shoot from?", "autoShotLoc", "field.png"),
+				new QuestionSeperator(),
+				new MultipleChoiceQuestion("Gear State:", "gearState", "Did not attempt", "Ran out of time", "Dropped", "Sucess"),
+				new MultipleChoiceQuestion("Gear Hook Used:", "autoGearPos", "Boiler Side Hook", "Center Hook", "Feeder Side Hook")		
 		);
 
 		ScoutingFormTab duringMatch = new ScoutingFormTab("During Match",
-				new QuestionGroup("Autonomous",
-						new CheckboxQuestion("Did they...", "autoAction", "Approach a Defense", "Cross a Defense"),
-						new SpinnerQuestion("How many high goals did they make?", "autoHigh"),
-						new SpinnerQuestion("How many low goals did they make?", "autoLow")
-				),
+				new SpinnerQuestion("Gears Scored", "gearsScored"),
 				new QuestionSeperator(),
-				new QuestionGroup("Defense Category A",
-						new MultipleChoiceQuestion("Which defense is up?", "defA", "Cheval de Frise", "Portcullis"),
-						new MultipleChoiceQuestion("How long did it take to cross on avg (seconds)?", "defATime",
-								"0 - 5", "5 - 10", "10 - 15", "15+", "Failed"),
-						new SpinnerQuestion("How many times did they cross it?", "defACount")
-				),
+				new SpinnerQuestion("Average Time per Gear Cycle", "gearCycleTime"),
 				new QuestionSeperator(),
-				new QuestionGroup("Defense Category B",
-						new MultipleChoiceQuestion("Which defense is up?", "defB", "Moat", "Ramparts"),
-						new MultipleChoiceQuestion("How long did it take to cross on avg (seconds)?", "defBTime",
-								"0 - 5", "5 - 10", "10 - 15", "15+", "Failed"),
-						new SpinnerQuestion("How many times did they cross it?", "defBCount")
-				),
+				new LocationQuestion("Where does this robot shoot from?", "shootingPos", "field.png"),
 				new QuestionSeperator(),
-				new QuestionGroup("Defense Category C",
-						new MultipleChoiceQuestion("Which defense is up?", "defC", "Drawbridge", "Sally Port"),
-						new MultipleChoiceQuestion("How long did it take to cross on avg (seconds)?", "defCTime",
-								"0 - 5", "5 - 10", "10 - 15", "15+", "Failed"),
-						new SpinnerQuestion("How many times did they cross it?", "defCCount")
-				),
+				new MultipleChoiceQuestion("What type of defense did they play?", "defenseType", "Purposeful (for an extended period of time)", "On the way", "None"),			
 				new QuestionSeperator(),
-				new QuestionGroup("Defense Category D",
-						new MultipleChoiceQuestion("Which defense is up?", "defD", "Rough Terrain", "Rock Wall"),
-						new MultipleChoiceQuestion("How long did it take to cross on avg (seconds)?", "defDTime",
-								"0 - 5", "5 - 10", "10 - 15", "15+", "Failed"),
-						new SpinnerQuestion("How many times did they cross it?", "defDCount")
-				),
-				new QuestionSeperator(),
-				new QuestionGroup("Low Bar",
-						new MultipleChoiceQuestion("How long did it take to cross on avg (seconds)?", "barTime",
-								"0 - 5", "5 - 10", "10 - 15", "15+", "Failed"),
-						new SpinnerQuestion("How many times did they cross it?", "barCount")
-				),
-				new QuestionSeperator(), 
-				new SpinnerQuestion("How many high goals did they make?", "highMade"),
-				new SpinnerQuestion("How many high goals did they miss?", "highMiss"), 
-				new QuestionSeperator(),
-				new SpinnerQuestion("How many low goals did they make?", "lowMade"),
-				new SpinnerQuestion("How many low goals did they miss?", "lowMiss"), 
-				new QuestionSeperator(),
-				new MultipleChoiceQuestion("End Game State:", "endGame", "Challenge", "Scale", "Neither")
+				new MultipleChoiceQuestion("End Game Climbing", "endGame", "Climbed", "Fell Off", "Ran Out Of Time", "No Attempt")
 		);
 
 		ScoutingFormTab postMatch = new ScoutingFormTab("Post Match",
-				new LocationQuestion("Where does this robot shoot from?", "shootingPos", "field.png"),
 				new QuestionSeperator(),
 				new QuestionAligner(
 						new MultipleChoiceQuestion("Intake Speed", "intakeSpeed", "Snail", "Slow", "Average", "Speedy",
 								"Lightning", "N/A"),
 						new MultipleChoiceQuestion("Manueverability", "manueverability", "Sluggish", "Unresponsive",
 								"Average", "Responsive", "Nimble"),
-						new MultipleChoiceQuestion("Shooter Repeatability", "shooterRepeat", "Unreliable", "Sketchy",
+						new MultipleChoiceQuestion ("Hopper Intake Capability", "hopperIntakeCapability", "Useless", "Unreliable", "Firmly Average", "Good", "Exceeds all Expectations"),
+						new MultipleChoiceQuestion ("Ground Intake Capability", "groundIntakeCapability", "Useless", "Unreliable", "Firmly Average", "Good", "Exceeds all Expectations"),
+						new MultipleChoiceQuestion("Shooter Accuracy", "shooterRepeat", "Unreliable", "Sketchy",
 								"Average", "Consistent", "Reliable", "N/A"),
 						new MultipleChoiceQuestion("Shooter Speed", "shooterSpeed", "Snail", "Slow", "Average",
 								"Speedy", "Lightning", "N/A"),
@@ -139,19 +121,21 @@ public class ScoutingForm extends LockedSizeJPanel {
 								"Badass", "N/A"),
 						new MultipleChoiceQuestion("Defense Evasion", "defenceEvade", "Shitty", "Decent", "Average",
 								"Good", "Badass", "N/A"),
+						new MultipleChoiceQuestion("Driver Skill", "driverSkill", "Hopeless", "Bad", "Average", "Skilled", "God-like"),
 						new MultipleChoiceQuestion("Overall Impression", "overall", "Shitty", "Decent", "Average",
 								"Good", "Badass")),
-				new SpinnerQuestion("How many tech fouls did they get?", "techFouls"),
-				new SpinnerQuestion("How many other fouls did they get?", "normalFouls"),
-				new CheckboxQuestion("What role(s) did they play?", "roles", "Shooter", "Breacher", "Defender",
-						"Support"),
+				new QuestionAligner(
+						new SpinnerQuestion("How many tech fouls did they get?", "techFouls"),
+						new SpinnerQuestion("How many other fouls did they get?", "normalFouls")
+				),
+				new CheckboxQuestion("What role(s) did they play?", "roles", "Shooter", "Gear Courier", "Defender"),
 				new MultipleChoiceQuestion("Did they break down?", "breakDown", "Yes", "No"),
 				new FreeResponseQuestion("Comments:", "comments")
 		);
 		
 		//@formatter:on
 
-		new ScoutingForm(prematch, duringMatch, postMatch);
+		new ScoutingForm(prematch, auto, duringMatch, postMatch);
 	}
 
 	public ScoutingForm(ScoutingFormTab... tabs) {
@@ -178,7 +162,7 @@ public class ScoutingForm extends LockedSizeJPanel {
 		outerPanel.add(this, BorderLayout.CENTER);
 		outerPanel.add(new JScrollPane(new LookAndFeelSelector(this)), BorderLayout.WEST);
 		outerPanel.add(new JScrollPane(new GamblingPanel(this)), BorderLayout.EAST);
-		
+
 		JPanel buttonPane = new JPanel();
 		buttonPane.setLayout(new FlowLayout());
 		buttonPane.add(new SubmitButton(this));
@@ -232,5 +216,15 @@ public class ScoutingForm extends LockedSizeJPanel {
 
 	public String getScoutName() {
 		return scoutName;
+	}
+
+	public static void setUIFont(javax.swing.plaf.FontUIResource f) {
+		java.util.Enumeration keys = UIManager.getDefaults().keys();
+		while (keys.hasMoreElements()) {
+			Object key = keys.nextElement();
+			Object value = UIManager.get(key);
+			if (value != null && value instanceof javax.swing.plaf.FontUIResource)
+				UIManager.put(key, f);
+		}
 	}
 }

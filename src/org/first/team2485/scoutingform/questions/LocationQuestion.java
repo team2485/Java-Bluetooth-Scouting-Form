@@ -52,6 +52,8 @@ public class LocationQuestion extends Question {
 
 				File[] files = curFolder.listFiles();
 
+				System.out.println(curFolder);
+				
 				for (File f : files) {
 
 					if (f.getName().equals(img)) {

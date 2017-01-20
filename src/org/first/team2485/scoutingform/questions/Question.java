@@ -1,6 +1,7 @@
 package org.first.team2485.scoutingform.questions;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 
 import org.first.team2485.scoutingform.gui.LockedSizeJPanel;
 
