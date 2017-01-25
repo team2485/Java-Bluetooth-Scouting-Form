@@ -23,7 +23,6 @@ import org.first.team2485.scoutingform.questions.FreeResponseQuestion;
 import org.first.team2485.scoutingform.questions.LocationQuestion;
 import org.first.team2485.scoutingform.questions.MultipleChoiceQuestion;
 import org.first.team2485.scoutingform.questions.QuestionAligner;
-import org.first.team2485.scoutingform.questions.QuestionGroup;
 import org.first.team2485.scoutingform.questions.QuestionSeperator;
 import org.first.team2485.scoutingform.questions.SpinnerQuestion;
 
@@ -68,18 +67,18 @@ public class ScoutingForm extends LockedSizeJPanel {
 
 		//@formatter:off
 		
-		setUIFont(new javax.swing.plaf.FontUIResource("Serif", Font.BOLD, 24));
+		setUIFont(new javax.swing.plaf.FontUIResource("SansSerif", Font.PLAIN, 20));
 
 		ScoutingFormTab prematch = new ScoutingFormTab("Prematch",
 				new QuestionAligner(
-						new SpinnerQuestion("Team Number:", "teamNumber"),
-						new SpinnerQuestion("Match Number:", "matchNumber")
+						new SpinnerQuestion("Team Number", "teamNumber"),
+						new SpinnerQuestion("Match Number", "matchNumber")
 				)
 		);
 		
 		ScoutingFormTab auto = new ScoutingFormTab("Automous", 
 				new CheckboxQuestion("Did they...", "autoAction", "Cross the Baseline", "Enter Opponents Launchpad"),
-				new MultipleChoiceQuestion ("Hoppers Dumped:", "hoppersDumped", "0", "1", "2", "3", "4"),
+				new MultipleChoiceQuestion ("Hoppers Dumped", "hoppersDumped", "0", "1", "2", "3", "4"),
 				new QuestionSeperator(),
 				new QuestionAligner(
 						new SpinnerQuestion("Low Goals", "autoLow"),
@@ -88,8 +87,8 @@ public class ScoutingForm extends LockedSizeJPanel {
 				new QuestionSeperator(),
 				new LocationQuestion("If they shot high goals, where did they shoot from?", "autoShotLoc", "field.png"),
 				new QuestionSeperator(),
-				new MultipleChoiceQuestion("Gear State:", "gearState", "Did not attempt", "Ran out of time", "Dropped", "Sucess"),
-				new MultipleChoiceQuestion("Gear Hook Used:", "autoGearPos", "Boiler Side Hook", "Center Hook", "Feeder Side Hook")		
+				new MultipleChoiceQuestion("Gear State", "gearState", "Did not attempt", "Ran out of time", "Dropped", "Sucess"),
+				new MultipleChoiceQuestion("Gear Hook Used", "autoGearPos", "Boiler Side Hook", "Center Hook", "Feeder Side Hook")		
 		);
 
 		ScoutingFormTab duringMatch = new ScoutingFormTab("During Match",
@@ -111,8 +110,8 @@ public class ScoutingForm extends LockedSizeJPanel {
 								"Lightning", "N/A"),
 						new MultipleChoiceQuestion("Manueverability", "manueverability", "Sluggish", "Unresponsive",
 								"Average", "Responsive", "Nimble"),
-						new MultipleChoiceQuestion ("Hopper Intake Capability", "hopperIntakeCapability", "Useless", "Unreliable", "Firmly Average", "Good", "Exceeds all Expectations"),
-						new MultipleChoiceQuestion ("Ground Intake Capability", "groundIntakeCapability", "Useless", "Unreliable", "Firmly Average", "Good", "Exceeds all Expectations"),
+						new MultipleChoiceQuestion ("Hopper Intake", "hopperIntake", "Useless", "Unreliable", "Average", "Good", "Excellent", "N/A"),
+						new MultipleChoiceQuestion ("Ground Intake", "groundIntake", "Useless", "Unreliable", "Average", "Good", "Excellent", "N/A"),
 						new MultipleChoiceQuestion("Shooter Accuracy", "shooterRepeat", "Unreliable", "Sketchy",
 								"Average", "Consistent", "Reliable", "N/A"),
 						new MultipleChoiceQuestion("Shooter Speed", "shooterSpeed", "Snail", "Slow", "Average",
@@ -124,13 +123,14 @@ public class ScoutingForm extends LockedSizeJPanel {
 						new MultipleChoiceQuestion("Driver Skill", "driverSkill", "Hopeless", "Bad", "Average", "Skilled", "God-like"),
 						new MultipleChoiceQuestion("Overall Impression", "overall", "Shitty", "Decent", "Average",
 								"Good", "Badass")),
+				new QuestionSeperator(),
 				new QuestionAligner(
 						new SpinnerQuestion("How many tech fouls did they get?", "techFouls"),
 						new SpinnerQuestion("How many other fouls did they get?", "normalFouls")
 				),
-				new CheckboxQuestion("What role(s) did they play?", "roles", "Shooter", "Gear Courier", "Defender"),
+				new CheckboxQuestion("What role(s) did they play?", "roles", "High Goal Shooter", "Low Goal Shooter", "Gear Courier", "Defender"),
 				new MultipleChoiceQuestion("Did they break down?", "breakDown", "Yes", "No"),
-				new FreeResponseQuestion("Comments:", "comments")
+				new FreeResponseQuestion("Comments", "comments")
 		);
 		
 		//@formatter:on
