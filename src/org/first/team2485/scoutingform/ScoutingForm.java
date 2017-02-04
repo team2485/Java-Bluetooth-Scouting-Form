@@ -78,58 +78,69 @@ public class ScoutingForm extends LockedSizeJPanel {
 		
 		ScoutingFormTab auto = new ScoutingFormTab("Automous", 
 				new CheckboxQuestion("Did they...", "autoAction", "Cross the Baseline", "Enter Opponents Launchpad"),
-				new MultipleChoiceQuestion ("Hoppers Dumped", "hoppersDumped", "0", "1", "2", "3", "4"),
+				new MultipleChoiceQuestion ("Hoppers Dumped in Auto", "autoHoppersDumped", true, "0", "1", "2", "3", "4"),
+				new MultipleChoiceQuestion ("Hopper Reload", "hopperReload", false, "Yes", "No"),
+
 				new QuestionSeperator(),
 				new QuestionAligner(
 						new SpinnerQuestion("Low Goals", "autoLow"),
 						new SpinnerQuestion("High Goals", "autoHigh")
 				),
 				new QuestionSeperator(),
-				new LocationQuestion("If they shot high goals, where did they shoot from?", "autoShotLoc", "field.png"),
+				new LocationQuestion("If they shot high goals, where did they shoot from?", "autoShootingPos", "field.png"),
 				new QuestionSeperator(),
-				new MultipleChoiceQuestion("Gear State", "gearState", "Did not attempt", "Ran out of time", "Dropped", "Sucess"),
-				new MultipleChoiceQuestion("Gear Hook Used", "autoGearPos", "Boiler Side Hook", "Center Hook", "Feeder Side Hook")		
+				new MultipleChoiceQuestion("Gear State", "gearState", false, "Did not attempt", "Ran out of time", "Dropped", "Sucess"),
+				new MultipleChoiceQuestion("Gear Hook Used", "autoGearPos", false, "Boiler Side Hook", "Center Hook", "Feeder Side Hook")		
 		);
 
 		ScoutingFormTab duringMatch = new ScoutingFormTab("During Match",
+				new MultipleChoiceQuestion ("Hoppers Dumped in Teleop", "teleopHoppersDumped", true, "0", "1", "2", "3", "4"),
+				new QuestionSeperator(),
 				new SpinnerQuestion("Gears Scored", "gearsScored"),
 				new QuestionSeperator(),
 				new SpinnerQuestion("Average Time per Gear Cycle", "gearCycleTime"),
 				new QuestionSeperator(),
-				new LocationQuestion("Where does this robot shoot from?", "shootingPos", "field.png"),
+				new MultipleChoiceQuestion("Gear Pickup", "gearPickup", false, "Floor", "Loading Station", "Both", "Neither"),		
 				new QuestionSeperator(),
-				new MultipleChoiceQuestion("What type of defense did they play?", "defenseType", "Purposeful (for an extended period of time)", "On the way", "None"),			
+				new QuestionAligner(
+						new SpinnerQuestion("Low Goals", "teleopLow"),
+						new SpinnerQuestion("High Goals", "teleopHigh")
+				),
+				new SpinnerQuestion("Number of Fuel Cycles", "shootingCycles"),
+				new SpinnerQuestion("Average Time per Fuel Cycle", "shootingCycleTime"),
+				new LocationQuestion("Where does this robot shoot from?", "teleopShootingPos", "field.png"),
 				new QuestionSeperator(),
-				new MultipleChoiceQuestion("End Game Climbing", "endGame", "Climbed", "Fell Off", "Ran Out Of Time", "No Attempt")
+				new MultipleChoiceQuestion("What type of defense did they play?", "defenseType", false, "Purposeful", "On the way", "None"),			
+				new SpinnerQuestion("How long did they play defense?", "defenseTime"),
+				new QuestionSeperator(),
+				new MultipleChoiceQuestion("Climbing", "climber", false, "Climbed", "Fell Off", "Ran Out Of Time", "No Attempt"),
+				new SpinnerQuestion("Time from beginning of climb to end of match", "climberTime")
 		);
 
 		ScoutingFormTab postMatch = new ScoutingFormTab("Post Match",
 				new QuestionSeperator(),
 				new QuestionAligner(
-						new MultipleChoiceQuestion("Intake Speed", "intakeSpeed", "Snail", "Slow", "Average", "Speedy",
+						new MultipleChoiceQuestion("Intake Speed", "intakeSpeed", true, "Snail", "Slow", "Average", "Speedy",
 								"Lightning", "N/A"),
-						new MultipleChoiceQuestion("Manueverability", "manueverability", "Sluggish", "Unresponsive",
+						new MultipleChoiceQuestion("Manueverability", "manueverability", true, "Sluggish", "Unresponsive",
 								"Average", "Responsive", "Nimble"),
-						new MultipleChoiceQuestion ("Hopper Intake", "hopperIntake", "Useless", "Unreliable", "Average", "Good", "Excellent", "N/A"),
-						new MultipleChoiceQuestion ("Ground Intake", "groundIntake", "Useless", "Unreliable", "Average", "Good", "Excellent", "N/A"),
-						new MultipleChoiceQuestion("Shooter Accuracy", "shooterRepeat", "Unreliable", "Sketchy",
+						new MultipleChoiceQuestion ("Hopper Intake", "hopperIntake", true, "Useless", "Unreliable", "Average", "Good", "Excellent", "N/A"),
+						new MultipleChoiceQuestion ("Loading Station Intake", "loadingStationIntake", true, "Useless", "Unreliable", "Average", "Good", "Excellent", "N/A"),
+
+						new MultipleChoiceQuestion ("Ground Intake", "groundIntake", true, "Useless", "Unreliable", "Average", "Good", "Excellent", "N/A"),
+						new MultipleChoiceQuestion("Shooter Accuracy", "shooterAccuracy", true, "Unreliable", "Sketchy",
 								"Average", "Consistent", "Reliable", "N/A"),
-						new MultipleChoiceQuestion("Shooter Speed", "shooterSpeed", "Snail", "Slow", "Average",
+						new MultipleChoiceQuestion("Shooter Speed", "shooterSpeed", true, "Snail", "Slow", "Average",
 								"Speedy", "Lightning", "N/A"),
-						new MultipleChoiceQuestion("Defense", "defence", "Shitty", "Decent", "Average", "Good",
-								"Badass", "N/A"),
-						new MultipleChoiceQuestion("Defense Evasion", "defenceEvade", "Shitty", "Decent", "Average",
-								"Good", "Badass", "N/A"),
-						new MultipleChoiceQuestion("Driver Skill", "driverSkill", "Hopeless", "Bad", "Average", "Skilled", "God-like"),
-						new MultipleChoiceQuestion("Overall Impression", "overall", "Shitty", "Decent", "Average",
+						new MultipleChoiceQuestion("Driver Skill", "driverSkill", true, "Hopeless", "Bad", "Average", "Skilled", "God-like"),
+						new MultipleChoiceQuestion("Overall Impression", "overall", true, "Shitty", "Decent", "Average",
 								"Good", "Badass")),
 				new QuestionSeperator(),
 				new QuestionAligner(
 						new SpinnerQuestion("How many tech fouls did they get?", "techFouls"),
 						new SpinnerQuestion("How many other fouls did they get?", "normalFouls")
 				),
-				new CheckboxQuestion("What role(s) did they play?", "roles", "High Goal Shooter", "Low Goal Shooter", "Gear Courier", "Defender"),
-				new MultipleChoiceQuestion("Did they break down?", "breakDown", "Yes", "No"),
+				new MultipleChoiceQuestion("Did they break down?", "breakDown", false, "Yes", "No"),
 				new FreeResponseQuestion("Comments", "comments")
 		);
 		
@@ -191,6 +202,10 @@ public class ScoutingForm extends LockedSizeJPanel {
 		for (ScoutingFormTab tab : tabs) {
 			output += tab.getData();
 		}
+		
+		output += "name," + this.scoutName;
+		
+		System.out.println(output);
 
 		return output;
 	}

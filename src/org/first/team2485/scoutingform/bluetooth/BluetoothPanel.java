@@ -254,7 +254,7 @@ public class BluetoothPanel extends JPanel implements ListCellRenderer<ExpandedR
 
 		int input = JOptionPane.showConfirmDialog(null,
 				"The preliminary query has gotten " + alreadyPaired.length
-						+ " responces. Would you like to evaluate these devices now?",
+						+ " responses. Would you like to evaluate these devices now?",
 				"Bluetooth System", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null);
 
 		if (input == JOptionPane.YES_OPTION) {

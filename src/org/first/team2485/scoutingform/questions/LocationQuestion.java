@@ -98,7 +98,7 @@ public class LocationQuestion extends Question {
 		String data = internalName + ",";
 
 		for (Point p : selectedPoints) {
-			data += "(" + (p.getX() / image.getWidth()) + "," + (p.getY() / image.getHeight()) + "),";
+			data += "(" + (p.getX() / image.getWidth()) + ":" + (p.getY() / image.getHeight()) + ");";
 		}
 
 		return data;

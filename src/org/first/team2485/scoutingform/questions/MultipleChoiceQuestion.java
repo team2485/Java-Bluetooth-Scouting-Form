@@ -17,10 +17,14 @@ public class MultipleChoiceQuestion extends Question {
 	
 	private String internalName;
 	
-	public MultipleChoiceQuestion(String prompt, String internalName, String... options) {
+	private boolean isNumerical;
+		
+	public MultipleChoiceQuestion(String prompt, String internalName, boolean numerical, String... options) {
 		
 		this.internalName = internalName;
 		
+		this.isNumerical = numerical;
+				
 		promptLabel = new JLabel(prompt);
 		this.add(promptLabel);
 		
@@ -42,7 +46,13 @@ public class MultipleChoiceQuestion extends Question {
 	public String getData() {
 		for (int i = 0; i < optionButtons.length; i++) {
 			if (optionButtons[i].isSelected()) {
-				return internalName + "," + i + ",";
+				if (optionButtons[i].getText().equals("N/A")) {
+					return internalName + ",-1,";
+				} if (isNumerical) {
+					return internalName + "," + i + ",";
+				} else {
+					return internalName + "," + optionButtons[i].getText() + ",";
+				}
 			}
 		}
 		return internalName + "," + "-1,";
