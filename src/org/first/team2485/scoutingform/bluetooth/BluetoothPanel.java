@@ -4,6 +4,9 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.GridLayout;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
@@ -81,6 +84,26 @@ public class BluetoothPanel extends JPanel implements ListCellRenderer<ExpandedR
 		new PaintThread().start();
 
 		BluetoothActionListener.startLocalScan();
+		
+		System.out.println("Preparing local records");
+
+		File loc = new File(System.getProperty("user.home") + "/ScoutingRecords");
+
+		if (!loc.exists()) {
+			System.out.println(loc);
+			System.out.println("Making dirs: " + loc.mkdir());
+		} else {
+			System.out.println("Scouting record structure exists");
+		}
+		
+		try {
+			BufferedWriter bw = new BufferedWriter(new FileWriter(new File(loc, fileName)));
+			bw.write(dataToSend);
+			bw.close();
+			System.out.println("Sucessfully wrote scouting data to local backup records");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	class PaintThread extends Thread {
@@ -113,20 +136,20 @@ public class BluetoothPanel extends JPanel implements ListCellRenderer<ExpandedR
 			refreshButton.setText("Please Wait");
 			refreshButton.setToolTipText("Please wait...");
 			sendButton.setToolTipText("Cannot send while busy");
-			
+
 			refreshButton.setEnabled(false);
 			sendButton.setEnabled(false);
-			
+
 			status.setText("BUSY");
 			status.setForeground(new Color(255, 128, 0));
 		} else {
 			refreshButton.setText("Scan For Devices");
 			refreshButton.setToolTipText("Start looking for new devices");
 			sendButton.setToolTipText("Send the scouting data to the device selected");
-			
+
 			refreshButton.setEnabled(true);
 			sendButton.setEnabled(true);
-			
+
 			status.setText("IDLE");
 			status.setForeground(new Color(0, 200, 0));
 		}
@@ -244,7 +267,7 @@ public class BluetoothPanel extends JPanel implements ListCellRenderer<ExpandedR
 		ExpandedRemoteDevice[] alreadyPaired = BluetoothSystem.pairedDevices();
 
 		System.out.println("Scan");
-		
+
 		if (alreadyPaired.length == 0) {
 			System.out.println("Not currently paired");
 			return;
@@ -276,13 +299,13 @@ public class BluetoothPanel extends JPanel implements ListCellRenderer<ExpandedR
 	}
 
 	public void remoteScan() {
-		
+
 		System.out.println("Beginning remote scan");
 
 		ExpandedRemoteDevice[] newDevices = BluetoothSystem.discoverDevices();
-		
+
 		System.out.println("Remote scaan finished");
-		
+
 		if (newDevices.length == 0) {
 			return;
 		}
@@ -381,7 +404,7 @@ public class BluetoothPanel extends JPanel implements ListCellRenderer<ExpandedR
 		text.setToolTipText("Address: " + value.getRemoteDevice() + " Status: " + text.getToolTipText());
 
 		if (isSelected) {
-//			text.setBackground(text.getBackground().darker());
+			// text.setBackground(text.getBackground().darker());
 			text.setText(text.getText() + " <--- SELECTED");
 			text.setBorder(BorderFactory.createLoweredBevelBorder());
 		} else {
@@ -396,7 +419,7 @@ public class BluetoothPanel extends JPanel implements ListCellRenderer<ExpandedR
 		System.setErr(oldErrorStream);
 
 		stop = true;
-		
+
 		frame.dispose();
 
 		ScoutingForm.displayForm(); // Open up another form
