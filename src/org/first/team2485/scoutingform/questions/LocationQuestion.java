@@ -101,7 +101,7 @@ public class LocationQuestion extends Question {
 			data += "(" + (p.getX() / image.getWidth()) + ":" + (p.getY() / image.getHeight()) + ");";
 		}
 
-		return data;
+		return data + ",";
 	}
 
 	@Override
