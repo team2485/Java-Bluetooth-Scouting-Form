@@ -78,17 +78,6 @@ public class BluetoothActionListener implements ActionListener {
 				return;
 			}
 
-			File loc = new File(System.getProperty("user.home") + "/ScoutingRecords");
-			System.out.println(loc);
-			System.out.println("Making dirs: " + loc.mkdir());
-			try {
-				BufferedWriter bw = new BufferedWriter(new FileWriter(new File(loc, bluetoothPanel.getFileName())));
-				bw.write(bluetoothPanel.getDataToSend());
-				bw.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-
 			boolean result = BluetoothSystem.sendToDevice(bluetoothPanel.getSelectedDevice(),
 					bluetoothPanel.getFileName(), bluetoothPanel.getDataToSend());
 
