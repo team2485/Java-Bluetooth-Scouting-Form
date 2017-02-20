@@ -73,7 +73,10 @@ public class ScoutingForm extends LockedSizeJPanel {
 				new QuestionAligner(
 						new SpinnerQuestion("Team Number", "teamNumber"),
 						new SpinnerQuestion("Match Number", "matchNumber")
-				)
+				),
+				new QuestionSeperator(),
+				new CheckboxQuestion("No Show?", "noShow", "")
+				
 		);
 		
 		ScoutingFormTab auto = new ScoutingFormTab("Automous", 
@@ -89,7 +92,7 @@ public class ScoutingForm extends LockedSizeJPanel {
 				new QuestionSeperator(),
 				new LocationQuestion("If they shot high goals, where did they shoot from?", "autoShootingPos", "field.png"),
 				new QuestionSeperator(),
-				new MultipleChoiceQuestion("Gear State", "gearState", false, "Did not attempt", "Ran out of time", "Dropped", "Sucess"),
+				new MultipleChoiceQuestion("Gear State", "gearState", false, "Did not attempt", "Ran out of time", "Dropped", "Success"),
 				new MultipleChoiceQuestion("Gear Hook Used", "autoGearPos", false, "Boiler Side Hook", "Center Hook", "Feeder Side Hook")		
 		);
 
@@ -100,7 +103,7 @@ public class ScoutingForm extends LockedSizeJPanel {
 				new QuestionSeperator(),
 				new SpinnerQuestion("Average Time per Gear Cycle", "gearCycleTime"),
 				new QuestionSeperator(),
-				new MultipleChoiceQuestion("Gear Pickup", "gearPickup", false, "Floor", "Loading Station", "Both", "Neither"),		
+				new CheckboxQuestion("Gear Pickup", "gearPickup", "Floor", "Loading Station"),		
 				new QuestionSeperator(),
 				new QuestionAligner(
 						new SpinnerQuestion("Low Goals", "teleopLow"),
@@ -122,8 +125,6 @@ public class ScoutingForm extends LockedSizeJPanel {
 				new QuestionAligner(
 						new MultipleChoiceQuestion("Intake Speed", "intakeSpeed", true, "Snail", "Slow", "Average", "Speedy",
 								"Lightning", "N/A"),
-						new MultipleChoiceQuestion("Manueverability", "manueverability", true, "Sluggish", "Unresponsive",
-								"Average", "Responsive", "Nimble"),
 						new MultipleChoiceQuestion ("Hopper Intake", "hopperIntake", true, "Useless", "Unreliable", "Average", "Good", "Excellent", "N/A"),
 						new MultipleChoiceQuestion ("Loading Station Intake", "loadingStationIntake", true, "Useless", "Unreliable", "Average", "Good", "Excellent", "N/A"),
 
@@ -131,7 +132,12 @@ public class ScoutingForm extends LockedSizeJPanel {
 						new MultipleChoiceQuestion("Shooter Accuracy", "shooterAccuracy", true, "Unreliable", "Sketchy",
 								"Average", "Consistent", "Reliable", "N/A"),
 						new MultipleChoiceQuestion("Shooter Speed", "shooterSpeed", true, "Snail", "Slow", "Average",
-								"Speedy", "Lightning", "N/A"),
+								"Speedy", "Lightning", "N/A")
+						),
+				new QuestionSeperator(),
+				new QuestionAligner(	
+						new MultipleChoiceQuestion("Manueverability", "manueverability", true, "Sluggish", "Unresponsive",
+								"Average", "Responsive", "Nimble"),
 						new MultipleChoiceQuestion("Driver Skill", "driverSkill", true, "Hopeless", "Bad", "Average", "Skilled", "God-like"),
 						new MultipleChoiceQuestion("Overall Impression", "overall", true, "Shitty", "Decent", "Average",
 								"Good", "Badass")),
