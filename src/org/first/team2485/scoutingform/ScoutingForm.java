@@ -3,6 +3,7 @@ package org.first.team2485.scoutingform;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.event.MouseWheelEvent;
 
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
@@ -121,14 +122,15 @@ public class ScoutingForm extends LockedSizeJPanel {
 		);
 
 		ScoutingFormTab postMatch = new ScoutingFormTab("Post Match",
+				new QuestionAligner(
+						new MultipleChoiceQuestion("Ground Intake (Gear)", "groundIntakeGear", true, "Useless", "Unreliable", "Average", "Good", "Excellent", "N/A"),
+						new MultipleChoiceQuestion("Loading Station Intake (Gear)", "loadingStationIntakeGear", true, "Useless", "Unreliable", "Average", "Good", "Excellent", "N/A")
+						),
 				new QuestionSeperator(),
 				new QuestionAligner(
-						new MultipleChoiceQuestion("Intake Speed", "intakeSpeed", true, "Snail", "Slow", "Average", "Speedy",
-								"Lightning", "N/A"),
-						new MultipleChoiceQuestion ("Hopper Intake", "hopperIntake", true, "Useless", "Unreliable", "Average", "Good", "Excellent", "N/A"),
-						new MultipleChoiceQuestion ("Loading Station Intake", "loadingStationIntake", true, "Useless", "Unreliable", "Average", "Good", "Excellent", "N/A"),
-
-						new MultipleChoiceQuestion ("Ground Intake", "groundIntake", true, "Useless", "Unreliable", "Average", "Good", "Excellent", "N/A"),
+						new MultipleChoiceQuestion ("Ground Intake (Fuel)", "groundIntake", true, "Useless", "Unreliable", "Average", "Good", "Excellent"),
+						new MultipleChoiceQuestion ("Loading Station Intake (Fuel)", "loadingStationIntake", true, "Useless", "Unreliable", "Average", "Good", "Excellent", "N/A"),
+						new MultipleChoiceQuestion ("Hopper Intake (Fuel)", "hopperIntake", true, "Useless", "Unreliable", "Average", "Good", "Excellent", "N/A"),
 						new MultipleChoiceQuestion("Shooter Accuracy", "shooterAccuracy", true, "Unreliable", "Sketchy",
 								"Average", "Consistent", "Reliable", "N/A"),
 						new MultipleChoiceQuestion("Shooter Speed", "shooterSpeed", true, "Snail", "Slow", "Average",
@@ -139,7 +141,7 @@ public class ScoutingForm extends LockedSizeJPanel {
 						new MultipleChoiceQuestion("Manueverability", "manueverability", true, "Sluggish", "Unresponsive",
 								"Average", "Responsive", "Nimble"),
 						new MultipleChoiceQuestion("Driver Skill", "driverSkill", true, "Hopeless", "Bad", "Average", "Skilled", "God-like"),
-						new MultipleChoiceQuestion("Overall Impression", "overall", true, "Shitty", "Decent", "Average",
+						new MultipleChoiceQuestion("Overall Impression", "overall", true, "Do not pick", "Decent", "Average",
 								"Good", "Badass")),
 				new QuestionSeperator(),
 				new QuestionAligner(
@@ -171,7 +173,9 @@ public class ScoutingForm extends LockedSizeJPanel {
 
 		this.tabs = tabs;
 		for (ScoutingFormTab tab : tabs) {
-			tabbedPane.add(tab.getName(), new JScrollPane(tab));
+			JScrollPane currPane = new JScrollPane(tab);
+			currPane.setWheelScrollingEnabled(false); //This doesnt work :)
+			tabbedPane.add(tab.getName(), currPane);
 		}
 
 		this.add(tabbedPane);
