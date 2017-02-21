@@ -8,6 +8,7 @@ import java.awt.GridLayout;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.border.EmptyBorder;
 
 /**
  * @author Nicholas Contreras
@@ -18,6 +19,7 @@ public class QuestionAligner extends Question {
 
 	private Question[] questions;
 	private final int HORIZONTAL_SPACING = 15;
+	private final int VERTICAL_PADDING = 10;
 
 	public QuestionAligner(Question... questions) {
 		int numComps = -1;
@@ -74,6 +76,8 @@ public class QuestionAligner extends Question {
 				b.setPreferredSize(new Dimension(widths[j] + HORIZONTAL_SPACING, b.getPreferredSize().height));
 				b.setMaximumSize(new Dimension(widths[j] + HORIZONTAL_SPACING, b.getPreferredSize().height));
 				b.setAlignmentX(Box.LEFT_ALIGNMENT);
+				
+				this.setBorder(new EmptyBorder(VERTICAL_PADDING, 0, VERTICAL_PADDING, 0));
 				
 				this.add(b, c);
 			}
