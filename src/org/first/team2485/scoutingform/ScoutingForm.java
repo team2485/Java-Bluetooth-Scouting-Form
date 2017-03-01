@@ -72,8 +72,8 @@ public class ScoutingForm extends LockedSizeJPanel {
 
 		ScoutingFormTab prematch = new ScoutingFormTab("Prematch",
 				new QuestionAligner(
-						new SpinnerQuestion("Team Number", "teamNumber"),
-						new SpinnerQuestion("Match Number", "matchNumber")
+						new SpinnerQuestion("Team Number", "teamNumber", 0, 9999),
+						new SpinnerQuestion("Match Number", "matchNumber", 0, 9999)
 				),
 				new QuestionSeperator(),
 				new CheckboxQuestion("No Show?", "noShow", "")
@@ -87,8 +87,8 @@ public class ScoutingForm extends LockedSizeJPanel {
 
 				new QuestionSeperator(),
 				new QuestionAligner(
-						new SpinnerQuestion("Low Goals", "autoLow"),
-						new SpinnerQuestion("High Goals", "autoHigh")
+						new SpinnerQuestion("Low Goals", "autoLow", 0),
+						new SpinnerQuestion("High Goals", "autoHigh", 0)
 				),
 				new QuestionSeperator(),
 				new LocationQuestion("If they shot high goals, where did they shoot from?", "autoShootingPos", "field.png"),
@@ -100,25 +100,23 @@ public class ScoutingForm extends LockedSizeJPanel {
 		ScoutingFormTab duringMatch = new ScoutingFormTab("During Match",
 				new MultipleChoiceQuestion ("Hoppers Dumped in Teleop", "teleopHoppersDumped", true, "0", "1", "2", "3", "4"),
 				new QuestionSeperator(),
-				new SpinnerQuestion("Gears Scored", "gearsScored"),
+				new SpinnerQuestion("Gears Scored", "gearsScored", 0, 21),
 				new QuestionSeperator(),
-				new SpinnerQuestion("Average Time per Gear Cycle", "gearCycleTime"),
-				new QuestionSeperator(),
-				new CheckboxQuestion("Gear Pickup", "gearPickup", "Floor", "Loading Station"),		
+				new SpinnerQuestion("Average Time per Gear Cycle", "gearCycleTime", 0, 135),
 				new QuestionSeperator(),
 				new QuestionAligner(
-						new SpinnerQuestion("Low Goals", "teleopLow"),
-						new SpinnerQuestion("High Goals", "teleopHigh")
+						new SpinnerQuestion("Low Goals", "teleopLow", 0),
+						new SpinnerQuestion("High Goals", "teleopHigh", 0)
 				),
-				new SpinnerQuestion("Number of Fuel Cycles", "shootingCycles"),
-				new SpinnerQuestion("Average Time per Fuel Cycle", "shootingCycleTime"),
+				new SpinnerQuestion("Number of Fuel Cycles", "shootingCycles", 0, 99),
+				new SpinnerQuestion("Average Time per Fuel Cycle", "shootingCycleTime", 0, 135),
 				new LocationQuestion("Where does this robot shoot from?", "teleopShootingPos", "field.png"),
 				new QuestionSeperator(),
 				new MultipleChoiceQuestion("What type of defense did they play?", "defenseType", false, "Purposeful", "On the way", "None"),			
-				new SpinnerQuestion("How long did they play defense?", "defenseTime"),
+				new SpinnerQuestion("How long did they play defense?", "defenseTime", 0, 135),
 				new QuestionSeperator(),
 				new MultipleChoiceQuestion("Climbing", "climber", false, "Climbed", "Fell Off", "Ran Out Of Time", "No Attempt"),
-				new SpinnerQuestion("Time from beginning of climb to end of match", "climberTime")
+				new SpinnerQuestion("Time from beginning of climb to end of match", "climberTime", 0, 135)
 		);
 
 		ScoutingFormTab postMatch = new ScoutingFormTab("Post Match",
@@ -145,8 +143,8 @@ public class ScoutingForm extends LockedSizeJPanel {
 								"Good", "Badass")),
 				new QuestionSeperator(),
 				new QuestionAligner(
-						new SpinnerQuestion("How many tech fouls did they get?", "techFouls"),
-						new SpinnerQuestion("How many other fouls did they get?", "normalFouls")
+						new SpinnerQuestion("How many tech fouls did they get?", "techFouls", 0, 99),
+						new SpinnerQuestion("How many other fouls did they get?", "normalFouls", 0, 99)
 				),
 				new MultipleChoiceQuestion("Did they break down?", "breakDown", false, "Yes", "No"),
 				new FreeResponseQuestion("Comments", "comments")
