@@ -92,6 +92,12 @@ public class LocationQuestion extends Question {
 		imagePanel.addMouseListener(imagePanel);
 		this.add(imagePanel);
 	}
+	
+	public LocationQuestion(String[] promptAndToolTip, String internalName, String img) {
+		this(promptAndToolTip[0],  internalName,  img);
+		
+		this.setToolTipText(promptAndToolTip[1]);
+	}
 
 	@Override
 	public String getData() {

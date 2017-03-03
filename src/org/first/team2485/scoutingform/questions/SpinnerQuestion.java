@@ -70,6 +70,13 @@ public class SpinnerQuestion extends Question{
 	
 	}
 	
+	public SpinnerQuestion(String[] promptAndTooltip, String internalName, int min, int max) {
+		this(promptAndTooltip[0], internalName, min, max);
+		
+		this.setToolTipText(promptAndTooltip[1]);
+		
+	}
+	
 	public String getData() {
 		return internalName + "," + ((int) spinner.getValue()) + ",";	
 	}

@@ -43,6 +43,16 @@ public class MultipleChoiceQuestion extends Question {
 		}
 	}
 	
+	public MultipleChoiceQuestion(String[] promptAndTooltip, String internalName, boolean numerical, String... options) {
+ 
+		this(promptAndTooltip[0],  internalName,  numerical, options);
+		
+		this.setToolTipText(promptAndTooltip[1]);
+
+	
+	}
+
+	
 	public String getData() {
 		for (int i = 0; i < optionButtons.length; i++) {
 			if (optionButtons[i].isSelected()) {

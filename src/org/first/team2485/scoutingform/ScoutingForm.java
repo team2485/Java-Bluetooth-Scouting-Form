@@ -76,7 +76,11 @@ public class ScoutingForm extends LockedSizeJPanel {
 						new SpinnerQuestion("Match Number", "matchNumber", 0, 9999)
 				),
 				new QuestionSeperator(),
-				new CheckboxQuestion("No Show?", "noShow", "")
+				new CheckboxQuestion(new String[] {"No Show?", "Check this box if your robot is scheduled to play "
+						+ "this match, but did not show up. Be careful! "
+						+ "It could be that you just can't see it from "
+						+ "where you are sitting."}, 
+						"noShow", "")
 				
 		);
 		
@@ -100,7 +104,9 @@ public class ScoutingForm extends LockedSizeJPanel {
 		ScoutingFormTab duringMatch = new ScoutingFormTab("During Match",
 				new MultipleChoiceQuestion ("Hoppers Triggered in Teleop", "teleopHoppersDumped", true, "0", "1", "2", "3", "4"),
 				new QuestionSeperator(),
-				new SpinnerQuestion("Gears Scored", "gearsScored", 0, 21),
+				new SpinnerQuestion("Gears Scored on Boiler Side Hook", "gearsScoredBoiler", 0, 21),
+				new SpinnerQuestion("Gears Scored on Center Hook", "gearsScoredCenter", 0, 21),
+				new SpinnerQuestion("Gears Scored on Feeder Side Hook", "gearsScoredFeeder", 0, 21),
 				new QuestionSeperator(),
 				new SpinnerQuestion("Average Time per Gear Cycle", "gearCycleTime", 0, 135),
 				new QuestionSeperator(),
@@ -126,7 +132,7 @@ public class ScoutingForm extends LockedSizeJPanel {
 						),
 				new QuestionSeperator(),
 				new QuestionAligner(
-						new MultipleChoiceQuestion ("Ground Intake (Fuel)", "groundIntake", true, "Useless", "Unreliable", "Average", "Good", "Excellent"),
+						new MultipleChoiceQuestion ("Ground Intake (Fuel)", "groundIntake", true, "Useless", "Unreliable", "Average", "Good", "Excellent", "N/A"),
 						new MultipleChoiceQuestion ("Loading Station Intake (Fuel)", "loadingStationIntake", true, "Useless", "Unreliable", "Average", "Good", "Excellent", "N/A"),
 						new MultipleChoiceQuestion ("Hopper Intake (Fuel)", "hopperIntake", true, "Useless", "Unreliable", "Average", "Good", "Excellent", "N/A"),
 						new MultipleChoiceQuestion("Shooter Accuracy", "shooterAccuracy", true, "Unreliable", "Sketchy",

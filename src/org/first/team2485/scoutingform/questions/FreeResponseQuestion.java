@@ -26,6 +26,14 @@ public class FreeResponseQuestion extends Question {
 		this.add(area);
 	}
 	
+	public FreeResponseQuestion(String[] promptAndTooltip, String internalName) {
+		
+		this(promptAndTooltip[0], internalName);
+		
+		this.setToolTipText(promptAndTooltip[1]);
+		
+	}
+	
 	public String getData() {
 		return internalName + ",\"" + area.getText().replaceAll(",", "%2C") + "\",";
 	}
