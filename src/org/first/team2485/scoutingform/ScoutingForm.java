@@ -82,7 +82,7 @@ public class ScoutingForm extends LockedSizeJPanel {
 		
 		ScoutingFormTab auto = new ScoutingFormTab("Automous", 
 				new CheckboxQuestion("Did they...", "autoAction", "Cross the Baseline", "Enter Opponents Launchpad"),
-				new MultipleChoiceQuestion ("Hoppers Dumped in Auto", "autoHoppersDumped", true, "0", "1", "2", "3", "4"),
+				new MultipleChoiceQuestion ("Hoppers Triggered in Auto", "autoHoppersDumped", true, "0", "1", "2", "3", "4"),
 				new MultipleChoiceQuestion ("Hopper Reload", "hopperReload", false, "Yes", "No"),
 
 				new QuestionSeperator(),
@@ -98,7 +98,7 @@ public class ScoutingForm extends LockedSizeJPanel {
 		);
 
 		ScoutingFormTab duringMatch = new ScoutingFormTab("During Match",
-				new MultipleChoiceQuestion ("Hoppers Dumped in Teleop", "teleopHoppersDumped", true, "0", "1", "2", "3", "4"),
+				new MultipleChoiceQuestion ("Hoppers Triggered in Teleop", "teleopHoppersDumped", true, "0", "1", "2", "3", "4"),
 				new QuestionSeperator(),
 				new SpinnerQuestion("Gears Scored", "gearsScored", 0, 21),
 				new QuestionSeperator(),
