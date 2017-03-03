@@ -27,10 +27,8 @@ import org.first.team2485.scoutingform.questions.QuestionSeperator;
 import org.first.team2485.scoutingform.questions.SpinnerQuestion;
 
 /**
- * 
  * @author Jeremy McCulloch
  * @author Troy Appel
- *
  */
 @SuppressWarnings("serial")
 public class ScoutingForm extends LockedSizeJPanel {
@@ -203,7 +201,7 @@ public class ScoutingForm extends LockedSizeJPanel {
 			output += tab.getData();
 		}
 		
-		output += "name," + this.scoutName;
+		output += "name," + scoutName;
 		
 		System.out.println(output);
 
