@@ -6,6 +6,7 @@ import javax.swing.JLabel;
 import javax.swing.JSpinner;
 import javax.swing.JSpinner.DefaultEditor;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.border.EmptyBorder;
 
 /**
  * 
@@ -20,6 +21,8 @@ public class SpinnerQuestion extends Question{
 	
 	private String internalName;
 	
+	private final int PADDING = 0;
+	
 	public SpinnerQuestion(String prompt, String internalName) {
 		
 		this.internalName = internalName;
@@ -28,7 +31,41 @@ public class SpinnerQuestion extends Question{
 		this.add(promptLabel);
 		
 		spinner = new JSpinner(new SpinnerNumberModel());
-		((DefaultEditor) spinner.getEditor()).getTextField().setColumns(5);
+		((DefaultEditor) spinner.getEditor()).getTextField().setColumns(4);
+		
+		this.setBorder(new EmptyBorder(PADDING, 0, PADDING, 0));
+				
+		this.add(spinner);
+	
+	}
+	
+	public SpinnerQuestion(String prompt, String internalName, int min) {
+		
+		this.internalName = internalName;
+		
+		promptLabel = new JLabel(prompt);
+		this.add(promptLabel);
+		
+		spinner = new JSpinner(new SpinnerNumberModel(min, min, Integer.MAX_VALUE, 1));
+		((DefaultEditor) spinner.getEditor()).getTextField().setColumns(4);
+		
+		this.setBorder(new EmptyBorder(PADDING, 0, PADDING, 0));
+		
+		this.add(spinner);
+	
+	}	
+	public SpinnerQuestion(String prompt, String internalName, int min, int max) {
+		
+		this.internalName = internalName;
+		
+		promptLabel = new JLabel(prompt);
+		this.add(promptLabel);
+		
+		spinner = new JSpinner(new SpinnerNumberModel(min, min, max, 1));
+		((DefaultEditor) spinner.getEditor()).getTextField().setColumns(4);
+		
+		this.setBorder(new EmptyBorder(PADDING, 0, PADDING, 0));
+		
 		this.add(spinner);
 	
 	}

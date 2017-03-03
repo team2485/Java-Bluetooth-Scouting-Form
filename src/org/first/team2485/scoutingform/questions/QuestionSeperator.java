@@ -21,6 +21,7 @@ public class QuestionSeperator extends Question {
 
 		JSeparator seperator = new JSeparator(SwingConstants.HORIZONTAL);
 		seperator.setMaximumSize(new Dimension(Integer.MAX_VALUE, 1));
+		
 		this.add(seperator, BorderLayout.NORTH);
 	}
 
