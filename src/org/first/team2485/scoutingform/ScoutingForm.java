@@ -3,7 +3,6 @@ package org.first.team2485.scoutingform;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.event.MouseWheelEvent;
 
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
@@ -16,7 +15,6 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import org.first.team2485.scoutingform.gui.LockedSizeJPanel;
-import org.first.team2485.scoutingform.gui.addons.GamblingPanel;
 //import org.first.team2485.scoutingform.gui.addons.GamblingPanel;
 import org.first.team2485.scoutingform.gui.addons.LookAndFeelSelector;
 import org.first.team2485.scoutingform.questions.CheckboxQuestion;
@@ -124,7 +122,7 @@ public class ScoutingForm extends LockedSizeJPanel {
 						),
 				new QuestionSeperator(),
 				new QuestionAligner(
-						new MultipleChoiceQuestion ("Ground Intake (Fuel)", "groundIntake", true, "Useless", "Unreliable", "Average", "Good", "Excellent"),
+						new MultipleChoiceQuestion ("Ground Intake (Fuel)", "groundIntake", true, "Useless", "Unreliable", "Average", "Good", "Excellent", "N/A"),
 						new MultipleChoiceQuestion ("Loading Station Intake (Fuel)", "loadingStationIntake", true, "Useless", "Unreliable", "Average", "Good", "Excellent", "N/A"),
 						new MultipleChoiceQuestion ("Hopper Intake (Fuel)", "hopperIntake", true, "Useless", "Unreliable", "Average", "Good", "Excellent", "N/A"),
 						new MultipleChoiceQuestion("Shooter Accuracy", "shooterAccuracy", true, "Unreliable", "Sketchy",
@@ -170,7 +168,7 @@ public class ScoutingForm extends LockedSizeJPanel {
 		this.tabs = tabs;
 		for (ScoutingFormTab tab : tabs) {
 			JScrollPane currPane = new JScrollPane(tab);
-			currPane.setWheelScrollingEnabled(false); //This doesnt work :)
+			currPane.setWheelScrollingEnabled(false); // This doesnt work :)
 			tabbedPane.add(tab.getName(), currPane);
 		}
 
@@ -178,7 +176,8 @@ public class ScoutingForm extends LockedSizeJPanel {
 
 		outerPanel.add(this, BorderLayout.CENTER);
 		outerPanel.add(new JScrollPane(new LookAndFeelSelector(this)), BorderLayout.WEST);
-		outerPanel.add(new JScrollPane(new GamblingPanel(this)), BorderLayout.EAST);
+		// outerPanel.add(new JScrollPane(new GamblingPanel(this)),
+		// BorderLayout.EAST);
 
 		JPanel buttonPane = new JPanel();
 		buttonPane.setLayout(new FlowLayout());
@@ -208,9 +207,9 @@ public class ScoutingForm extends LockedSizeJPanel {
 		for (ScoutingFormTab tab : tabs) {
 			output += tab.getData();
 		}
-		
+
 		output += "name," + scoutName;
-		
+
 		System.out.println(output);
 
 		return output;
@@ -239,6 +238,7 @@ public class ScoutingForm extends LockedSizeJPanel {
 		return scoutName;
 	}
 
+	@SuppressWarnings("rawtypes")
 	public static void setUIFont(javax.swing.plaf.FontUIResource f) {
 		java.util.Enumeration keys = UIManager.getDefaults().keys();
 		while (keys.hasMoreElements()) {

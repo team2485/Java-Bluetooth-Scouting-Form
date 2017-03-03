@@ -47,7 +47,7 @@ public class BluetoothPanel extends JPanel implements ListCellRenderer<ExpandedR
 	private JList<ExpandedRemoteDevice> deviceList;
 	private JTextArea console;
 
-	private JButton sendButton, refreshButton, clearConsoleButton;
+	private JButton sendButton, refreshButton, clearConsoleButton, returnToFormButton;
 
 	private JLabel status;
 
@@ -84,7 +84,7 @@ public class BluetoothPanel extends JPanel implements ListCellRenderer<ExpandedR
 		new PaintThread().start();
 
 		BluetoothActionListener.startLocalScan();
-		
+
 		System.out.println("Preparing local records");
 
 		File loc = new File(System.getProperty("user.home") + "/ScoutingRecords");
@@ -95,7 +95,7 @@ public class BluetoothPanel extends JPanel implements ListCellRenderer<ExpandedR
 		} else {
 			System.out.println("Scouting record structure exists");
 		}
-		
+
 		try {
 			BufferedWriter bw = new BufferedWriter(new FileWriter(new File(loc, fileName)));
 			bw.write(dataToSend);
@@ -129,8 +129,6 @@ public class BluetoothPanel extends JPanel implements ListCellRenderer<ExpandedR
 	}
 
 	private void customPaint() {
-
-		// System.out.println("Is Busy: " + BluetoothSystem.isBusy());
 
 		if (BluetoothSystem.isBusy()) {
 			refreshButton.setText("Please Wait");
@@ -224,6 +222,7 @@ public class BluetoothPanel extends JPanel implements ListCellRenderer<ExpandedR
 		sendButton = new JButton("Send Data");
 		refreshButton = new JButton("Scan For Devices");
 		clearConsoleButton = new JButton("Clear Console");
+		returnToFormButton = new JButton("Return to Form");
 
 		sendButton.setActionCommand("sendButton");
 		sendButton.addActionListener(new BluetoothActionListener());
@@ -237,9 +236,14 @@ public class BluetoothPanel extends JPanel implements ListCellRenderer<ExpandedR
 		clearConsoleButton.addActionListener(new BluetoothActionListener());
 		clearConsoleButton.setToolTipText("Clear the console window");
 
+		returnToFormButton.setActionCommand("returnButton");
+		returnToFormButton.addActionListener(new BluetoothActionListener());
+		returnToFormButton.setToolTipText("Return to the scouting form to scout again");
+
 		buttonPanel.add(sendButton);
 		buttonPanel.add(refreshButton);
 		buttonPanel.add(clearConsoleButton);
+		buttonPanel.add(returnToFormButton);
 
 		this.add(buttonPanel, BorderLayout.SOUTH);
 	}
@@ -266,10 +270,12 @@ public class BluetoothPanel extends JPanel implements ListCellRenderer<ExpandedR
 
 		ExpandedRemoteDevice[] alreadyPaired = BluetoothSystem.pairedDevices();
 
-		System.out.println("Scan");
-
 		if (alreadyPaired.length == 0) {
 			System.out.println("Not currently paired");
+			return;
+		}
+		
+		if (stop) {
 			return;
 		}
 
@@ -283,6 +289,10 @@ public class BluetoothPanel extends JPanel implements ListCellRenderer<ExpandedR
 		if (input == JOptionPane.YES_OPTION) {
 
 			for (ExpandedRemoteDevice curDevice : alreadyPaired) {
+
+				if (stop) {
+					return;
+				}
 
 				System.out.println("****************");
 
@@ -304,15 +314,23 @@ public class BluetoothPanel extends JPanel implements ListCellRenderer<ExpandedR
 
 		ExpandedRemoteDevice[] newDevices = BluetoothSystem.discoverDevices();
 
-		System.out.println("Remote scaan finished");
+		System.out.println("Remote scan finished");
 
 		if (newDevices.length == 0) {
+			return;
+		}
+		
+		if (stop) {
 			return;
 		}
 
 		addToList(newDevices);
 
 		for (ExpandedRemoteDevice curDevice : newDevices) {
+
+			if (stop) {
+				return;
+			}
 
 			System.out.println("****************");
 
@@ -415,10 +433,15 @@ public class BluetoothPanel extends JPanel implements ListCellRenderer<ExpandedR
 	}
 
 	public void shutdownBluetooth() {
-		System.setOut(oldPrintStream);
-		System.setErr(oldErrorStream);
 
 		stop = true;
+		
+		returnToFormButton.setEnabled(false);
+
+		BluetoothSystem.shutdown();
+
+		System.setOut(oldPrintStream);
+		System.setErr(oldErrorStream);
 
 		frame.dispose();
 
