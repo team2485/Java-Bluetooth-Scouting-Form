@@ -18,7 +18,7 @@ import javax.swing.border.EmptyBorder;
 public class QuestionAligner extends Question {
 
 	private Question[] questions;
-	private final int HORIZONTAL_SPACING = 15;
+	private final int HORIZONTAL_SPACING = 5;
 	private final int VERTICAL_PADDING = 10;
 
 	public QuestionAligner(Question... questions) {

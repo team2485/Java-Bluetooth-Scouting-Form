@@ -39,6 +39,8 @@ public class BluetoothSystem implements DiscoveryListener {
 	private static ExpandedRemoteDevice currentDevice;
 	private static DiscoveryAgent agent;
 
+	private static int serviceSearchID;
+
 	private static boolean isBusy;
 
 	private static BluetoothSystem getInstance() {
@@ -50,7 +52,15 @@ public class BluetoothSystem implements DiscoveryListener {
 		}
 
 		return instance;
+	}
 
+	public static void shutdown() {
+		System.out.println("Shutting down bluetooth system...");
+		agent.cancelInquiry(getInstance());
+		agent.cancelServiceSearch(serviceSearchID);
+		isBusy = false;
+		instance = null;
+		System.out.println("Bluetooth system shut down");
 	}
 
 	public static ExpandedRemoteDevice[] pairedDevices() {
@@ -212,7 +222,7 @@ public class BluetoothSystem implements DiscoveryListener {
 		try {
 			System.out.println("Searching Services On: " + deviceName);
 
-			agent.searchServices(attrIDs, uuidSet, device.getRemoteDevice(), getInstance());
+			serviceSearchID = agent.searchServices(attrIDs, uuidSet, device.getRemoteDevice(), getInstance());
 
 			System.out.println("Started Search on: " + device.getRemoteDevice());
 
@@ -347,9 +357,9 @@ public class BluetoothSystem implements DiscoveryListener {
 			OutputStream outputStream = null;
 			Operation putOperation = null;
 			ClientSession cs = null;
-			
+
 			boolean success = false;
-			
+
 			try {
 				// Send a request to the server to open a connection
 				connection = Connector.open(serverURL);

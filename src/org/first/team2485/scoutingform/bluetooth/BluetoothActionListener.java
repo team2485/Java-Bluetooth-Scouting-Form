@@ -2,10 +2,6 @@ package org.first.team2485.scoutingform.bluetooth;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 
 import javax.swing.JOptionPane;
 
@@ -40,6 +36,9 @@ public class BluetoothActionListener implements ActionListener {
 
 		case "clearButton":
 			bluetoothPanel.getConsole().setText("");
+			break;
+		case "returnButton":
+			new ReturnThread().start();
 			break;
 		}
 	}
@@ -87,6 +86,21 @@ public class BluetoothActionListener implements ActionListener {
 			}
 
 			bluetoothPanel.shutdownBluetooth();
+		}
+	}
+
+	class ReturnThread extends Thread {
+
+		@Override
+		public void run() {
+
+			int result = JOptionPane.showConfirmDialog(null,
+					"Are you sure you want to go back to the form?\nThe current data will not be sent.",
+					"Confirm Return to Form", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null);
+
+			if (result == JOptionPane.YES_OPTION) {
+				bluetoothPanel.shutdownBluetooth();
+			}
 		}
 	}
 

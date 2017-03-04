@@ -3,7 +3,6 @@ package org.first.team2485.scoutingform;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.event.MouseWheelEvent;
 
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
@@ -16,7 +15,6 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import org.first.team2485.scoutingform.gui.LockedSizeJPanel;
-import org.first.team2485.scoutingform.gui.addons.GamblingPanel;
 //import org.first.team2485.scoutingform.gui.addons.GamblingPanel;
 import org.first.team2485.scoutingform.gui.addons.LookAndFeelSelector;
 import org.first.team2485.scoutingform.questions.CheckboxQuestion;
@@ -28,10 +26,8 @@ import org.first.team2485.scoutingform.questions.QuestionSeperator;
 import org.first.team2485.scoutingform.questions.SpinnerQuestion;
 
 /**
- * 
  * @author Jeremy McCulloch
  * @author Troy Appel
- *
  */
 @SuppressWarnings("serial")
 public class ScoutingForm extends LockedSizeJPanel {
@@ -187,6 +183,7 @@ public class ScoutingForm extends LockedSizeJPanel {
 						),
 				new QuestionSeperator(),
 				new QuestionAligner(
+<<<<<<< HEAD
 						new MultipleChoiceQuestion (new String[] {"Ground Intake (Fuel)",
 								"A measurement of the reliability and speed of FUEL intake from the ground."
 						}, "groundIntake", true, "Useless", "Bad", "Average", "Good", "Excellent", "N/A"),
@@ -198,6 +195,11 @@ public class ScoutingForm extends LockedSizeJPanel {
 								+ "<br>A HOPPER is a pair of containers located just outside the FIELD and used "
 								+ "to store FUEL at the start ofthe MATCH.</html>"
 						}, "hopperIntake", true, "Useless", "Bad", "Average", "Good", "Excellent", "N/A"),
+=======
+						new MultipleChoiceQuestion ("Ground Intake (Fuel)", "groundIntake", true, "Useless", "Unreliable", "Average", "Good", "Excellent", "N/A"),
+						new MultipleChoiceQuestion ("Loading Station Intake (Fuel)", "loadingStationIntake", true, "Useless", "Unreliable", "Average", "Good", "Excellent", "N/A"),
+						new MultipleChoiceQuestion ("Hopper Intake (Fuel)", "hopperIntake", true, "Useless", "Unreliable", "Average", "Good", "Excellent", "N/A"),
+>>>>>>> 5fd585b7ad79e3f84347f01cac783ace6ade14cd
 						new MultipleChoiceQuestion("Shooter Accuracy", "shooterAccuracy", true, "Unreliable", "Sketchy",
 								"Average", "Consistent", "Reliable", "N/A"),
 						new MultipleChoiceQuestion("Shooter Speed", "shooterSpeed", true, "Snail", "Slow", "Average",
@@ -247,7 +249,8 @@ public class ScoutingForm extends LockedSizeJPanel {
 		this.tabs = tabs;
 		for (ScoutingFormTab tab : tabs) {
 			JScrollPane currPane = new JScrollPane(tab);
-			currPane.setWheelScrollingEnabled(false); //This doesnt work :)
+			currPane.setWheelScrollingEnabled(true); 
+			currPane.getVerticalScrollBar().setUnitIncrement(16); // sets scroll speed
 			tabbedPane.add(tab.getName(), currPane);
 		}
 
@@ -255,7 +258,8 @@ public class ScoutingForm extends LockedSizeJPanel {
 
 		outerPanel.add(this, BorderLayout.CENTER);
 		outerPanel.add(new JScrollPane(new LookAndFeelSelector(this)), BorderLayout.WEST);
-		outerPanel.add(new JScrollPane(new GamblingPanel(this)), BorderLayout.EAST);
+		// outerPanel.add(new JScrollPane(new GamblingPanel(this)),
+		// BorderLayout.EAST);
 
 		JPanel buttonPane = new JPanel();
 		buttonPane.setLayout(new FlowLayout());
@@ -285,9 +289,9 @@ public class ScoutingForm extends LockedSizeJPanel {
 		for (ScoutingFormTab tab : tabs) {
 			output += tab.getData();
 		}
-		
-		output += "name," + this.scoutName;
-		
+
+		output += "name," + scoutName;
+
 		System.out.println(output);
 
 		return output;
@@ -316,6 +320,7 @@ public class ScoutingForm extends LockedSizeJPanel {
 		return scoutName;
 	}
 
+	@SuppressWarnings("rawtypes")
 	public static void setUIFont(javax.swing.plaf.FontUIResource f) {
 		java.util.Enumeration keys = UIManager.getDefaults().keys();
 		while (keys.hasMoreElements()) {
