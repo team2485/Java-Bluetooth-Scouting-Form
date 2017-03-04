@@ -183,7 +183,6 @@ public class ScoutingForm extends LockedSizeJPanel {
 						),
 				new QuestionSeperator(),
 				new QuestionAligner(
-<<<<<<< HEAD
 						new MultipleChoiceQuestion (new String[] {"Ground Intake (Fuel)",
 								"A measurement of the reliability and speed of FUEL intake from the ground."
 						}, "groundIntake", true, "Useless", "Bad", "Average", "Good", "Excellent", "N/A"),
@@ -195,11 +194,7 @@ public class ScoutingForm extends LockedSizeJPanel {
 								+ "<br>A HOPPER is a pair of containers located just outside the FIELD and used "
 								+ "to store FUEL at the start ofthe MATCH.</html>"
 						}, "hopperIntake", true, "Useless", "Bad", "Average", "Good", "Excellent", "N/A"),
-=======
-						new MultipleChoiceQuestion ("Ground Intake (Fuel)", "groundIntake", true, "Useless", "Unreliable", "Average", "Good", "Excellent", "N/A"),
-						new MultipleChoiceQuestion ("Loading Station Intake (Fuel)", "loadingStationIntake", true, "Useless", "Unreliable", "Average", "Good", "Excellent", "N/A"),
-						new MultipleChoiceQuestion ("Hopper Intake (Fuel)", "hopperIntake", true, "Useless", "Unreliable", "Average", "Good", "Excellent", "N/A"),
->>>>>>> 5fd585b7ad79e3f84347f01cac783ace6ade14cd
+=
 						new MultipleChoiceQuestion("Shooter Accuracy", "shooterAccuracy", true, "Unreliable", "Sketchy",
 								"Average", "Consistent", "Reliable", "N/A"),
 						new MultipleChoiceQuestion("Shooter Speed", "shooterSpeed", true, "Snail", "Slow", "Average",
