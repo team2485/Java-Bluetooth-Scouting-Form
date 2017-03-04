@@ -43,7 +43,7 @@ public class QuestionAligner extends Question {
 				
 				Component curComp = j < questionComps.length ? questionComps[j]
 						: Box.createRigidArea(new Dimension(1, 1));
-
+				
 				if (curComp.getPreferredSize().width > widths[j]) {
 					widths[j] = curComp.getPreferredSize().width;
 				}
@@ -78,6 +78,8 @@ public class QuestionAligner extends Question {
 				b.setAlignmentX(Box.LEFT_ALIGNMENT);
 				
 				this.setBorder(new EmptyBorder(VERTICAL_PADDING, 0, VERTICAL_PADDING, 0));
+				
+				b.setToolTipText(questions[i].getToolTipText());
 				
 				this.add(b, c);
 			}

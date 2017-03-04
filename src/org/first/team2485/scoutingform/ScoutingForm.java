@@ -111,7 +111,7 @@ public class ScoutingForm extends LockedSizeJPanel {
 				new MultipleChoiceQuestion(new String[] {"Gear State",
 						"<html>RAN OUT OF TIME: The gear is on the LIFT, but was not pulled into the AIRSHIP before AUTONOMOUS ended."
 						+ "<br>DROPPED: The team attempted to collect a gear in AUTO, but the gear was dropped on the floor."
-						+ "<br>Failed: The team attempted to collect a gear in AUTO, but failed."
+						+ "<br>FAILED: The team attempted to collect a gear in AUTO, but failed."
 						+ "<br>SUCCESS: The PILOT collected a gear in AUTO"
 				}, "gearState", false, "Did not attempt", "Ran out of time", "Dropped", "Failed", "Success"),
 				new MultipleChoiceQuestion("Gear Hook Used", "autoGearPos", false, "Boiler Side Hook", "Center Hook", "Feeder Side Hook")		
@@ -123,22 +123,26 @@ public class ScoutingForm extends LockedSizeJPanel {
 						+ "to store FUEL at the start ofthe MATCH. "
 						+ "<br>TRIGGERING a hopper is pressing the button on the hopper.</html>"}, "teleopHoppersDumped", true, "0", "1", "2", "3", "4", "5"),
 				new QuestionSeperator(),
-				new SpinnerQuestion("Gears Scored on Boiler Side Hook", "gearsScoredBoiler", 0, 21),
-				new SpinnerQuestion("Gears Scored on Center Hook", "gearsScoredCenter", 0, 21),
-				new SpinnerQuestion("Gears Scored on Feeder Side Hook", "gearsScoredFeeder", 0, 21),
+				new QuestionAligner(
+					new SpinnerQuestion("Gears Scored on Boiler Side Hook", "gearsScoredBoiler", 0, 21),
+					new SpinnerQuestion("Gears Scored on Center Hook", "gearsScoredCenter", 0, 21),
+					new SpinnerQuestion("Gears Scored on Feeder Side Hook", "gearsScoredFeeder", 0, 21)
+				),
 				new QuestionSeperator(),
-				new SpinnerQuestion(new String[] {"Gears Mismanaged on Boiler Side Hook",
-						"<html>Increment this whenever a team struggles with the Boiler Side Hook in any way, besides simply missing the hook."
-						+ "<br>This include dropping a GEAR, and jamming on the LIFT.</html>"
-				}, "gearsFailedBoiler", 0, 999),
-				new SpinnerQuestion(new String[] {"Gears Mismanaged on Center Hook",
-						"<html>Increment this whenever a team struggles with the Center Hook in any way, besides simply missing the hook."
-						+ "<br>This include dropping a GEAR, and jamming on the LIFT.</html>"
-				}, "gearsFailedCenter", 0, 999),
-				new SpinnerQuestion(new String[] {"Gears Mismanaged on Feeder Side Hook",
-						"<html>Increment this whenever a team struggles with the Feeder Side Hook in any way, besides simply missing the hook."
-						+ "<br>This include dropping a GEAR, and jamming on the LIFT.</html>"
-				}, "gearsFailedFeeder", 0, 999),
+				new QuestionAligner(
+					new SpinnerQuestion(new String[] {"Gears Mismanaged on Boiler Side Hook",
+							"<html>Increment this whenever a team struggles with the Boiler Side Hook in any way, besides simply missing the hook."
+							+ "<br>This include dropping a GEAR, and jamming on the LIFT.</html>"
+					}, "gearsFailedBoiler", 0, 999),
+					new SpinnerQuestion(new String[] {"Gears Mismanaged on Center Hook",
+							"<html>Increment this whenever a team struggles with the Center Hook in any way, besides simply missing the hook."
+							+ "<br>This include dropping a GEAR, and jamming on the LIFT.</html>"
+					}, "gearsFailedCenter", 0, 999),
+					new SpinnerQuestion(new String[] {"Gears Mismanaged on Feeder Side Hook",
+							"<html>Increment this whenever a team struggles with the Feeder Side Hook in any way, besides simply missing the hook."
+							+ "<br>This include dropping a GEAR, and jamming on the LIFT.</html>"
+					}, "gearsFailedFeeder", 0, 999)
+				),
 				new QuestionSeperator(),
 				new SpinnerQuestion(new String[] {"Average Time per Gear Cycle (seconds)",
 						"Approximate time, in seconds, it takes for the team to move across the field, collect a GEAR, return, and deposit it."
@@ -165,9 +169,9 @@ public class ScoutingForm extends LockedSizeJPanel {
 				new SpinnerQuestion("How long did they play defense? (Seconds)", "defenseTime", 0, 135),
 				new QuestionSeperator(),
 				new MultipleChoiceQuestion(new String[] {"Climbing",
-						"CLIMBED: Successfully climbed the ROPE and depressed the TOUCHPAD."
-						+ "FELL OFF: The robot lost grip on the rope and was unable to climb again."
-						+ "FAILED: The robot either failed to latch on to the rope or failed to fully climb and depress the touchpad."
+						"<html>CLIMBED: Successfully climbed the ROPE and depressed the TOUCHPAD."
+						+ "<br>FELL OFF: The robot lost grip on the rope and was unable to climb again."
+						+ "<br>FAILED: The robot either failed to latch on to the rope or failed to fully climb and depress the touchpad.</html>"
 				}, "climber", false, "Climbed", "Fell Off", "Failed", "No Attempt"),
 				new SpinnerQuestion("Time from beginning of climb to end of match (seconds)", "climberTime", 0, 135)
 		);
