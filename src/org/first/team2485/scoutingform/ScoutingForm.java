@@ -168,7 +168,8 @@ public class ScoutingForm extends LockedSizeJPanel {
 		this.tabs = tabs;
 		for (ScoutingFormTab tab : tabs) {
 			JScrollPane currPane = new JScrollPane(tab);
-			currPane.setWheelScrollingEnabled(false); // This doesnt work :)
+			currPane.setWheelScrollingEnabled(true); 
+			currPane.getVerticalScrollBar().setUnitIncrement(16); // sets scroll speed
 			tabbedPane.add(tab.getName(), currPane);
 		}
 
