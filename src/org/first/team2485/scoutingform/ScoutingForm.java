@@ -85,56 +85,115 @@ public class ScoutingForm extends LockedSizeJPanel {
 		);
 		
 		ScoutingFormTab auto = new ScoutingFormTab("Automous", 
-				new CheckboxQuestion("Did they...", "autoAction", "Cross the Baseline", "Enter Opponents Launchpad"),
-				new MultipleChoiceQuestion ("Hoppers Triggered in Auto", "autoHoppersDumped", true, "0", "1", "2", "3", "4"),
-				new MultipleChoiceQuestion ("Hopper Reload", "hopperReload", false, "Yes", "No"),
+				new CheckboxQuestion(new String[] {"Did they...", "<html>CROSSING THE BASELINE means moving in front of the line defined"
+						+ " by the back face of the airship."
+						+ "<br>ENTERING THE OPPONENT'S LAUNCHPAD is crossing the line marked by the "
+						+ "NEAR PLANE of the OPPONENT'S LAUNCHPAD. This is a foul. </html>"},
+						"autoAction", "Cross the Baseline", "Enter Opponents Launchpad"),
+				new MultipleChoiceQuestion (new String[] {"Hoppers Triggered in Auto", 
+						"<html>A HOPPER is a pair of containers located just outside the FIELD and used "
+						+ "to store FUEL at the start ofthe MATCH. "
+						+ "<br>TRIGGERING a hopper is pressing the button on the hopper.</html>"}, "autoHoppersDumped", true, "0", "1", "2", "3", "4"),
+				new MultipleChoiceQuestion (new String[] {"Hopper Reload",
+						"<html>A HOPPER is a pair of containers located just outside the FIELD and used "
+						+ "to store FUEL at the start ofthe MATCH. "
+						+ "<br>Mark \"Yes\" if the team intook balls from a HOPPER during AUTO."
+				}, "hopperReload", false, "Yes", "No"),
 
 				new QuestionSeperator(),
 				new QuestionAligner(
-						new SpinnerQuestion("Low Goals", "autoLow", 0),
-						new SpinnerQuestion("High Goals", "autoHigh", 0)
+						new SpinnerQuestion("Low Goals Made in AUTO", "autoLow", 0),
+						new SpinnerQuestion("High Goals Made in AUTO", "autoHigh", 0)
 				),
 				new QuestionSeperator(),
 				new LocationQuestion("If they shot high goals, where did they shoot from?", "autoShootingPos", "field.png"),
 				new QuestionSeperator(),
-				new MultipleChoiceQuestion("Gear State", "gearState", false, "Did not attempt", "Ran out of time", "Dropped", "Success"),
+				new MultipleChoiceQuestion(new String[] {"Gear State",
+						"<html>RAN OUT OF TIME: The gear is on the LIFT, but was not pulled into the AIRSHIP before AUTONOMOUS ended."
+						+ "<br>DROPPED: The team attempted to collect a gear in AUTO, but the gear was dropped on the floor."
+						+ "<br>Failed: The team attempted to collect a gear in AUTO, but failed."
+						+ "<br>SUCCESS: The PILOT collected a gear in AUTO"
+				}, "gearState", false, "Did not attempt", "Ran out of time", "Dropped", "Failed", "Success"),
 				new MultipleChoiceQuestion("Gear Hook Used", "autoGearPos", false, "Boiler Side Hook", "Center Hook", "Feeder Side Hook")		
 		);
 
 		ScoutingFormTab duringMatch = new ScoutingFormTab("During Match",
-				new MultipleChoiceQuestion ("Hoppers Triggered in Teleop", "teleopHoppersDumped", true, "0", "1", "2", "3", "4"),
+				new MultipleChoiceQuestion (new String[] {"Hoppers Triggered in Teleoperated", 
+						"<html>A HOPPER is a pair of containers located just outside the FIELD and used "
+						+ "to store FUEL at the start ofthe MATCH. "
+						+ "<br>TRIGGERING a hopper is pressing the button on the hopper.</html>"}, "teleopHoppersDumped", true, "0", "1", "2", "3", "4", "5"),
 				new QuestionSeperator(),
 				new SpinnerQuestion("Gears Scored on Boiler Side Hook", "gearsScoredBoiler", 0, 21),
 				new SpinnerQuestion("Gears Scored on Center Hook", "gearsScoredCenter", 0, 21),
 				new SpinnerQuestion("Gears Scored on Feeder Side Hook", "gearsScoredFeeder", 0, 21),
 				new QuestionSeperator(),
-				new SpinnerQuestion("Average Time per Gear Cycle", "gearCycleTime", 0, 135),
+				new SpinnerQuestion(new String[] {"Gears Mismanaged on Boiler Side Hook",
+						"<html>Increment this whenever a team struggles with the Boiler Side Hook in any way, besides simply missing the hook."
+						+ "<br>This include dropping a GEAR, and jamming on the LIFT.</html>"
+				}, "gearsFailedBoiler", 0, 999),
+				new SpinnerQuestion(new String[] {"Gears Mismanaged on Center Hook",
+						"<html>Increment this whenever a team struggles with the Center Hook in any way, besides simply missing the hook."
+						+ "<br>This include dropping a GEAR, and jamming on the LIFT.</html>"
+				}, "gearsFailedCenter", 0, 999),
+				new SpinnerQuestion(new String[] {"Gears Mismanaged on Feeder Side Hook",
+						"<html>Increment this whenever a team struggles with the Feeder Side Hook in any way, besides simply missing the hook."
+						+ "<br>This include dropping a GEAR, and jamming on the LIFT.</html>"
+				}, "gearsFailedFeeder", 0, 999),
+				new QuestionSeperator(),
+				new SpinnerQuestion(new String[] {"Average Time per Gear Cycle (seconds)",
+						"Approximate time, in seconds, it takes for the team to move across the field, collect a GEAR, return, and deposit it."
+				}, "gearCycleTime", 0, 135),
 				new QuestionSeperator(),
 				new QuestionAligner(
-						new SpinnerQuestion("Low Goals", "teleopLow", 0),
-						new SpinnerQuestion("High Goals", "teleopHigh", 0)
+						new SpinnerQuestion("Low Goals Made in TELEOPERATED", "teleopLow", 0),
+						new SpinnerQuestion("High Goals Made in TELEOPERATED", "teleopHigh", 0)
 				),
-				new SpinnerQuestion("Number of Fuel Cycles", "shootingCycles", 0, 99),
-				new SpinnerQuestion("Average Time per Fuel Cycle", "shootingCycleTime", 0, 135),
-				new LocationQuestion("Where does this robot shoot from?", "teleopShootingPos", "field.png"),
+				new SpinnerQuestion(new String[] {"Number of Fuel Cycles",
+						"The number of times a team set up and attempted to shoot."
+				}, "shootingCycles", 0, 99),
+				new SpinnerQuestion(new String[] {"Average Time per Fuel Cycle (seconds)",
+						"Approximate time for a team to collect FUEL and shoot."
+				},"shootingCycleTime", 0, 135),
+				new LocationQuestion(new String[] {"Where does this robot shoot from in TELEOP?",
+						"If they shot from the same place multiple times, you only need one flag."
+				}, "teleopShootingPos", "field.png"),
 				new QuestionSeperator(),
-				new MultipleChoiceQuestion("What type of defense did they play?", "defenseType", false, "Purposeful", "On the way", "None"),			
-				new SpinnerQuestion("How long did they play defense?", "defenseTime", 0, 135),
+				new MultipleChoiceQuestion(new String[] {"What type of defense did they play?",
+						"<html>PURPOSEFUL: Dedicated defense, accomplishing few other actions in the meantime."
+						+ "<br>ON THE WAY: Harasses opponent's robots while moving between tasks.</html>"
+				}, "defenseType", false, "Purposeful", "On the way", "None"),			
+				new SpinnerQuestion("How long did they play defense? (Seconds)", "defenseTime", 0, 135),
 				new QuestionSeperator(),
-				new MultipleChoiceQuestion("Climbing", "climber", false, "Climbed", "Fell Off", "Ran Out Of Time", "No Attempt"),
-				new SpinnerQuestion("Time from beginning of climb to end of match", "climberTime", 0, 135)
+				new MultipleChoiceQuestion(new String[] {"Climbing",
+						"CLIMBED: Successfully climbed the ROPE and depressed the TOUCHPAD."
+						+ "FELL OFF: The robot lost grip on the rope and was unable to climb again."
+						+ "FAILED: The robot either failed to latch on to the rope or failed to fully climb and depress the touchpad."
+				}, "climber", false, "Climbed", "Fell Off", "Failed", "No Attempt"),
+				new SpinnerQuestion("Time from beginning of climb to end of match (seconds)", "climberTime", 0, 135)
 		);
 
 		ScoutingFormTab postMatch = new ScoutingFormTab("Post Match",
 				new QuestionAligner(
-						new MultipleChoiceQuestion("Ground Intake (Gear)", "groundIntakeGear", true, "Useless", "Unreliable", "Average", "Good", "Excellent", "N/A"),
-						new MultipleChoiceQuestion("Loading Station Intake (Gear)", "loadingStationIntakeGear", true, "Useless", "Unreliable", "Average", "Good", "Excellent", "N/A")
+						new MultipleChoiceQuestion(new String[] {"Ground Intake (Gear)",
+								"A measurement of the reliability and speed of GEAR intake from the ground."
+						}, "groundIntakeGear", true, "Useless", "Bad", "Average", "Good", "Excellent", "N/A"),
+						new MultipleChoiceQuestion(new String[] {"Loading Station Intake (Gear)",
+								"A measurement of the reliability and speed of GEAR intake from the LOADING STATION."
+						}, "loadingStationIntakeGear", true, "Useless", "Bad", "Average", "Good", "Excellent", "N/A")
 						),
 				new QuestionSeperator(),
 				new QuestionAligner(
-						new MultipleChoiceQuestion ("Ground Intake (Fuel)", "groundIntake", true, "Useless", "Unreliable", "Average", "Good", "Excellent", "N/A"),
-						new MultipleChoiceQuestion ("Loading Station Intake (Fuel)", "loadingStationIntake", true, "Useless", "Unreliable", "Average", "Good", "Excellent", "N/A"),
-						new MultipleChoiceQuestion ("Hopper Intake (Fuel)", "hopperIntake", true, "Useless", "Unreliable", "Average", "Good", "Excellent", "N/A"),
+						new MultipleChoiceQuestion (new String[] {"Ground Intake (Fuel)",
+								"A measurement of the reliability and speed of FUEL intake from the ground."
+						}, "groundIntake", true, "Useless", "Bad", "Average", "Good", "Excellent", "N/A"),
+						new MultipleChoiceQuestion (new String[] {"Loading Station Intake (Fuel)",
+								"A measurement of the reliability and speed of FUEL intake from the LOADING STATION."
+						}, "loadingStationIntake", true, "Useless", "Bad", "Average", "Good", "Excellent", "N/A"),
+						new MultipleChoiceQuestion (new String[] {"Hopper Intake (Fuel)",
+								"<html>A measurement of the reliability and speed of FUEL intake from a HOPPER."
+								+ "<br>A HOPPER is a pair of containers located just outside the FIELD and used "
+								+ "to store FUEL at the start ofthe MATCH.</html>"
+						}, "hopperIntake", true, "Useless", "Bad", "Average", "Good", "Excellent", "N/A"),
 						new MultipleChoiceQuestion("Shooter Accuracy", "shooterAccuracy", true, "Unreliable", "Sketchy",
 								"Average", "Consistent", "Reliable", "N/A"),
 						new MultipleChoiceQuestion("Shooter Speed", "shooterSpeed", true, "Snail", "Slow", "Average",
@@ -142,18 +201,24 @@ public class ScoutingForm extends LockedSizeJPanel {
 						),
 				new QuestionSeperator(),
 				new QuestionAligner(	
-						new MultipleChoiceQuestion("Manueverability", "manueverability", true, "Sluggish", "Unresponsive",
+						new MultipleChoiceQuestion(new String[] {"Manueverability",
+								"A measurement of the general alignment ability and speed of the robot"
+						}, "manueverability", true, "Sluggish", "Unresponsive",
 								"Average", "Responsive", "Nimble"),
-						new MultipleChoiceQuestion("Driver Skill", "driverSkill", true, "Hopeless", "Bad", "Average", "Skilled", "God-like"),
-						new MultipleChoiceQuestion("Overall Impression", "overall", true, "Do not pick", "Decent", "Average",
-								"Good", "Badass")),
+						new MultipleChoiceQuestion(new String[] {"Driver Skill",
+								"A measurement of how intentional and practiced the drive team appears."
+						}, "driverSkill", true, "Hopeless", "Bad", "Average", "Skilled", "God-like"),
+						new MultipleChoiceQuestion("Overall Impression", "overall", true, "Do not pick", "Mediocre", "Average",
+								"Good", "Incredible")),
 				new QuestionSeperator(),
-				new QuestionAligner(
-						new SpinnerQuestion("How many tech fouls did they get?", "techFouls", 0, 99),
-						new SpinnerQuestion("How many other fouls did they get?", "normalFouls", 0, 99)
-				),
-				new MultipleChoiceQuestion("Did they break down?", "breakDown", false, "Yes", "No"),
-				new FreeResponseQuestion("Comments", "comments")
+				new MultipleChoiceQuestion(new String[] {"Did they break down?",
+						"<html>Check this box if the robot was on the field, but unable to operate due to jamming/disconnection from the FMS/physical damage."
+						+ "<br>Please mark jams regarding GEARS and LIFTS in the appropriate section of the \"During Match\" tab."
+						+ "<br>Please provide more information about the nature of a break-down in comments.</html>"
+				}, "breakDown", false, "Yes", "No"),
+				new FreeResponseQuestion(new String[] {"Comments",
+						"General comments, strategic information not defined by the questions above, etc."
+				}, "comments")
 		);
 		
 		//@formatter:on
