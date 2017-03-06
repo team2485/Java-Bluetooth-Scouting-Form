@@ -38,18 +38,6 @@ public class ScoutingFormTab extends JPanel {
 		this.questions = questions;
 		
 		
-		this.addMouseWheelListener(new MouseWheelListener() {
-			
-			@Override
-			public void mouseWheelMoved(MouseWheelEvent e) {
-				Rectangle oldRect = myself.getVisibleRect();
-				myself.scrollRectToVisible(new Rectangle(oldRect.x, oldRect.y + e.getUnitsToScroll(), oldRect.width, oldRect.height));
-
-
-			}
-		});
-		
-		
 	}
 	
 	public String getName() {
