@@ -78,8 +78,6 @@ public class LookAndFeelSelector extends LockedSizeJPanel implements ActionListe
 					i++;
 				}
 			}
-			
-			System.out.println(shortName);
 
 			JRadioButton radioButton = new JRadioButton(shortName);
 			radioButton.setToolTipText(fullName);
@@ -88,8 +86,6 @@ public class LookAndFeelSelector extends LockedSizeJPanel implements ActionListe
 
 			buttonGroup.add(radioButton);
 			buttonPanel.add(radioButton, BorderLayout.CENTER);
-			
-			System.out.println(buttonGroup.getButtonCount());
 
 			if (fullName.contains(UIManager.getLookAndFeel().getClass().getName())) {
 				buttonGroup.setSelected(radioButton.getModel(), true);
@@ -126,7 +122,7 @@ public class LookAndFeelSelector extends LockedSizeJPanel implements ActionListe
 					"Restart Required", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null);
 			
 			if (input == JOptionPane.YES_OPTION) {
-				ScoutingForm.scoutingForm.restart();
+				ScoutingForm.scoutingForm.restart(true);
 			}
 		}
 	}

@@ -30,7 +30,7 @@ public class SubmitButton extends JButton implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		
 		String dataToSend = form.submit();
-		String fileName = "ScoutingData~" + form.getScoutName() + "^" + System.currentTimeMillis() + ".csv";
+		String fileName = "ScoutingData~" + form.getScoutName() + "^" + System.currentTimeMillis() + ".sfd";
 		
 		new BluetoothPanel(fileName, dataToSend);
 		

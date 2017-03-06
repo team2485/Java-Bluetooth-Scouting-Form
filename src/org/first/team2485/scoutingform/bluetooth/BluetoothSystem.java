@@ -326,8 +326,8 @@ public class BluetoothSystem implements DiscoveryListener {
 
 				System.out.println("Is PIM: " + (serviceName.getValue().toString()).contains("PIM Item Transfer"));
 
-				if (serviceName.getValue().equals("OBEX Object Push")
-						|| serviceName.getValue().toString().contains("PIM Item Transfer")) {
+				if (serviceName.getValue().toString().trim().equals("OBEX Object Push")
+						|| serviceName.getValue().toString().trim().contains("PIM Item Transfer")) {
 
 					System.out.println("Has OBEX/PIM Service, setting values");
 

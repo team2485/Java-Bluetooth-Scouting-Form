@@ -27,6 +27,8 @@ public class QuestionGroup extends Question {
 	private final Question[] questions;
 
 	public QuestionGroup(String title, Question... questions) {
+		
+		super("");
 
 		this.setLayout(new BorderLayout());
 
@@ -58,6 +60,10 @@ public class QuestionGroup extends Question {
 		this.add(pane, BorderLayout.CENTER);
 		
 		this.questions = questions;
+	}
+	
+	public Question[] getQuestions() {
+		return questions;
 	}
 
 	public void update() {

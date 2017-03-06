@@ -15,13 +15,16 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import org.first.team2485.scoutingform.gui.LockedSizeJPanel;
+import org.first.team2485.scoutingform.gui.addons.GamePredictionPanel;
 //import org.first.team2485.scoutingform.gui.addons.GamblingPanel;
 import org.first.team2485.scoutingform.gui.addons.LookAndFeelSelector;
 import org.first.team2485.scoutingform.questions.CheckboxQuestion;
 import org.first.team2485.scoutingform.questions.FreeResponseQuestion;
 import org.first.team2485.scoutingform.questions.LocationQuestion;
 import org.first.team2485.scoutingform.questions.MultipleChoiceQuestion;
+import org.first.team2485.scoutingform.questions.Question;
 import org.first.team2485.scoutingform.questions.QuestionAligner;
+import org.first.team2485.scoutingform.questions.QuestionGroup;
 import org.first.team2485.scoutingform.questions.QuestionSeperator;
 import org.first.team2485.scoutingform.questions.SpinnerQuestion;
 
@@ -55,6 +58,8 @@ public class ScoutingForm extends LockedSizeJPanel {
 		}
 
 		LookAndFeelSelector.addAdditonalLaFs();
+
+		setUIFont(new javax.swing.plaf.FontUIResource("SansSerif", Font.PLAIN, 20));
 	}
 
 	/**
@@ -63,8 +68,6 @@ public class ScoutingForm extends LockedSizeJPanel {
 	public static void displayForm() {
 
 		//@formatter:off
-		
-		setUIFont(new javax.swing.plaf.FontUIResource("SansSerif", Font.PLAIN, 20));
 
 		ScoutingFormTab prematch = new ScoutingFormTab("Prematch",
 				new QuestionAligner(
@@ -77,6 +80,7 @@ public class ScoutingForm extends LockedSizeJPanel {
 		);
 		
 		ScoutingFormTab auto = new ScoutingFormTab("Automous", 
+				new LocationQuestion("Where does this robot start auto?", "startLoc", "/field.png"),
 				new CheckboxQuestion("Did they...", "autoAction", "Cross the Baseline", "Enter Opponents Launchpad"),
 				new MultipleChoiceQuestion ("Hoppers Triggered in Auto", "autoHoppersDumped", true, "0", "1", "2", "3", "4"),
 				new MultipleChoiceQuestion ("Hopper Reload", "hopperReload", false, "Yes", "No"),
@@ -87,7 +91,7 @@ public class ScoutingForm extends LockedSizeJPanel {
 						new SpinnerQuestion("High Goals", "autoHigh", 0)
 				),
 				new QuestionSeperator(),
-				new LocationQuestion("If they shot high goals, where did they shoot from?", "autoShootingPos", "field.png"),
+				new LocationQuestion("If they shot high goals, where did they shoot from?", "autoShootingPos", "/field.png"),
 				new QuestionSeperator(),
 				new MultipleChoiceQuestion("Gear State", "gearState", false, "Did not attempt", "Ran out of time", "Dropped", "Success"),
 				new MultipleChoiceQuestion("Gear Hook Used", "autoGearPos", false, "Boiler Side Hook", "Center Hook", "Feeder Side Hook")		
@@ -104,22 +108,21 @@ public class ScoutingForm extends LockedSizeJPanel {
 						new SpinnerQuestion("Low Goals", "teleopLow", 0),
 						new SpinnerQuestion("High Goals", "teleopHigh", 0)
 				),
-				new SpinnerQuestion("Number of Fuel Cycles", "shootingCycles", 0, 99),
-				new SpinnerQuestion("Average Time per Fuel Cycle", "shootingCycleTime", 0, 135),
-				new LocationQuestion("Where does this robot shoot from?", "teleopShootingPos", "field.png"),
+				new LocationQuestion("Where does this robot shoot from?", "teleopShootingPos", "/field.png"),
 				new QuestionSeperator(),
 				new MultipleChoiceQuestion("What type of defense did they play?", "defenseType", false, "Purposeful", "On the way", "None"),			
 				new SpinnerQuestion("How long did they play defense?", "defenseTime", 0, 135),
 				new QuestionSeperator(),
 				new MultipleChoiceQuestion("Climbing", "climber", false, "Climbed", "Fell Off", "Ran Out Of Time", "No Attempt"),
-				new SpinnerQuestion("Time from beginning of climb to end of match", "climberTime", 0, 135)
+				new SpinnerQuestion("Time from beginning of climb to end of match", "climberTime", 0, 135),
+				new MultipleChoiceQuestion("Does this climber seem relyable?", "climberRelyability", false, "Yes", "No")
 		);
 
 		ScoutingFormTab postMatch = new ScoutingFormTab("Post Match",
 				new QuestionAligner(
 						new MultipleChoiceQuestion("Ground Intake (Gear)", "groundIntakeGear", true, "Useless", "Unreliable", "Average", "Good", "Excellent", "N/A"),
 						new MultipleChoiceQuestion("Loading Station Intake (Gear)", "loadingStationIntakeGear", true, "Useless", "Unreliable", "Average", "Good", "Excellent", "N/A")
-						),
+				),
 				new QuestionSeperator(),
 				new QuestionAligner(
 						new MultipleChoiceQuestion ("Ground Intake (Fuel)", "groundIntake", true, "Useless", "Unreliable", "Average", "Good", "Excellent", "N/A"),
@@ -129,12 +132,15 @@ public class ScoutingForm extends LockedSizeJPanel {
 								"Average", "Consistent", "Reliable", "N/A"),
 						new MultipleChoiceQuestion("Shooter Speed", "shooterSpeed", true, "Snail", "Slow", "Average",
 								"Speedy", "Lightning", "N/A")
-						),
+				),
 				new QuestionSeperator(),
 				new QuestionAligner(	
 						new MultipleChoiceQuestion("Manueverability", "manueverability", true, "Sluggish", "Unresponsive",
 								"Average", "Responsive", "Nimble"),
 						new MultipleChoiceQuestion("Driver Skill", "driverSkill", true, "Hopeless", "Bad", "Average", "Skilled", "God-like"),
+						new MultipleChoiceQuestion("Pilot Skill", "pilotSkill", true, "Hopeless", "Bad", "Average", "Skilled", "God-like", "N/A"),
+						new MultipleChoiceQuestion("Human Player Skill", "humanPlayerSkill", true, "Hopeless", "Bad", "Average", "Skilled", "God-like", "N/A"),
+						new MultipleChoiceQuestion("Planning", "planning", false, "No plan", "Some plan", "Very clear plan"),
 						new MultipleChoiceQuestion("Overall Impression", "overall", true, "Do not pick", "Decent", "Average",
 								"Good", "Badass")),
 				new QuestionSeperator(),
@@ -155,7 +161,7 @@ public class ScoutingForm extends LockedSizeJPanel {
 
 		scoutingForm = this;
 
-		frame = new JFrame();
+		frame = new JFrame("Scouting Form");
 
 		JPanel outerPanel = new JPanel();
 		outerPanel.setLayout(new BorderLayout());
@@ -166,6 +172,7 @@ public class ScoutingForm extends LockedSizeJPanel {
 		this.tabbedPane = new JTabbedPane();
 
 		this.tabs = tabs;
+
 		for (ScoutingFormTab tab : tabs) {
 			JScrollPane currPane = new JScrollPane(tab);
 			currPane.setWheelScrollingEnabled(false); // This doesnt work :)
@@ -176,8 +183,7 @@ public class ScoutingForm extends LockedSizeJPanel {
 
 		outerPanel.add(this, BorderLayout.CENTER);
 		outerPanel.add(new JScrollPane(new LookAndFeelSelector(this)), BorderLayout.WEST);
-		// outerPanel.add(new JScrollPane(new GamblingPanel(this)),
-		// BorderLayout.EAST);
+		outerPanel.add(new JScrollPane(new GamePredictionPanel(this)), BorderLayout.EAST);
 
 		JPanel buttonPane = new JPanel();
 		buttonPane.setLayout(new FlowLayout());
@@ -197,7 +203,52 @@ public class ScoutingForm extends LockedSizeJPanel {
 		frame.pack();
 		frame.setVisible(true);
 		frame.repaint();
+	}
 
+	public Question superMegaQuestionFinder5000(String internalName) {
+		for (ScoutingFormTab tab : tabs) {
+			for (Question q : tab.getQuestions()) {
+
+				Question result = getFromSelfOrSubQuestionsIfPossibleRecursive(internalName, q);
+
+				if (result != null) {
+					return result;
+				}
+			}
+		}
+		return null;
+	}
+
+	private Question getFromSelfOrSubQuestionsIfPossibleRecursive(String internalName, Question container) {
+
+		if (container instanceof QuestionAligner) {
+
+			for (Question q : ((QuestionAligner) container).getQuestions()) {
+
+				Question result = getFromSelfOrSubQuestionsIfPossibleRecursive(internalName, q);
+
+				if (result != null) {
+					return result;
+				} else if (q.getInternalName().equals(internalName)) {
+					return q;
+				}
+			}
+		} else if (container instanceof QuestionGroup) {
+
+			for (Question q : ((QuestionGroup) container).getQuestions()) {
+
+				Question result = getFromSelfOrSubQuestionsIfPossibleRecursive(internalName, q);
+
+				if (result != null) {
+					return result;
+				} else if (q.getInternalName().equals(internalName)) {
+					return q;
+				}
+			}
+		} else {
+			return container.getInternalName().equals(internalName) ? container : null;
+		}
+		return null;
 	}
 
 	public String submit() {
@@ -207,8 +258,6 @@ public class ScoutingForm extends LockedSizeJPanel {
 		for (ScoutingFormTab tab : tabs) {
 			output += tab.getData();
 		}
-
-		output += "name," + scoutName;
 
 		System.out.println(output);
 
@@ -229,9 +278,26 @@ public class ScoutingForm extends LockedSizeJPanel {
 		}
 	}
 
-	public void restart() {
+	public void restart(boolean clearAndIncrement) {
 		frame.dispose();
-		displayForm();
+
+		if (clearAndIncrement) {
+			displayForm();
+
+			Question q = superMegaQuestionFinder5000("matchNumber");
+			System.out.println("Found: " + q.getData());
+			String data = q.getData();
+			int num = Integer.parseInt(data.substring(data.indexOf(",") + 1, data.lastIndexOf(",")));
+			System.out.println("Old match num: " + num);
+			q = new SpinnerQuestion("Match Number", "matchNumber", 0, 9999, num + 1);
+			System.out.println("q = " + q.getData());
+
+			System.out.println("global: " + superMegaQuestionFinder5000("matchNumber").getData());
+
+			GamePredictionPanel.predictionPanel.beginTimeoutForMatch(num + 1);
+		} else {
+			new ScoutingForm(tabs.clone());
+		}
 	}
 
 	public String getScoutName() {

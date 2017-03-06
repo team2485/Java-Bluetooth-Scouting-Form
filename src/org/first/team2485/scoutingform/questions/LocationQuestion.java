@@ -2,22 +2,18 @@ package org.first.team2485.scoutingform.questions;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Image;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 
@@ -27,9 +23,10 @@ import org.first.team2485.scoutingform.gui.LockedSizeJPanel;
  * @author Nicholas Contreras
  */
 
+@SuppressWarnings("serial")
 public class LocationQuestion extends Question {
 
-	private String internalName;
+	private static final String FLAG_FILE_NAME = "/flag.png";
 
 	private BufferedImage image;
 
@@ -40,37 +37,18 @@ public class LocationQuestion extends Question {
 	private JButton clearButton;
 
 	public LocationQuestion(String question, String internalName, String img) {
+		
+		super(internalName);
+
+		InputStream imgInput = this.getClass().getResourceAsStream(img);
+		InputStream flagInput = this.getClass().getResourceAsStream(FLAG_FILE_NAME);
+
 		try {
-
-			URI uri = this.getClass().getResource("").toURI();
-
-			File curFolder = new File(uri);
-
-			boolean done = false;
-
-			while (!done) {
-
-				File[] files = curFolder.listFiles();
-
-				System.out.println(curFolder);
-				
-				for (File f : files) {
-
-					if (f.getName().equals(img)) {
-						System.out.println(f);
-						image = loadImage(f.getAbsolutePath());
-						flagImage = loadImage(new File(curFolder, "flag.png").getAbsolutePath());
-						done = true;
-						break;
-					}
-				}
-				curFolder = curFolder.getParentFile();
-			}
-		} catch (URISyntaxException e) {
+			image = ImageIO.read(imgInput);
+			flagImage = ImageIO.read(flagInput);
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
-		this.internalName = internalName;
 
 		selectedPoints = new ArrayList<Point>();
 
@@ -95,7 +73,7 @@ public class LocationQuestion extends Question {
 
 	@Override
 	public String getData() {
-		String data = internalName + ",";
+		String data = getInternalName() + ",";
 
 		for (Point p : selectedPoints) {
 			data += "(" + (p.getX() / image.getWidth()) + ":" + (p.getY() / image.getHeight()) + ");";
@@ -110,19 +88,6 @@ public class LocationQuestion extends Question {
 		repaint();
 	}
 
-	private BufferedImage loadImage(String path) {
-		ImageIcon imageIcon = new ImageIcon(path);
-		Image tmpImage = imageIcon.getImage();
-
-		BufferedImage image = new BufferedImage(imageIcon.getIconWidth(), imageIcon.getIconHeight(),
-				BufferedImage.TYPE_INT_ARGB);
-		image.getGraphics().drawImage(tmpImage, 0, 0, null);
-		tmpImage.flush();
-
-		return image;
-	}
-
-	@SuppressWarnings("serial")
 	private class ImagePanel extends LockedSizeJPanel implements MouseListener {
 
 		private ImagePanel() {

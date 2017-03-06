@@ -87,20 +87,24 @@ public class BluetoothPanel extends JPanel implements ListCellRenderer<ExpandedR
 
 		System.out.println("Preparing local records");
 
+		writeToScoutingRecords(fileName, dataToSend);
+	}
+
+	public static void writeToScoutingRecords(String fileName, String data) {
 		File loc = new File(System.getProperty("user.home") + "/ScoutingRecords");
 
 		if (!loc.exists()) {
 			System.out.println(loc);
 			System.out.println("Making dirs: " + loc.mkdir());
 		} else {
-			System.out.println("Scouting record structure exists");
+			System.out.println("Record structure exists");
 		}
 
 		try {
 			BufferedWriter bw = new BufferedWriter(new FileWriter(new File(loc, fileName)));
-			bw.write(dataToSend);
+			bw.write(data);
 			bw.close();
-			System.out.println("Sucessfully wrote scouting data to local backup records");
+			System.out.println("Sucessfully wrote data to local records");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -274,7 +278,7 @@ public class BluetoothPanel extends JPanel implements ListCellRenderer<ExpandedR
 			System.out.println("Not currently paired");
 			return;
 		}
-		
+
 		if (stop) {
 			return;
 		}
@@ -319,7 +323,7 @@ public class BluetoothPanel extends JPanel implements ListCellRenderer<ExpandedR
 		if (newDevices.length == 0) {
 			return;
 		}
-		
+
 		if (stop) {
 			return;
 		}
@@ -432,19 +436,19 @@ public class BluetoothPanel extends JPanel implements ListCellRenderer<ExpandedR
 		return text;
 	}
 
-	public void shutdownBluetooth() {
+	public void shutdownBluetooth(boolean clearAndIncrement) {
 
 		stop = true;
-		
+
 		returnToFormButton.setEnabled(false);
 
 		BluetoothSystem.shutdown();
 
 		System.setOut(oldPrintStream);
 		System.setErr(oldErrorStream);
-
+		
 		frame.dispose();
 
-		ScoutingForm.displayForm(); // Open up another form
+		ScoutingForm.scoutingForm.restart(clearAndIncrement); // Open up another form
 	}
 }

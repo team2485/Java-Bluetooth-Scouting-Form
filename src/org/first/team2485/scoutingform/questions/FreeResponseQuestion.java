@@ -13,11 +13,9 @@ public class FreeResponseQuestion extends Question {
 	private JLabel promptLabel;
 	private JTextArea area;
 	
-	private String internalName;
-	
 	public FreeResponseQuestion(String prompt, String internalName) {
 		
-		this.internalName = internalName;
+		super(internalName);
 		
 		promptLabel = new JLabel(prompt);
 		this.add(promptLabel);
@@ -27,7 +25,7 @@ public class FreeResponseQuestion extends Question {
 	}
 	
 	public String getData() {
-		return internalName + ",\"" + area.getText().replaceAll(",", "%2C") + "\",";
+		return getInternalName() + ",\"" + area.getText().replaceAll(",", "%2C") + "\",";
 	}
 	public void clear() {
 		this.area.setText("");

@@ -16,6 +16,7 @@ import javax.swing.SwingConstants;
 public class QuestionSeperator extends Question {
 
 	public QuestionSeperator() {
+		super("");
 
 		this.setLayout(new BorderLayout());
 

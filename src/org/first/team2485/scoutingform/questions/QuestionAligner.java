@@ -22,6 +22,9 @@ public class QuestionAligner extends Question {
 	private final int VERTICAL_PADDING = 10;
 
 	public QuestionAligner(Question... questions) {
+		
+		super("");
+		
 		int numComps = -1;
 		
 		for (Question q : questions) {
@@ -84,6 +87,10 @@ public class QuestionAligner extends Question {
 		}
 
 		this.questions = questions;
+	}
+	
+	public Question[] getQuestions() {
+		return questions;
 	}
 
 	@Override

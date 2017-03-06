@@ -85,7 +85,7 @@ public class BluetoothActionListener implements ActionListener {
 				return;
 			}
 
-			bluetoothPanel.shutdownBluetooth();
+			bluetoothPanel.shutdownBluetooth(true);
 		}
 	}
 
@@ -99,7 +99,7 @@ public class BluetoothActionListener implements ActionListener {
 					"Confirm Return to Form", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null);
 
 			if (result == JOptionPane.YES_OPTION) {
-				bluetoothPanel.shutdownBluetooth();
+				bluetoothPanel.shutdownBluetooth(false);
 			}
 		}
 	}
