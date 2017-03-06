@@ -194,7 +194,7 @@ public class ScoutingForm extends LockedSizeJPanel {
 								+ "<br>A HOPPER is a pair of containers located just outside the FIELD and used "
 								+ "to store FUEL at the start ofthe MATCH.</html>"
 						}, "hopperIntake", true, "Useless", "Bad", "Average", "Good", "Excellent", "N/A"),
-=
+
 						new MultipleChoiceQuestion("Shooter Accuracy", "shooterAccuracy", true, "Unreliable", "Sketchy",
 								"Average", "Consistent", "Reliable", "N/A"),
 						new MultipleChoiceQuestion("Shooter Speed", "shooterSpeed", true, "Snail", "Slow", "Average",
