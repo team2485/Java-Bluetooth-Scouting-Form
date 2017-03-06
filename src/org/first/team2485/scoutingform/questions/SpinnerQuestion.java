@@ -55,7 +55,14 @@ public class SpinnerQuestion extends Question {
 	    
 	    this.add(spinner);
 	}
-	 
+	
+	public SpinnerQuestion(String[] promptAndTooltip, String internalName, int min, int max) {
+		this(promptAndTooltip[0], internalName, min, max);
+		
+		this.setToolTipText(promptAndTooltip[1]);
+		
+	}
+	
 	public String getData() {
 		return getInternalName() + "," + ((int) spinner.getValue()) + ",";
 	}

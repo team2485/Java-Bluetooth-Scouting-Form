@@ -1,5 +1,8 @@
 package org.first.team2485.scoutingform;
 import java.awt.Component;
+import java.awt.Rectangle;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
 
 import javax.swing.BoxLayout;
 import javax.swing.JComponent;
@@ -18,8 +21,11 @@ public class ScoutingFormTab extends JPanel {
 	
 	private Question[] questions;
 	private String name;
+	private ScoutingFormTab myself;
 
 	public ScoutingFormTab(String name, Question... questions) {
+		
+		this.myself = this;
 		
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		
@@ -30,6 +36,8 @@ public class ScoutingFormTab extends JPanel {
 			this.add(item);
 		}
 		this.questions = questions;
+		
+		
 	}
 	
 	public String getName() {

@@ -27,7 +27,15 @@ public class CheckboxQuestion extends Question {
 			this.add(checkboxes[i]);
 		}
 	}
+	
+	public CheckboxQuestion(String[] promptAndTooltip, String internalName, String... options) {
+		
+		this(promptAndTooltip[0], internalName, options);
+		
+		this.setToolTipText(promptAndTooltip[1]);
 
+	}
+	
 	public String getData() {
 		String data = getInternalName() + ",";
 		for (int i = 0; i < checkboxes.length; i++) {
