@@ -52,8 +52,14 @@ public class ScoutingForm extends LockedSizeJPanel {
 	 */
 	public static void init() {
 
-		while (scoutName == null) {
+		scoutName = "";
+
+		while (scoutName.equals("")) {
 			scoutName = JOptionPane.showInputDialog(null, "Enter your name", "Name", JOptionPane.QUESTION_MESSAGE);
+
+			if (scoutName == null) {
+				System.exit(0);
+			}
 		}
 
 		LookAndFeelSelector.addAdditonalLaFs();
