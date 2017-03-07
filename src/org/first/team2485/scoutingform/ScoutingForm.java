@@ -163,7 +163,7 @@ public class ScoutingForm extends LockedSizeJPanel {
 				},"shootingCycleTime", 0, 135),
 				new LocationQuestion(new String[] {"Where does this robot shoot from in TELEOP?",
 						"If they shot from the same place multiple times, you only need one flag."
-				}, "teleopShootingPos", "field.png"),
+				}, "teleopShootingPos", "/field.png"),
 				new QuestionSeperator(),
 				new MultipleChoiceQuestion(new String[] {"What type of defense did they play?",
 						"<html>PURPOSEFUL: Dedicated defense, accomplishing few other actions in the meantime."

@@ -14,12 +14,8 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import javax.swing.AbstractButton;
 import javax.swing.DefaultButtonModel;
@@ -40,7 +36,7 @@ import org.first.team2485.scoutingform.gui.LockedSizeJPanel;
 public class GamePredictionPanel extends LockedSizeJPanel {
 
 	private static final int TIMEOUT = 30000;
-	
+
 	public static GamePredictionPanel predictionPanel;
 
 	private boolean write;
@@ -55,7 +51,7 @@ public class GamePredictionPanel extends LockedSizeJPanel {
 	private JButton commandButton;
 
 	public GamePredictionPanel(ScoutingForm form) {
-		
+
 		predictionPanel = this;
 
 		this.form = form;
@@ -100,7 +96,7 @@ public class GamePredictionPanel extends LockedSizeJPanel {
 					add(switchBox);
 					switchBoxes.add(switchBox);
 				}
-				
+
 				return;
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -186,7 +182,7 @@ public class GamePredictionPanel extends LockedSizeJPanel {
 					e.printStackTrace();
 				}
 			}
-			
+
 			timerLabel.setText("");
 
 			JSwitchBox switchBox = switchBoxes.get(matchNum - 1);
@@ -195,7 +191,7 @@ public class GamePredictionPanel extends LockedSizeJPanel {
 			JLabel matchLabel = matchLabels.get(matchNum - 1);
 			matchLabel.setForeground(Color.LIGHT_GRAY);
 		});
-		
+
 		t.setDaemon(true);
 		t.start();
 	}
@@ -214,7 +210,6 @@ public class GamePredictionPanel extends LockedSizeJPanel {
 		private final String trueLabel;
 		private final String falseLabel;
 		private Dimension thumbBounds;
-		private Rectangle2D bounds;
 		private int max;
 
 		private boolean disabled;
