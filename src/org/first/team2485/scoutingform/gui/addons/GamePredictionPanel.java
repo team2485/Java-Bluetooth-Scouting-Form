@@ -202,10 +202,10 @@ public class GamePredictionPanel extends LockedSizeJPanel {
 		private Color black = new Color(0, 0, 0, 100);
 		private Color white = new Color(255, 255, 255, 100);
 		private Color light = new Color(220, 220, 220, 100);
-		private Color red = new Color(160, 130, 130);
-		private Color blue = new Color(10, 10, 240);
+		private Color red = new Color(200, 130, 130);
+		private Color blue = new Color(130, 130, 200);
 		private Font font = new JLabel().getFont();
-		private int gap = 5;
+		private int gap = 4;
 		private int globalWitdh = 0;
 		private final String trueLabel;
 		private final String falseLabel;
@@ -214,14 +214,14 @@ public class GamePredictionPanel extends LockedSizeJPanel {
 
 		private boolean disabled;
 
-		public JSwitchBox(String trueLabel, String falseLabel) {
+		public JSwitchBox(String trueLabel, String falseLabel)  {
 			this.trueLabel = trueLabel;
 			this.falseLabel = falseLabel;
 			double trueLenth = getFontMetrics(getFont()).getStringBounds(trueLabel, getGraphics()).getWidth();
 			double falseLenght = getFontMetrics(getFont()).getStringBounds(falseLabel, getGraphics()).getWidth();
 			max = (int) Math.max(trueLenth, falseLenght);
 			gap = Math.max(5, 5 + (int) Math.abs(trueLenth - falseLenght));
-			thumbBounds = new Dimension(max + gap * 2, 20);
+			thumbBounds = new Dimension(max + gap * 2, 30);
 			globalWitdh = max + thumbBounds.width + gap * 2;
 			setModel(new DefaultButtonModel());
 			setSelected(false);
