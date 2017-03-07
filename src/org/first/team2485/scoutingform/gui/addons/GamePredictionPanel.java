@@ -96,6 +96,10 @@ public class GamePredictionPanel extends LockedSizeJPanel {
 					add(switchBox);
 					switchBoxes.add(switchBox);
 				}
+				
+				add(commandButton);
+				
+				write = true;
 
 				return;
 			} catch (Exception e) {
@@ -104,7 +108,7 @@ public class GamePredictionPanel extends LockedSizeJPanel {
 		}
 
 		initSwitchBoxesAndButtons(90);
-
+		
 		write = true;
 	}
 
@@ -162,7 +166,6 @@ public class GamePredictionPanel extends LockedSizeJPanel {
 	}
 
 	public void updateRecords() {
-		System.out.println("Updating record");
 		String fileName = "PredictionData~" + form.getScoutName() + ".spd";
 		BluetoothPanel.writeToScoutingRecords(fileName, getData());
 	}
@@ -259,7 +262,7 @@ public class GamePredictionPanel extends LockedSizeJPanel {
 				setText(falseLabel);
 			}
 			super.setSelected(b);
-
+			
 			if (write) {
 				updateRecords();
 			}

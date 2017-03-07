@@ -16,7 +16,6 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 import org.first.team2485.scoutingform.gui.LockedSizeJPanel;
 import org.first.team2485.scoutingform.gui.addons.GamePredictionPanel;
-//import org.first.team2485.scoutingform.gui.addons.GamblingPanel;
 import org.first.team2485.scoutingform.gui.addons.LookAndFeelSelector;
 import org.first.team2485.scoutingform.questions.CheckboxQuestion;
 import org.first.team2485.scoutingform.questions.FreeResponseQuestion;
@@ -27,8 +26,6 @@ import org.first.team2485.scoutingform.questions.QuestionAligner;
 import org.first.team2485.scoutingform.questions.QuestionGroup;
 import org.first.team2485.scoutingform.questions.QuestionSeperator;
 import org.first.team2485.scoutingform.questions.SpinnerQuestion;
-
-import javafx.scene.control.Spinner;
 
 /**
  * @author Jeremy McCulloch
@@ -131,7 +128,7 @@ public class ScoutingForm extends LockedSizeJPanel {
 					}, "liftFeederFailure", 0, 999)
 				),
 				new QuestionSeperator(),
-				new SpinnerQuestion(new String[] {"Gears Dropped by robot",
+				new SpinnerQuestion(new String[] {"Gears Dropped by Robot",
 						"<html>Increment this when a robot drops a gear while operating a lift,"
 						+ "<br/>moving across the field, or intaking a gear, and it is the robot's fault.</html>"
 				}, "gearsDropped", 0, 999),
@@ -178,7 +175,7 @@ public class ScoutingForm extends LockedSizeJPanel {
 								"<html>Increment every time a HUMAN PLAYER pushes a GEAR through the LOADING STATION,"
 								+ "<br>where the gear falls on the floor because of an error by the HUMAN PLAYER</html>"
 						}, "humanPlayer", 0, 999)
-						),
+				),
 				
 				
 				new QuestionSeperator(),
@@ -189,7 +186,7 @@ public class ScoutingForm extends LockedSizeJPanel {
 						new MultipleChoiceQuestion(new String[] {"Loading Station Intake (Gear)",
 								"A measurement of the reliability and speed of GEAR intake from the LOADING STATION."
 						}, "loadingStationIntakeGear", true, "Useless", "Bad", "Average", "Good", "Excellent", "N/A")
-						),
+				),
 				
 				new QuestionSeperator(),
 				new QuestionAligner(
@@ -219,8 +216,8 @@ public class ScoutingForm extends LockedSizeJPanel {
 						new MultipleChoiceQuestion(new String[] {"Driver Skill",
 								"A measurement of how intentional and practiced the drive team appears."
 						}, "driverSkill", true, "Hopeless", "Bad", "Average", "Skilled", "God-like"),
-						new MultipleChoiceQuestion("Overall Impression", "overall", true, "Do not pick", "Mediocre", "Average",
-								"Good", "Incredible")),
+						new MultipleChoiceQuestion("Overall Impression", "overall", true, "Do not pick", "Mediocre", "Average", "Good", "Incredible")
+				),
 
 				new QuestionSeperator(),
 				new MultipleChoiceQuestion(new String[] {"Did they break down?",
@@ -257,8 +254,9 @@ public class ScoutingForm extends LockedSizeJPanel {
 
 		for (ScoutingFormTab tab : tabs) {
 			JScrollPane currPane = new JScrollPane(tab);
-			currPane.setWheelScrollingEnabled(true); 
-			currPane.getVerticalScrollBar().setUnitIncrement(16); // sets scroll speed
+			currPane.setWheelScrollingEnabled(true);
+			currPane.getVerticalScrollBar().setUnitIncrement(16); // sets scroll
+																	// speed
 			tabbedPane.add(tab.getName(), currPane);
 		}
 
