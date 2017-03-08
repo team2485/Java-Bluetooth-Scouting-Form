@@ -122,7 +122,7 @@ public class LookAndFeelSelector extends LockedSizeJPanel implements ActionListe
 					"Restart Required", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null);
 			
 			if (input == JOptionPane.YES_OPTION) {
-				ScoutingForm.scoutingForm.restart(true);
+				ScoutingForm.scoutingForm.restart(false);
 			}
 		}
 	}

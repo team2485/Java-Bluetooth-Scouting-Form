@@ -36,6 +36,8 @@ public class ScoutingForm extends LockedSizeJPanel {
 
 	public static ScoutingForm scoutingForm;
 
+	public static int matchNumber;
+
 	private JFrame frame;
 	private ScoutingFormTab[] tabs;
 	private JTabbedPane tabbedPane;
@@ -77,7 +79,7 @@ public class ScoutingForm extends LockedSizeJPanel {
 		ScoutingFormTab prematch = new ScoutingFormTab("Prematch",
 				new QuestionAligner(
 						new SpinnerQuestion("Team Number", "teamNumber", 0, 9999),
-						new SpinnerQuestion("Match Number", "matchNumber", 0, 9999)
+						new SpinnerQuestion("Match Number", "matchNumber", 0, 9999, matchNumber)
 				),
 				new QuestionSeperator(),
 				new CheckboxQuestion(new String[] {"No Show?", "Check this box if your robot is scheduled to play "
@@ -167,7 +169,6 @@ public class ScoutingForm extends LockedSizeJPanel {
 						+ "<br>FAILED: The robot either failed to latch on to the rope or failed to fully climb and depress the touchpad.</html>"
 				}, "climber", false, "Climbed", "Fell Off", "Failed", "No Attempt"),
 				new SpinnerQuestion("Time from beginning of climb to end of match (seconds)", "climberTime", 0, 135)
-
 		);
 
 		ScoutingFormTab postMatch = new ScoutingFormTab("Post Match",
@@ -369,19 +370,17 @@ public class ScoutingForm extends LockedSizeJPanel {
 		frame.dispose();
 
 		if (clearAndIncrement) {
-			displayForm();
 
 			Question q = superMegaQuestionFinder5000("matchNumber");
 			System.out.println("Found: " + q.getData());
 			String data = q.getData();
 			int num = Integer.parseInt(data.substring(data.indexOf(",") + 1, data.lastIndexOf(",")));
 			System.out.println("Old match num: " + num);
-			q = new SpinnerQuestion("Match Number", "matchNumber", 0, 9999, num + 1);
-			System.out.println("q = " + q.getData());
+			matchNumber = num + 1;
+			
+			displayForm();
 
-			System.out.println("global: " + superMegaQuestionFinder5000("matchNumber").getData());
-
-			GamePredictionPanel.predictionPanel.beginTimeoutForMatch(num + 1);
+			GamePredictionPanel.predictionPanel.beginTimeoutForMatch(num);
 		} else {
 			new ScoutingForm(tabs.clone());
 		}
