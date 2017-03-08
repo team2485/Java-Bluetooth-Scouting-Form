@@ -446,9 +446,10 @@ public class BluetoothPanel extends JPanel implements ListCellRenderer<ExpandedR
 
 		System.setOut(oldPrintStream);
 		System.setErr(oldErrorStream);
-		
+
 		frame.dispose();
 
-		ScoutingForm.scoutingForm.restart(clearAndIncrement); // Open up another form
+		ScoutingForm.scoutingForm.restart(clearAndIncrement); // Open up another
+																// form
 	}
 }

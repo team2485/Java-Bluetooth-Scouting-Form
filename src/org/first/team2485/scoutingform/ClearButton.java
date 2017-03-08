@@ -12,12 +12,10 @@ import org.first.team2485.scoutingform.ScoutingFormTab;
 @SuppressWarnings("serial")
 public class ClearButton extends JButton {
 	private static ScoutingFormTab[] tabs;
-	private static JFrame frame;
 
 	public ClearButton(ScoutingFormTab[] tabs, JFrame frame) {
 		super("Clear");
 		ClearButton.tabs = tabs;
-		ClearButton.frame = frame;
 		this.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				showConfirmation();
@@ -34,7 +32,7 @@ public class ClearButton extends JButton {
 	}
 
 	private void showConfirmation() {
-		int status = JOptionPane.showConfirmDialog(frame, "Are you sure you want to clear?", "Confirmation",
+		int status = JOptionPane.showConfirmDialog(null, "Are you sure you want to clear?", "Confirmation",
 				JOptionPane.YES_NO_OPTION);
 
 		if (status == JOptionPane.YES_OPTION) {

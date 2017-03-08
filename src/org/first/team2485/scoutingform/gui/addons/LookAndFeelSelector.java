@@ -1,16 +1,12 @@
 package org.first.team2485.scoutingform.gui.addons;
 
 import java.awt.BorderLayout;
-import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.regex.Pattern;
 
-import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -117,10 +113,10 @@ public class LookAndFeelSelector extends LockedSizeJPanel implements ActionListe
 		if (e.getSource() instanceof JRadioButton) {
 			form.setLookAndFeel(e.getActionCommand());
 
-			int input = JOptionPane.showConfirmDialog(ScoutingForm.scoutingForm,
+			int input = JOptionPane.showConfirmDialog(null,
 					"You must restart the form for all the changes to take effect.\nWould you like to restart now?",
 					"Restart Required", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null);
-			
+
 			if (input == JOptionPane.YES_OPTION) {
 				ScoutingForm.scoutingForm.restart(false);
 			}

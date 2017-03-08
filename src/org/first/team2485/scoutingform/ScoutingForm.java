@@ -36,7 +36,7 @@ public class ScoutingForm extends LockedSizeJPanel {
 
 	public static ScoutingForm scoutingForm;
 
-	public static int matchNumber;
+	private static int matchNumber;
 
 	private JFrame frame;
 	private ScoutingFormTab[] tabs;
