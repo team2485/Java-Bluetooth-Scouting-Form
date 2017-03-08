@@ -111,10 +111,15 @@ public class GamePredictionPanel extends LockedSizeJPanel {
 		
 		write = true;
 	}
+	
+	public Dimension getPreferredSize() {
+		return new Dimension(270, 3000);
+		
+	}
 
 	private void processCommand() {
 		String command = JOptionPane.showInputDialog(null, "Enter Command", "Command", JOptionPane.PLAIN_MESSAGE);
-
+		
 		if (command.startsWith("NUM_MATCHES=")) {
 			int numMatches = Integer.parseInt(command.substring("NUM_MATCHES".length() + 1));
 
@@ -209,7 +214,7 @@ public class GamePredictionPanel extends LockedSizeJPanel {
 		private Color blue = new Color(130, 130, 200);
 		private Font font = new JLabel().getFont();
 		private int gap = 4;
-		private int globalWitdh = 0;
+		private int globalWidth = 0;
 		private final String trueLabel;
 		private final String falseLabel;
 		private Dimension thumbBounds;
@@ -225,7 +230,7 @@ public class GamePredictionPanel extends LockedSizeJPanel {
 			max = (int) Math.max(trueLenth, falseLenght);
 			gap = Math.max(5, 5 + (int) Math.abs(trueLenth - falseLenght));
 			thumbBounds = new Dimension(max + gap * 2, 30);
-			globalWitdh = max + thumbBounds.width + gap * 2;
+			globalWidth = max + thumbBounds.width + gap * 2;
 			setModel(new DefaultButtonModel());
 			setSelected(false);
 			addMouseListener(new MouseAdapter() {
@@ -235,12 +240,14 @@ public class GamePredictionPanel extends LockedSizeJPanel {
 						setSelected(!isSelected());
 					}
 				}
+				
 			});
+		
 		}
 
 		@Override
 		public Dimension getPreferredSize() {
-			return new Dimension(globalWitdh, thumbBounds.height);
+			return new Dimension(globalWidth, thumbBounds.height);
 		}
 
 		public void disable() {
