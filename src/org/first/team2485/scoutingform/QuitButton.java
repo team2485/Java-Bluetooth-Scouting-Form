@@ -17,8 +17,6 @@ import javax.swing.JOptionPane;
 @SuppressWarnings("serial")
 public class QuitButton extends JButton {
 	
-	private static JFrame comp;
-	
 	public QuitButton(JFrame frame) {
 		super("Quit");
 		
@@ -28,7 +26,6 @@ public class QuitButton extends JButton {
 				showConfirmation();
 			}
 		});
-		comp = frame;
 
 		this.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -38,7 +35,7 @@ public class QuitButton extends JButton {
 		
 	}
 	private void showConfirmation () {
-		int status = JOptionPane.showConfirmDialog(QuitButton.comp, "Are you sure you want to quit?", "Confirmation", JOptionPane.YES_NO_OPTION);
+		int status = JOptionPane.showConfirmDialog(null, "Are you sure you want to quit?", "Confirmation", JOptionPane.YES_NO_OPTION);
 		
 		if (status == JOptionPane.YES_OPTION) {
 			System.exit(0);
