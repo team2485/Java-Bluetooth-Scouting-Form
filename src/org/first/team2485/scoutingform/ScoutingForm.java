@@ -111,7 +111,7 @@ public class ScoutingForm extends LockedSizeJPanel {
 				}, "gearState", false, "Did not attempt", "Dropped", "Failed", "Success"),
 				new MultipleChoiceQuestion("Gear Hook Attempted", "autoGearPos", false, "Boiler Side Hook", "Center Hook", "Feeder Side Hook", "N/A")		
 		);
-
+ 
 		ScoutingFormTab duringMatch = new ScoutingFormTab("During Match",
 				new QuestionAligner(
 					new SpinnerQuestion("Gears Placed on Boiler Side Hook", "gearsScoredBoiler", 0, 21),
