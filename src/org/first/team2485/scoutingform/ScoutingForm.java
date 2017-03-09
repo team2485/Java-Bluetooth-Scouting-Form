@@ -68,9 +68,9 @@ public class ScoutingForm extends LockedSizeJPanel {
 		LookAndFeelSelector.addAdditonalLaFs();
 
 		setUIFont(new javax.swing.plaf.FontUIResource("SansSerif", Font.PLAIN, 20));
-	
+
 		ToolTipManager.sharedInstance().setDismissDelay(Integer.MAX_VALUE);
-		
+
 	}
 
 	/**
@@ -108,31 +108,15 @@ public class ScoutingForm extends LockedSizeJPanel {
 						+ "<br>FAILED: The team attempted to collect a gear in AUTO, but failed, without the robot dropping it."
 						+ "<br>SUCCESS: The PILOT collected a gear in AUTO."
 						+ "<br>If the GEAR fell because the PILOT pulled too fast and it slipped off the list, please mark that in the appropriate section of the POSTMATCH tab.</html>"
-				}, "gearState", false, "Did not attempt", "Ran out of time", "Dropped", "Failed", "Success"),
+				}, "gearState", false, "Did not attempt", "Dropped", "Failed", "Success"),
 				new MultipleChoiceQuestion("Gear Hook Attempted", "autoGearPos", false, "Boiler Side Hook", "Center Hook", "Feeder Side Hook", "N/A")		
 		);
 
 		ScoutingFormTab duringMatch = new ScoutingFormTab("During Match",
 				new QuestionAligner(
-					new SpinnerQuestion("Gears Scored on Boiler Side Hook", "gearsScoredBoiler", 0, 21),
-					new SpinnerQuestion("Gears Scored on Center Hook", "gearsScoredCenter", 0, 21),
-					new SpinnerQuestion("Gears Scored on Feeder Side Hook", "gearsScoredFeeder", 0, 21)
-				),
-
-				new QuestionSeperator(),
-				new QuestionAligner(
-					new SpinnerQuestion(new String[] {"Boiler Side LIFT Failure",
-							"<html>Increment this whenever a team struggles with the Boiler Side Hook in any way, besides simply missing the hook."
-							+ "<br>This include dropping a GEAR, and jamming on the LIFT.</html>"
-					}, "liftBoilerFailure", 0, 999),
-					new SpinnerQuestion(new String[] {"Center LIFT Failure",
-							"<html>Increment this whenever a team struggles with the Center Hook in any way, besides simply missing the hook."
-							+ "<br>This include dropping a GEAR, and jamming on the LIFT.</html>"
-					}, "liftCenterFailure", 0, 999),
-					new SpinnerQuestion(new String[] {"Feeder Side LIFT Failure",
-							"<html>Increment this whenever a team struggles with the Feeder Side Hook in any way, besides simply missing the hook."
-							+ "<br>This include dropping a GEAR, and jamming on the LIFT.</html>"
-					}, "liftFeederFailure", 0, 999)
+					new SpinnerQuestion("Gears Placed on Boiler Side Hook", "gearsScoredBoiler", 0, 21),
+					new SpinnerQuestion("Gears Placed on Center Hook", "gearsScoredCenter", 0, 21),
+					new SpinnerQuestion("Gears Placed on Feeder Side Hook", "gearsScoredFeeder", 0, 21)
 				),
 				new QuestionSeperator(),
 				new SpinnerQuestion(new String[] {"Gears Dropped by Robot",
@@ -151,9 +135,6 @@ public class ScoutingForm extends LockedSizeJPanel {
 				new SpinnerQuestion(new String[] {"Number of Fuel Cycles",
 						"The number of times a team set up and attempted to shoot."
 				}, "shootingCycles", 0, 99),
-				new SpinnerQuestion(new String[] {"Average Time per Fuel Cycle (seconds)",
-						"Approximate time for a team to collect FUEL and shoot."
-				},"shootingCycleTime", 0, 135),
 
 				new QuestionSeperator(),
 				new MultipleChoiceQuestion(new String[] {"What type of defense did they play?",
@@ -166,23 +147,41 @@ public class ScoutingForm extends LockedSizeJPanel {
 						"<html>CLIMBED: Successfully climbed the ROPE and depressed the TOUCHPAD."
 						+ "<br>FELL OFF: The robot lost grip on the rope and was unable to climb again."
 						+ "<br>FAILED: The robot either failed to latch on to the rope or failed to fully climb and depress the touchpad.</html>"
-				}, "climber", false, "Climbed", "Fell Off", "Failed", "No Attempt"),
+				}, "climber", false, "Climbed", "Fell Off", "Ran out of Time", "No Attempt"),
 				new SpinnerQuestion("Time from beginning of climb to end of match (seconds)", "climberTime", 0, 135)
+		);
+		
+		ScoutingFormTab pilot = new ScoutingFormTab("Pilot",
+				
+				new MultipleChoiceQuestion(new String[] {"Is their pilot in play?", "Indicate whether this team's pilot is playing in this game"}, "isPilotIn", false, "Yes", "No"),
+				new QuestionSeperator(),
+				new QuestionAligner(
+					new SpinnerQuestion(new String[] {"Successes on Boiler Side Hook", 
+							"<html>Increment every time the PILOT successfully retrives a gear from the BOILER side hook" },
+							"pilotBoilerSuccesses", 0, 999),
+					new SpinnerQuestion(new String[] {"Failures on Boiler Side Hook", 
+							"<html>Increment every time the PILOT drops a gear from the BOILER side hook" },
+								"pilotBoilerFailures", 0, 999),
+					new QuestionSeperator(),
+					new SpinnerQuestion(new String[] {"Successes on Center Hook", 
+							"<html>Increment every time the PILOT successfully retrives a gear from the center hook" },
+								"pilotCenterSuccesses", 0, 999),	
+					new SpinnerQuestion(new String[] {"Failures on Center Hook", 
+							"<html>Increment every time the PILOT drops a gear from the center hook" },
+								"pilotCenterFailures", 0, 999),	
+					new QuestionSeperator(),
+					new SpinnerQuestion(new String[] {"Successes on Feeder Side Hook", 
+							"<html>Increment every time the PILOT successfully retrives a gear from the FEEDER side hook" },
+								"pilotFeederSuccesses", 0, 999),	
+					new SpinnerQuestion(new String[] {"Failures on Feeder Side Hook", 
+							"<html>Increment every time the PILOT successfully drops a gear from the FEEDER side hook" },
+								"pilotFeederFailures", 0, 999)
+				),
+				new QuestionSeperator(),
+				new FreeResponseQuestion(new String[] {"Additional Comments on Pilot", "<html>If you feel that there is additional information about the pilot that would be useful, put it here"} , "pilotComments")
 		);
 
 		ScoutingFormTab postMatch = new ScoutingFormTab("Post Match",
-				new QuestionAligner(
-						new SpinnerQuestion(new String[] {"Human Player GEAR Loading Successes",
-								"<html>Increment every time a HUMAN PLAYER pushes a GEAR through the LOADING STATION,"
-								+ "<br>where the gear correctly falls into the target robot.</html>"
-						}, "humanPlayerSuccess", 0, 999),
-
-						new SpinnerQuestion(new String[] {"Human Player GEAR Loading Failures",
-								"<html>Increment every time a HUMAN PLAYER pushes a GEAR through the LOADING STATION,"
-								+ "<br>where the gear falls on the floor because of an error by the HUMAN PLAYER</html>"
-						}, "humanPlayerFailure", 0, 999)
-				),
-				
 				
 				new QuestionSeperator(),
 				new QuestionAligner(
@@ -206,12 +205,17 @@ public class ScoutingForm extends LockedSizeJPanel {
 								"<html>A measurement of the reliability and speed of FUEL intake from a HOPPER."
 								+ "<br>A HOPPER is a pair of containers located just outside the FIELD and used "
 								+ "to store FUEL at the start of the MATCH.</html>"
-						}, "hopperIntake", true, "Useless", "Bad", "Average", "Good", "Excellent", "N/A"),
-						new MultipleChoiceQuestion("Shooter Accuracy", "shooterAccuracy", true, "Unreliable", "Sketchy",
-								"Average", "Consistent", "Reliable", "N/A"),
-						new MultipleChoiceQuestion("Shooter Speed", "shooterSpeed", true, "Snail", "Slow", "Average",
-								"Speedy", "Lightning", "N/A")
+						}, "hopperIntake", true, "Useless", "Bad", "Average", "Good", "Excellent", "N/A")
 				),
+				
+				new QuestionSeperator(),
+				new QuestionAligner(
+						new MultipleChoiceQuestion("Shooter Accuracy", "shooterAccuracy", true, "0%", "25%",
+								"50%", "75%", "100%", "N/A"),
+						new MultipleChoiceQuestion("Shooter Speed", "shooterSpeed", true, "1 Ball/sec", "2 Ball/sec", "3 Ball/sec",
+								"4 Ball/sec", "5+ Ball/sec", "N/A")
+				),
+				
 				new QuestionSeperator(),
 				new QuestionAligner(	
 						new MultipleChoiceQuestion(new String[] {"Manueverability",
@@ -239,7 +243,7 @@ public class ScoutingForm extends LockedSizeJPanel {
 		
 		//@formatter:on
 
-		new ScoutingForm(prematch, auto, duringMatch, postMatch);
+		new ScoutingForm(prematch, auto, duringMatch, pilot, postMatch);
 	}
 
 	public ScoutingForm(ScoutingFormTab... tabs) {
@@ -261,7 +265,8 @@ public class ScoutingForm extends LockedSizeJPanel {
 		for (ScoutingFormTab tab : tabs) {
 			JScrollPane currPane = new JScrollPane(tab);
 			currPane.setWheelScrollingEnabled(true);
-			currPane.getVerticalScrollBar().setUnitIncrement(16); // sets scroll speed
+			currPane.getVerticalScrollBar().setUnitIncrement(16); // sets scroll
+																	// speed
 			currPane.getHorizontalScrollBar().setUnitIncrement(16);
 			tabbedPane.add(tab.getName(), currPane);
 		}
@@ -376,7 +381,7 @@ public class ScoutingForm extends LockedSizeJPanel {
 			int num = Integer.parseInt(data.substring(data.indexOf(",") + 1, data.lastIndexOf(",")));
 			System.out.println("Old match num: " + num);
 			matchNumber = num + 1;
-			
+
 			displayForm();
 
 			GamePredictionPanel.predictionPanel.beginTimeoutForMatch(num);
