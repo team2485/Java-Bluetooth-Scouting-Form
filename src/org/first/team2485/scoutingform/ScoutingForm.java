@@ -175,12 +175,12 @@ public class ScoutingForm extends LockedSizeJPanel {
 						new SpinnerQuestion(new String[] {"Human Player GEAR Loading Successes",
 								"<html>Increment every time a HUMAN PLAYER pushes a GEAR through the LOADING STATION,"
 								+ "<br>where the gear correctly falls into the target robot.</html>"
-						}, "humanPlayer", 0, 999),
+						}, "humanPlayerSuccess", 0, 999),
 
 						new SpinnerQuestion(new String[] {"Human Player GEAR Loading Failures",
 								"<html>Increment every time a HUMAN PLAYER pushes a GEAR through the LOADING STATION,"
 								+ "<br>where the gear falls on the floor because of an error by the HUMAN PLAYER</html>"
-						}, "humanPlayer", 0, 999)
+						}, "humanPlayerFailure", 0, 999)
 				),
 				
 				
