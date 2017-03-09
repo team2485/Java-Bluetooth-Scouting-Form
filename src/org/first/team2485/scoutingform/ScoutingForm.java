@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingUtilities;
+import javax.swing.ToolTipManager;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -67,6 +68,9 @@ public class ScoutingForm extends LockedSizeJPanel {
 		LookAndFeelSelector.addAdditonalLaFs();
 
 		setUIFont(new javax.swing.plaf.FontUIResource("SansSerif", Font.PLAIN, 20));
+	
+		ToolTipManager.sharedInstance().setDismissDelay(Integer.MAX_VALUE);
+		
 	}
 
 	/**
@@ -82,21 +86,16 @@ public class ScoutingForm extends LockedSizeJPanel {
 						new SpinnerQuestion("Match Number", "matchNumber", 0, 9999, matchNumber)
 				),
 				new QuestionSeperator(),
-				new CheckboxQuestion(new String[] {"No Show?", "Check this box if your robot is scheduled to play "
-						+ "this match, but did not show up. Be careful! "
-						+ "It could be that you just can't see it from "
-						+ "where you are sitting."}, 
+				new CheckboxQuestion(new String[] {"No Show?", "<html>Check this box if your robot is scheduled to play "
+						+ "<br/>this match, but did not show up. Be careful! "
+						+ "<br/>It could be that you just can't see it from "
+						+ "where you are sitting.</html>"}, 
 						"noShow", "")
 				
 		);
 		
 		ScoutingFormTab auto = new ScoutingFormTab("Automous", 
 				new LocationQuestion("Where did they start their AUTO from?", "autoStartPos", "/field.png"),
-				new QuestionSeperator(),
-				new MultipleChoiceQuestion (new String[] {"Did they cross the baseline?",
-						"CROSSING THE BASELINE means moving in front of the line defined"
-						+ " by the back face of the airship."
-				}, "crossBaseline", false, "Yes", "No"),
 				new QuestionSeperator(),
 				new QuestionAligner(
 						new SpinnerQuestion("Low Goals Made in AUTO", "autoLow", 0),
@@ -106,7 +105,7 @@ public class ScoutingForm extends LockedSizeJPanel {
 				new MultipleChoiceQuestion(new String[] {"Gear State",
 						"<html>RAN OUT OF TIME: The gear is on the LIFT, but was not pulled into the AIRSHIP before AUTONOMOUS ended."
 						+ "<br>DROPPED: The team attempted to collect a gear in AUTO, but the gear was dropped on the floor."
-						+ "<br>FAILED: The team attempted to collect a gear in AUTO, but failed."
+						+ "<br>FAILED: The team attempted to collect a gear in AUTO, but failed, without the robot dropping it."
 						+ "<br>SUCCESS: The PILOT collected a gear in AUTO."
 						+ "<br>If the GEAR fell because the PILOT pulled too fast and it slipped off the list, please mark that in the appropriate section of the POSTMATCH tab.</html>"
 				}, "gearState", false, "Did not attempt", "Ran out of time", "Dropped", "Failed", "Success"),
@@ -137,8 +136,8 @@ public class ScoutingForm extends LockedSizeJPanel {
 				),
 				new QuestionSeperator(),
 				new SpinnerQuestion(new String[] {"Gears Dropped by Robot",
-						"<html>Increment this when a robot drops a gear while operating a lift,"
-						+ "<br/>moving across the field, or intaking a gear, and it is the robot's fault.</html>"
+						"<html>Increment this when a robot drops a gear while operating a lift, moving across the field,"
+						+ "<br/>or intaking a gear, and it is the robot's fault.</html>"
 				}, "gearsDropped", 0, 999),
 				new QuestionSeperator(),
 				new SpinnerQuestion(new String[] {"Average Time per Gear Cycle (seconds)",
