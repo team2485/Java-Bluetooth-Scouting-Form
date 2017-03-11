@@ -147,7 +147,7 @@ public class ScoutingForm extends LockedSizeJPanel {
 						"<html>CLIMBED: Successfully climbed the ROPE and depressed the TOUCHPAD."
 						+ "<br>FELL OFF: The robot lost grip on the rope and was unable to climb again."
 						+ "<br>FAILED: The robot either failed to latch on to the rope or failed to fully climb and depress the touchpad.</html>"
-				}, "climber", false, "Climbed", "Fell Off", "Ran out of Time", "No Attempt"),
+				}, "climber", false, "Climbed", "Fell Off", "Ran out of Time", "failed attempt", "No Attempt"),
 				new SpinnerQuestion("Time from beginning of climb to end of match (seconds)", "climberTime", 0, 135)
 		);
 		
