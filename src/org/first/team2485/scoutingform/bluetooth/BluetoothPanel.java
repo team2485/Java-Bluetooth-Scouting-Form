@@ -40,6 +40,8 @@ import org.first.team2485.scoutingform.ScoutingForm;
 @SuppressWarnings("serial")
 public class BluetoothPanel extends JPanel implements ListCellRenderer<ExpandedRemoteDevice> {
 
+	final public static String SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxeGy9zlXqqRcRvhShhR5W870y0JS2D4OwUMUi16lCHtikuyD6v/exec";
+	
 	private JFrame frame;
 
 	private String fileName, dataToSend;
@@ -47,7 +49,7 @@ public class BluetoothPanel extends JPanel implements ListCellRenderer<ExpandedR
 	private JList<ExpandedRemoteDevice> deviceList;
 	private JTextArea console;
 
-	private JButton sendButton, refreshButton, clearConsoleButton, returnToFormButton;
+	private JButton sendButton, sendViaWiFiButton, refreshButton, clearConsoleButton, returnToFormButton;
 
 	private JLabel status;
 
@@ -122,7 +124,7 @@ public class BluetoothPanel extends JPanel implements ListCellRenderer<ExpandedR
 				frame.repaint();
 
 				try {
-					Thread.sleep(20);
+					Thread.sleep(50);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
@@ -138,9 +140,11 @@ public class BluetoothPanel extends JPanel implements ListCellRenderer<ExpandedR
 			refreshButton.setText("Please Wait");
 			refreshButton.setToolTipText("Please wait...");
 			sendButton.setToolTipText("Cannot send while busy");
+			sendViaWiFiButton.setToolTipText("Cannot send while busy");
 
 			refreshButton.setEnabled(false);
 			sendButton.setEnabled(false);
+			sendViaWiFiButton.setEnabled(false);
 
 			status.setText("BUSY");
 			status.setForeground(new Color(255, 128, 0));
@@ -148,9 +152,11 @@ public class BluetoothPanel extends JPanel implements ListCellRenderer<ExpandedR
 			refreshButton.setText("Scan For Devices");
 			refreshButton.setToolTipText("Start looking for new devices");
 			sendButton.setToolTipText("Send the scouting data to the device selected");
-
+			sendViaWiFiButton.setToolTipText("Send the scouting data via WiFi");
+			
 			refreshButton.setEnabled(true);
 			sendButton.setEnabled(true);
+			sendViaWiFiButton.setEnabled(true);
 
 			status.setText("IDLE");
 			status.setForeground(new Color(0, 200, 0));
@@ -223,7 +229,8 @@ public class BluetoothPanel extends JPanel implements ListCellRenderer<ExpandedR
 		buttonPanel.add(statusLabel);
 		buttonPanel.add(status);
 
-		sendButton = new JButton("Send Data");
+		sendButton = new JButton("Send Data via Bluetooth");
+		sendViaWiFiButton = new JButton("Send Data via WiFi");
 		refreshButton = new JButton("Scan For Devices");
 		clearConsoleButton = new JButton("Clear Console");
 		returnToFormButton = new JButton("Return to Form");
@@ -231,7 +238,11 @@ public class BluetoothPanel extends JPanel implements ListCellRenderer<ExpandedR
 		sendButton.setActionCommand("sendButton");
 		sendButton.addActionListener(new BluetoothActionListener());
 		sendButton.setToolTipText("Send the scouting data to the device selected");
-
+		
+		sendViaWiFiButton.setActionCommand("sendWiFiButton");
+		sendViaWiFiButton.addActionListener(new BluetoothActionListener());
+		sendViaWiFiButton.setToolTipText("Send the scouting data via WiFi");
+		
 		refreshButton.setActionCommand("refreshButton");
 		refreshButton.addActionListener(new BluetoothActionListener());
 		refreshButton.setToolTipText("Start looking for new devices");
@@ -245,6 +256,7 @@ public class BluetoothPanel extends JPanel implements ListCellRenderer<ExpandedR
 		returnToFormButton.setToolTipText("Return to the scouting form to scout again");
 
 		buttonPanel.add(sendButton);
+		buttonPanel.add(sendViaWiFiButton);
 		buttonPanel.add(refreshButton);
 		buttonPanel.add(clearConsoleButton);
 		buttonPanel.add(returnToFormButton);

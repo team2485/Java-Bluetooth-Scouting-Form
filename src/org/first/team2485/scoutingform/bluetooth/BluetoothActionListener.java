@@ -30,6 +30,10 @@ public class BluetoothActionListener implements ActionListener {
 			new SendThread().start();
 			break;
 
+		case "sendWiFiButton":
+			new SendWiFiThread().start();
+			break;
+
 		case "refreshButton":
 			new SearchThread(false).start();
 			break;
@@ -37,6 +41,7 @@ public class BluetoothActionListener implements ActionListener {
 		case "clearButton":
 			bluetoothPanel.getConsole().setText("");
 			break;
+
 		case "returnButton":
 			new ReturnThread().start();
 			break;
@@ -86,6 +91,21 @@ public class BluetoothActionListener implements ActionListener {
 			}
 
 			bluetoothPanel.shutdownBluetooth(true);
+		}
+	}
+
+	class SendWiFiThread extends Thread {
+
+		@Override
+		public void run() {
+			
+			System.out.println("Sending data via WiFi...");
+			
+			boolean result = BluetoothSystem.sendViaWiFi(bluetoothPanel.getDataToSend());
+
+			if (result) {
+				bluetoothPanel.shutdownBluetooth(true);
+			}
 		}
 	}
 

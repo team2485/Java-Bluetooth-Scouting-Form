@@ -49,7 +49,9 @@ public class GamePredictionPanel extends LockedSizeJPanel {
 
 	private JButton commandButton;
 
-	public GamePredictionPanel(ScoutingForm form) {
+	private Thread countdownThread;
+
+	public GamePredictionPanel(ScoutingForm form, int matchNumber) {
 
 		predictionPanel = this;
 
@@ -95,9 +97,9 @@ public class GamePredictionPanel extends LockedSizeJPanel {
 					add(switchBox);
 					switchBoxes.add(switchBox);
 				}
-				
+
 				add(commandButton);
-				
+
 				write = true;
 
 				return;
@@ -107,18 +109,21 @@ public class GamePredictionPanel extends LockedSizeJPanel {
 		}
 
 		initSwitchBoxesAndButtons(90);
-		
+
 		write = true;
+
+		instantlyDisableUpTo(matchNumber - 1);
+		beginTimeoutForMatch(matchNumber);
 	}
-	
+
 	public Dimension getPreferredSize() {
 		return new Dimension(270, 3000);
-		
+
 	}
 
 	private void processCommand() {
 		String command = JOptionPane.showInputDialog(null, "Enter Command", "Command", JOptionPane.PLAIN_MESSAGE);
-		
+
 		if (command.startsWith("NUM_MATCHES=")) {
 			int numMatches = Integer.parseInt(command.substring("NUM_MATCHES".length() + 1));
 
@@ -174,8 +179,28 @@ public class GamePredictionPanel extends LockedSizeJPanel {
 		BluetoothPanel.writeToScoutingRecords(fileName, getData());
 	}
 
+	public void instantlyDisableUpTo(int matchNum) {
+		while (matchNum > 0) {
+			int indexToDisable = matchNum - 1;
+
+			JSwitchBox switchBox = switchBoxes.get(indexToDisable);
+			switchBox.setEnabled(false);
+
+			JLabel matchLabel = matchLabels.get(indexToDisable);
+			matchLabel.setForeground(Color.LIGHT_GRAY);
+
+			matchNum--;
+		}
+	}
+
+	@SuppressWarnings("deprecation")
 	public void beginTimeoutForMatch(int matchNum) {
-		Thread t = new Thread(() -> {
+
+		if (countdownThread != null) {
+			countdownThread.stop();
+		}
+
+		countdownThread = new Thread(() -> {
 
 			long startTime = System.currentTimeMillis();
 
@@ -192,15 +217,17 @@ public class GamePredictionPanel extends LockedSizeJPanel {
 
 			timerLabel.setText("");
 
-			JSwitchBox switchBox = switchBoxes.get(matchNum - 1);
+			int indexToDisable = matchNum - 1;
+
+			JSwitchBox switchBox = switchBoxes.get(indexToDisable);
 			switchBox.setEnabled(false);
 
-			JLabel matchLabel = matchLabels.get(matchNum - 1);
+			JLabel matchLabel = matchLabels.get(indexToDisable);
 			matchLabel.setForeground(Color.LIGHT_GRAY);
 		});
 
-		t.setDaemon(true);
-		t.start();
+		countdownThread.setDaemon(true);
+		countdownThread.start();
 	}
 
 	class JSwitchBox extends AbstractButton {
@@ -221,7 +248,7 @@ public class GamePredictionPanel extends LockedSizeJPanel {
 
 		private boolean disabled;
 
-		public JSwitchBox(String trueLabel, String falseLabel)  {
+		public JSwitchBox(String trueLabel, String falseLabel) {
 			this.trueLabel = trueLabel;
 			this.falseLabel = falseLabel;
 			double trueLenth = getFontMetrics(getFont()).getStringBounds(trueLabel, getGraphics()).getWidth();
@@ -239,9 +266,9 @@ public class GamePredictionPanel extends LockedSizeJPanel {
 						setSelected(!isSelected());
 					}
 				}
-				
+
 			});
-		
+
 		}
 
 		@Override
@@ -268,7 +295,7 @@ public class GamePredictionPanel extends LockedSizeJPanel {
 				setText(falseLabel);
 			}
 			super.setSelected(b);
-			
+
 			if (write) {
 				updateRecords();
 			}

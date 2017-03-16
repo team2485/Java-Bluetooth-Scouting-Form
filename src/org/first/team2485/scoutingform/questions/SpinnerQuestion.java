@@ -5,6 +5,7 @@ import javax.swing.JSpinner;
 import javax.swing.JSpinner.DefaultEditor;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.border.EmptyBorder;
+
 /**
  * 
  * @author Jeremy McCulloch
@@ -32,27 +33,29 @@ public class SpinnerQuestion extends Question {
 
 	public SpinnerQuestion(String prompt, String internalName, int min, int max, int startValue) {
 		super(internalName);
-		
+
 		promptLabel = new JLabel(prompt);
 		this.add(promptLabel);
 
 		spinner = new JSpinner(new SpinnerNumberModel(min, min, max, 1));
+		JSpinner.NumberEditor editor = new JSpinner.NumberEditor(spinner, "#");
+		spinner.setEditor(editor);
 		((DefaultEditor) spinner.getEditor()).getTextField().setColumns(4);
-					
+
 		this.setBorder(new EmptyBorder(PADDING, 0, PADDING, 0));
 
 		spinner.setValue(startValue);
-	    
-	    this.add(spinner);
+
+		this.add(spinner);
 	}
-	
+
 	public SpinnerQuestion(String[] promptAndTooltip, String internalName, int min, int max) {
 		this(promptAndTooltip[0], internalName, min, max);
-		
+
 		this.setToolTipText(promptAndTooltip[1]);
-		
+
 	}
-	
+
 	public String getData() {
 		return getInternalName() + "," + ((int) spinner.getValue()) + ",";
 	}
@@ -60,5 +63,5 @@ public class SpinnerQuestion extends Question {
 	public void clear() {
 		spinner.setValue(0);
 	}
-	 
+
 }

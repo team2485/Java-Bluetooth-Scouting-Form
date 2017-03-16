@@ -20,13 +20,13 @@ import javax.obex.HeaderSet;
 import javax.obex.Operation;
 import javax.obex.ResponseCodes;
 
+import org.first.team2485.scoutingform.util.HTTPUtils;
+
 import com.intel.bluetooth.BlueCoveConfigProperties;
 import com.intel.bluetooth.BlueCoveImpl;
 
 /**
- * 
  * @author Nicholas Contreras
- *
  */
 public class BluetoothSystem implements DiscoveryListener {
 
@@ -50,7 +50,6 @@ public class BluetoothSystem implements DiscoveryListener {
 			BlueCoveImpl.setConfigProperty(BlueCoveConfigProperties.PROPERTY_CONNECT_TIMEOUT, "10000");
 			BlueCoveImpl.setConfigProperty(BlueCoveConfigProperties.PROPERTY_OBEX_TIMEOUT, "10000");
 		}
-
 		return instance;
 	}
 
@@ -403,6 +402,24 @@ public class BluetoothSystem implements DiscoveryListener {
 			return success;
 		} catch (final Exception e) {
 			System.out.println(e.getMessage());
+			isBusy = false;
+			return false;
+		}
+	}
+
+	public static boolean sendViaWiFi(String data) {
+		
+		isBusy = true;
+		
+		String[] header = { "data" };
+		String[] param = { data };
+
+		try {
+			HTTPUtils.sendPost(BluetoothPanel.SCRIPT_URL, header, param);
+			isBusy = false;
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
 			isBusy = false;
 			return false;
 		}
