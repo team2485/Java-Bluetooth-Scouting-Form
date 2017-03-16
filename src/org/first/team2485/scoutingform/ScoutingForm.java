@@ -64,7 +64,7 @@ public class ScoutingForm extends LockedSizeJPanel {
 				System.exit(0);
 			}
 		}
-		
+
 		matchNumber = 1;
 
 		LookAndFeelSelector.addAdditonalLaFs();
@@ -295,7 +295,7 @@ public class ScoutingForm extends LockedSizeJPanel {
 		SwingUtilities.updateComponentTreeUI(frame);
 
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-		
+
 		frame.pack();
 		frame.setVisible(true);
 		frame.repaint();
@@ -388,7 +388,7 @@ public class ScoutingForm extends LockedSizeJPanel {
 
 			displayForm();
 
-//			GamePredictionPanel.predictionPanel.beginTimeoutForMatch(matchNumber);
+			// GamePredictionPanel.predictionPanel.beginTimeoutForMatch(matchNumber);
 		} else {
 			new ScoutingForm(tabs.clone());
 		}
