@@ -116,19 +116,14 @@ public class ScoutingForm extends LockedSizeJPanel {
  
 		ScoutingFormTab duringMatch = new ScoutingFormTab("During Match",
 				new QuestionAligner(
-					new SpinnerQuestion("Gears Placed on Boiler Side Hook", "gearsScoredBoiler", 0, 21),
-					new SpinnerQuestion("Gears Placed on Center Hook", "gearsScoredCenter", 0, 21),
-					new SpinnerQuestion("Gears Placed on Feeder Side Hook", "gearsScoredFeeder", 0, 21)
+					new SpinnerQuestion("Gears Placed on the Hook", "gearsScored", 0, 21)
 				),
 				new QuestionSeperator(),
 				new SpinnerQuestion(new String[] {"Gears Dropped by Robot",
 						"<html>Increment this when a robot drops a gear while operating a lift, moving across the field,"
 						+ "<br/>or intaking a gear, and it is the robot's fault.</html>"
 				}, "gearsDropped", 0, 999),
-				new QuestionSeperator(),
-				new SpinnerQuestion(new String[] {"Average Time per Gear Cycle (seconds)",
-						"Approximate time, in seconds, it takes for the team to move across the field, collect a GEAR, return, and deposit it."
-				}, "gearCycleTime", 0, 135),
+				new SpinnerQuestion("Gears Intook by Robot (Ground)", "gearsIntookGround"),
 				new QuestionSeperator(),
 				new QuestionAligner(
 						new SpinnerQuestion("Low Goals Made in TELEOPERATED", "teleopLow", 0),
@@ -143,42 +138,27 @@ public class ScoutingForm extends LockedSizeJPanel {
 						"<html>PURPOSEFUL: Dedicated defense, accomplishing few other actions in the meantime."
 						+ "<br>ON THE WAY: Harasses opponent's robots while moving between tasks.</html>"
 				}, "defenseType", false, "Purposeful", "On the way", "None"),			
-				new SpinnerQuestion("How long did they play defense? (seconds)", "defenseTime", 0, 135),
 				new QuestionSeperator(),
 				new MultipleChoiceQuestion(new String[] {"Climbing",
 						"<html>CLIMBED: Successfully climbed the ROPE and depressed the TOUCHPAD."
 						+ "<br>FELL OFF: The robot lost grip on the rope and was unable to climb again."
 						+ "<br>FAILED: The robot either failed to latch on to the rope or failed to fully climb and depress the touchpad.</html>"
-				}, "climber", false, "Climbed", "Fell Off", "Ran out of Time", "No Attempt"),
+				}, "climber", false, "Climbed", "Fell Off", "Ran out of Time", "Got Stuck", "No Attempt"),
 				new SpinnerQuestion("Time taken to climb(seconds)", "climberTime", 0, 135)
 		);
 		
 		ScoutingFormTab pilot = new ScoutingFormTab("Pilot",
 				
-				new MultipleChoiceQuestion(new String[] {"Is their pilot in play?", "Indicate whether this team's pilot is playing in this game"}, "isPilotIn", false, "Yes", "No"),
-				new QuestionSeperator(),
 				new QuestionAligner(
-					new SpinnerQuestion(new String[] {"Successes on Boiler Side Hook", 
+					new SpinnerQuestion(new String[] {"Successes in Pulling Up Gear", 
 							"<html>Increment every time the PILOT successfully retrives a gear from the BOILER side hook" },
 							"pilotBoilerSuccesses", 0, 999),
-					new SpinnerQuestion(new String[] {"Failures on Boiler Side Hook", 
+					new SpinnerQuestion(new String[] {"Failures in Pulling Up Gear", 
 							"<html>Increment every time the PILOT drops a gear from the BOILER side hook" },
-								"pilotBoilerFailures", 0, 999),
-					new QuestionSeperator(),
-					new SpinnerQuestion(new String[] {"Successes on Center Hook", 
-							"<html>Increment every time the PILOT successfully retrives a gear from the center hook" },
-								"pilotCenterSuccesses", 0, 999),	
-					new SpinnerQuestion(new String[] {"Failures on Center Hook", 
-							"<html>Increment every time the PILOT drops a gear from the center hook" },
-								"pilotCenterFailures", 0, 999),	
-					new QuestionSeperator(),
-					new SpinnerQuestion(new String[] {"Successes on Feeder Side Hook", 
-							"<html>Increment every time the PILOT successfully retrives a gear from the FEEDER side hook" },
-								"pilotFeederSuccesses", 0, 999),	
-					new SpinnerQuestion(new String[] {"Failures on Feeder Side Hook", 
-							"<html>Increment every time the PILOT successfully drops a gear from the FEEDER side hook" },
-								"pilotFeederFailures", 0, 999)
+								"pilotBoilerFailures", 0, 999)
 				),
+				new QuestionSeperator(),
+				new MultipleChoiceQuestion("Were the ropes deployed efficiently?", "ropesDeployed", true, "Yes", "No"),
 				new QuestionSeperator(),
 				new FreeResponseQuestion(new String[] {"Additional Comments on Pilot", "<html>If you feel that there is additional information about the pilot that would be useful, put it here"} , "pilotComments")
 		);
@@ -187,35 +167,8 @@ public class ScoutingForm extends LockedSizeJPanel {
 				
 				new QuestionSeperator(),
 				new QuestionAligner(
-						new MultipleChoiceQuestion(new String[] {"Ground Intake (Gear)",
-								"A measurement of the reliability and speed of GEAR intake from the ground."
-						}, "groundIntakeGear", true, "Useless", "Bad", "Average", "Good", "Excellent", "N/A"),
-						new MultipleChoiceQuestion(new String[] {"Loading Station Intake (Gear)",
-								"A measurement of the reliability and speed of GEAR intake from the LOADING STATION."
-						}, "loadingStationIntakeGear", true, "Useless", "Bad", "Average", "Good", "Excellent", "N/A")
-				),
-				
-				new QuestionSeperator(),
-				new QuestionAligner(
-						new MultipleChoiceQuestion (new String[] {"Ground Intake (Fuel)",
-								"A measurement of the reliability and speed of FUEL intake from the ground."
-						}, "groundIntake", true, "Useless", "Bad", "Average", "Good", "Excellent", "N/A"),
-						new MultipleChoiceQuestion (new String[] {"Loading Station Intake (Fuel)",
-								"A measurement of the reliability and speed of FUEL intake from the LOADING STATION."
-						}, "loadingStationIntake", true, "Useless", "Bad", "Average", "Good", "Excellent", "N/A"),
-						new MultipleChoiceQuestion (new String[] {"Hopper Intake (Fuel)",
-								"<html>A measurement of the reliability and speed of FUEL intake from a HOPPER."
-								+ "<br>A HOPPER is a pair of containers located just outside the FIELD and used "
-								+ "to store FUEL at the start of the MATCH.</html>"
-						}, "hopperIntake", true, "Useless", "Bad", "Average", "Good", "Excellent", "N/A")
-				),
-				
-				new QuestionSeperator(),
-				new QuestionAligner(
 						new MultipleChoiceQuestion("Shooter Accuracy", "shooterAccuracy", true, "0%", "25%",
-								"50%", "75%", "100%", "N/A"),
-						new MultipleChoiceQuestion("Shooter Speed", "shooterSpeed", true, "1 Ball/sec", "2 Ball/sec", "3 Ball/sec",
-								"4 Ball/sec", "5+ Ball/sec", "N/A")
+								"50%", "75%", "100%", "N/A")
 				),
 				
 				new QuestionSeperator(),
@@ -227,9 +180,7 @@ public class ScoutingForm extends LockedSizeJPanel {
 
 						new MultipleChoiceQuestion(new String[] {"Driver Skill",
 								"A measurement of how intentional and practiced the drive team appears."
-						}, "driverSkill", true, "Hopeless", "Bad", "Average", "Skilled", "God-like"),
-						new MultipleChoiceQuestion("Overall Impression", "overall", true, "Do not pick", "Mediocre", "Average", "Good", "Incredible")
-				),
+						}, "driverSkill", true, "Hopeless", "Bad", "Average", "Skilled", "God-like")				),
 
 				new QuestionSeperator(),
 				new MultipleChoiceQuestion(new String[] {"Did they break down?",
