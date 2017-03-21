@@ -26,6 +26,7 @@ import org.first.team2485.scoutingform.questions.Question;
 import org.first.team2485.scoutingform.questions.QuestionAligner;
 import org.first.team2485.scoutingform.questions.QuestionGroup;
 import org.first.team2485.scoutingform.questions.QuestionSeperator;
+import org.first.team2485.scoutingform.questions.SliderQuestion;
 import org.first.team2485.scoutingform.questions.SpinnerQuestion;
 
 /**
@@ -81,122 +82,86 @@ public class ScoutingForm extends LockedSizeJPanel {
 	public static void displayForm() {
 
 		//@formatter:off
-
-		ScoutingFormTab prematch = new ScoutingFormTab("Prematch",
-				new QuestionAligner(
-						new SpinnerQuestion("Team Number", "teamNumber", 0, 9999),
-						new SpinnerQuestion("Match Number", "matchNumber", 0, 9999, matchNumber)
-				),
-				new QuestionSeperator(),
-				new CheckboxQuestion(new String[] {"No Show?", "<html>Check this box if your robot is scheduled to play "
-						+ "<br/>this match, but did not show up. Be careful! "
-						+ "<br/>It could be that you just can't see it from "
-						+ "where you are sitting.</html>"}, 
-						"noShow", "")
-				
-		);
-		
-		ScoutingFormTab auto = new ScoutingFormTab("Automous", 
-				new LocationQuestion("Where did they start their AUTO from?", "autoStartPos", "/field.png"),
-				new QuestionSeperator(),
-				new QuestionAligner(
-						new SpinnerQuestion("Low Goals Made in AUTO", "autoLow", 0),
-						new SpinnerQuestion("High Goals Made in AUTO", "autoHigh", 0)
-				),
-				new QuestionSeperator(),
-				new MultipleChoiceQuestion(new String[] {"Gear State",
-						"<html>RAN OUT OF TIME: The gear is on the LIFT, but was not pulled into the AIRSHIP before AUTONOMOUS ended."
-						+ "<br>DROPPED: The team attempted to collect a gear in AUTO, but the gear was dropped on the floor."
-						+ "<br>FAILED: The team attempted to collect a gear in AUTO, but failed, without the robot dropping it."
-						+ "<br>SUCCESS: The PILOT collected a gear in AUTO."
-						+ "<br>If the GEAR fell because the PILOT pulled too fast and it slipped off the list, please mark that in the appropriate section of the POSTMATCH tab.</html>"
-				}, "gearState", false, "Did not attempt", "Dropped", "Failed", "Success"),
-				new MultipleChoiceQuestion("Gear Hook Attempted", "autoGearPos", false, "Boiler Side Hook", "Center Hook", "Feeder Side Hook", "N/A")		
-		);
  
-		ScoutingFormTab duringMatch = new ScoutingFormTab("During Match",
+		ScoutingFormTab robotScouting = new ScoutingFormTab("Robot Scouting",
 				new QuestionAligner(
-					new SpinnerQuestion("Gears Placed on the Hook", "gearsScored", 0, 21)
+						new SpinnerQuestion("Match Number", "robotMatchNumber"),
+						new SpinnerQuestion("Team Number", "robotTeamNumber")
+				),
+				new CheckboxQuestion(new String[] {"No Show", "Check this box if you are sure you're robot is not in this match"}, "noShow", ""),
+				new QuestionSeperator(),
+				new QuestionGroup("Automous",
+						new MultipleChoiceQuestion(new String[] {"Auto Gear", "Select what the robot did with it's gear in auto"}, "autoGear", false, "No Attempt", "Failed", "Success"),
+						new QuestionAligner(
+								new SpinnerQuestion(new String[] {"High Goals Made", "How many high goals did they make in auto"}, "autoHighGoals"),
+								new SpinnerQuestion(new String[] {"Low Goals Made", "How many low goals did they make in auto" }, "autoLowGoals")
+						)
 				),
 				new QuestionSeperator(),
-				new SpinnerQuestion(new String[] {"Gears Dropped by Robot",
-						"<html>Increment this when a robot drops a gear while operating a lift, moving across the field,"
-						+ "<br/>or intaking a gear, and it is the robot's fault.</html>"
-				}, "gearsDropped", 0, 999),
-				new SpinnerQuestion("Gears Intook by Robot (Ground)", "gearsIntookGround"),
-				new QuestionSeperator(),
-				new QuestionAligner(
-						new SpinnerQuestion("Low Goals Made in TELEOPERATED", "teleopLow", 0),
-						new SpinnerQuestion("High Goals Made in TELEOPERATED", "teleopHigh", 0)
+				new QuestionGroup("Teleop",
+						new QuestionAligner(
+								new SpinnerQuestion("Gears Intook From Loading Station", "loadingStationGearIntake"),
+								new SpinnerQuestion("Gears Intook From Ground", "groundGearIntake"),
+								new SpinnerQuestion("Gears Hung On Lift", "gearsHung")
+						),
+						new QuestionSeperator(),
+						
+						new QuestionAligner(
+								new SpinnerQuestion("High Goals", "highGoals"),
+								new SpinnerQuestion("Low Goals", "lowGoals")
+						),
+						new QuestionSeperator(),
+						
+						new CheckboxQuestion("Fuel Intake", "fuelIntake", "Loading Station", "Hopper", "Ground"),
+						new SliderQuestion("Shooter Acccuracy", "shooterAccuracy", 0, 100, 0),
+						
+						new QuestionSeperator(),
+						
+						new MultipleChoiceQuestion("Climbing", "climbState", false, "No Attempt", "Failed", "Fell Off", "Success")
 				),
-				new SpinnerQuestion(new String[] {"Number of Fuel Cycles",
-						"The number of times a team set up and attempted to shoot."
-				}, "shootingCycles", 0, 99),
-
 				new QuestionSeperator(),
-				new MultipleChoiceQuestion(new String[] {"What type of defense did they play?",
-						"<html>PURPOSEFUL: Dedicated defense, accomplishing few other actions in the meantime."
-						+ "<br>ON THE WAY: Harasses opponent's robots while moving between tasks.</html>"
-				}, "defenseType", false, "Purposeful", "On the way", "None"),			
-				new QuestionSeperator(),
-				new MultipleChoiceQuestion(new String[] {"Climbing",
-						"<html>CLIMBED: Successfully climbed the ROPE and depressed the TOUCHPAD."
-						+ "<br>FELL OFF: The robot lost grip on the rope and was unable to climb again."
-						+ "<br>FAILED: The robot either failed to latch on to the rope or failed to fully climb and depress the touchpad.</html>"
-				}, "climber", false, "Climbed", "Fell Off", "Ran out of Time", "Got Stuck", "No Attempt"),
-				new SpinnerQuestion("Time taken to climb(seconds)", "climberTime", 0, 135)
+				new FreeResponseQuestion("Comments", "comments")
 		);
 		
-		ScoutingFormTab pilot = new ScoutingFormTab("Pilot",
-				
-				new QuestionAligner(
-					new SpinnerQuestion(new String[] {"Successes in Pulling Up Gear", 
-							"<html>Increment every time the PILOT successfully retrives a gear from the BOILER side hook" },
-							"pilotBoilerSuccesses", 0, 999),
-					new SpinnerQuestion(new String[] {"Failures in Pulling Up Gear", 
-							"<html>Increment every time the PILOT drops a gear from the BOILER side hook" },
-								"pilotBoilerFailures", 0, 999)
-				),
-				new QuestionSeperator(),
-				new MultipleChoiceQuestion("Were the ropes deployed efficiently?", "ropesDeployed", true, "Yes", "No"),
-				new QuestionSeperator(),
-				new FreeResponseQuestion(new String[] {"Additional Comments on Pilot", "<html>If you feel that there is additional information about the pilot that would be useful, put it here"} , "pilotComments")
-		);
+		ScoutingFormTab pilotScouting = new ScoutingFormTab("Pilot Scouting",
+					new SpinnerQuestion("Match Number", "pilotMatchNumber"),
+					new QuestionSeperator(),
+					new QuestionGroup("Pilot 1 Data",
+							new SpinnerQuestion("Pilot Team Number", "pilot1Team"),
+							new QuestionAligner(
+									new SpinnerQuestion(new String[] {"Successes in Pulling Up Gear", 
+									"Increment every time the pilot successfully retrives a gear from the hook" },
+											"pilot1Successes"),
+									new SpinnerQuestion(new String[] {"Failures in Pulling Up Gear", 
+									"Increment every time the pilot drops a gear from the hook" },
+											"pilot1Failures")	
+							),
+					new QuestionSeperator(),
+					new MultipleChoiceQuestion("Were the ropes deployed efficiently?", "ropesDeployed1", true, "Yes", "No")
 
-		ScoutingFormTab postMatch = new ScoutingFormTab("Post Match",
-				
-				new QuestionSeperator(),
-				new QuestionAligner(
-						new MultipleChoiceQuestion("Shooter Accuracy", "shooterAccuracy", true, "0%", "25%",
-								"50%", "75%", "100%", "N/A")
 				),
 				
 				new QuestionSeperator(),
-				new QuestionAligner(	
-						new MultipleChoiceQuestion(new String[] {"Manueverability",
-								"A measurement of the general alignment ability and speed of the robot"
-						}, "manueverability", true, "Sluggish", "Unresponsive",
-								"Average", "Responsive", "Nimble"),
-
-						new MultipleChoiceQuestion(new String[] {"Driver Skill",
-								"A measurement of how intentional and practiced the drive team appears."
-						}, "driverSkill", true, "Hopeless", "Bad", "Average", "Skilled", "God-like")				),
-
-				new QuestionSeperator(),
-				new MultipleChoiceQuestion(new String[] {"Did they break down?",
-						"<html>Check this box if the robot was on the field, but unable to operate due to jamming/disconnection from the FMS/physical damage."
-						+ "<br>Please mark jams regarding GEARS and LIFTS in the appropriate section of the \"During Match\" tab."
-						+ "<br>Please provide more information about the nature of a break-down in comments.</html>"
-				}, "breakDown", false, "Yes", "No"),
-				new FreeResponseQuestion(new String[] {"Comments",
-						"<html>General comments, strategic information not defined by the questions above, etc."
-						+ "<br>We are especially interested in whether or not teams get stuck on FUEL.</html>"
-				}, "comments")
+				
+				new QuestionGroup("Pilot 2 Data", 
+						new SpinnerQuestion("Pilot Team Number", "pilot2Team"),
+						new QuestionAligner(
+								new SpinnerQuestion(new String[] {"Successes in Pulling Up Gear", 
+								"Increment every time the pilot successfully retrives a gear from the hook" },
+										"pilot2Successes"),
+								new SpinnerQuestion(new String[] {"Failures in Pulling Up Gear", 
+								"Increment every time the pilot drops a gear from the hook" },
+										"pilot2Failures")
+						),
+					new QuestionSeperator(),
+					new MultipleChoiceQuestion("Were the ropes deployed efficiently?", "ropesDeployed2", true, "Yes", "No")
+				),	
+				new FreeResponseQuestion(new String[] {"Comments", "If you feel that there is additional information about the pilot that would be useful, put it here"} , "pilotComments")
 		);
 		
 		//@formatter:on
 
-		new ScoutingForm(prematch, auto, duringMatch, pilot, postMatch);
+		new ScoutingForm(robotScouting, pilotScouting);
 	}
 
 	public ScoutingForm(ScoutingFormTab... tabs) {
@@ -330,9 +295,9 @@ public class ScoutingForm extends LockedSizeJPanel {
 
 		if (clearAndIncrement) {
 
-			Question q = superMegaQuestionFinder5000("matchNumber");
-			System.out.println("Found: " + q.getData());
-			String data = q.getData();
+			Question q1 = superMegaQuestionFinder5000("robotMatchNumber");
+			System.out.println("Found: " + q1.getData());
+			String data = q1.getData();
 			int num = Integer.parseInt(data.substring(data.indexOf(",") + 1, data.lastIndexOf(",")));
 			System.out.println("Old match num: " + num);
 			matchNumber = num + 1;

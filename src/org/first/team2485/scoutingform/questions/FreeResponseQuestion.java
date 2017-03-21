@@ -31,9 +31,10 @@ public class FreeResponseQuestion extends Question {
 		this.setToolTipText(promptAndTooltip[1]);
 		
 	}
+
 	
 	public String getData() {
-		return getInternalName() + ",\"" + area.getText().replaceAll(",", "%2C") + "\",";
+		return getInternalName() + ",\"" + area.getText().replaceAll(",", ";;;") + "\",";
 	}
 	public void clear() {
 		this.area.setText("");

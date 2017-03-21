@@ -16,11 +16,12 @@ public class SpinnerQuestion extends Question {
 
 	private JLabel promptLabel;
 	private JSpinner spinner;
+	private int startValue;
 
 	private final int PADDING = 0;
 
 	public SpinnerQuestion(String prompt, String internalName) {
-		this(prompt, internalName, Integer.MIN_VALUE);
+		this(prompt, internalName, 0);
 	}
 
 	public SpinnerQuestion(String prompt, String internalName, int min) {
@@ -28,7 +29,7 @@ public class SpinnerQuestion extends Question {
 	}
 
 	public SpinnerQuestion(String prompt, String internalName, int min, int max) {
-		this(prompt, internalName, min, max, min);
+		this(prompt, internalName, min, max, 0);
 	}
 
 	public SpinnerQuestion(String prompt, String internalName, int min, int max, int startValue) {
@@ -47,13 +48,18 @@ public class SpinnerQuestion extends Question {
 		spinner.setValue(startValue);
 
 		this.add(spinner);
+		
+		this.startValue = startValue;
 	}
 
-	public SpinnerQuestion(String[] promptAndTooltip, String internalName, int min, int max) {
-		this(promptAndTooltip[0], internalName, min, max);
+	public SpinnerQuestion(String[] promptAndTooltip, String internalName, int min, int max, int startValue) {
+		this(promptAndTooltip[0], internalName, min, max, startValue);
 
 		this.setToolTipText(promptAndTooltip[1]);
+	}
 
+	public SpinnerQuestion(String[] promptAndTooltip, String internalName) {
+		this(promptAndTooltip, internalName, 0, Integer.MAX_VALUE, 0);
 	}
 
 	public String getData() {
@@ -61,7 +67,7 @@ public class SpinnerQuestion extends Question {
 	}
 
 	public void clear() {
-		spinner.setValue(0);
+		spinner.setValue(startValue);
 	}
 
 }

@@ -131,7 +131,7 @@ public class BluetoothSystem implements DiscoveryListener {
 
 			System.out.println("Lock opened, waiting on timer");
 
-			Thread.sleep(5000);
+			Thread.sleep(500);
 
 			System.out.println("Timer ended, reading...");
 
@@ -243,7 +243,7 @@ public class BluetoothSystem implements DiscoveryListener {
 		System.out.println("Lock opened, waiting on timer...");
 
 		try {
-			Thread.sleep(1000);
+			Thread.sleep(100);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -408,9 +408,9 @@ public class BluetoothSystem implements DiscoveryListener {
 	}
 
 	public static boolean sendViaWiFi(String data) {
-		
+
 		isBusy = true;
-		
+
 		String[] header = { "data" };
 		String[] param = { data };
 

@@ -3,8 +3,11 @@ package org.first.team2485.scoutingform.questions;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.font.TextAttribute;
+import java.util.Map;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -27,12 +30,16 @@ public class QuestionGroup extends Question {
 	private final Question[] questions;
 
 	public QuestionGroup(String title, Question... questions) {
-		
+
 		super("");
 
 		this.setLayout(new BorderLayout());
 
-		checkbox = new JCheckBox(title);
+		checkbox = new JCheckBox(title, true);
+		Font f = new Font(getFont().getFontName(), Font.BOLD, (int) (getFont().getSize() * 1.5));
+		Map attributes = f.getAttributes();
+		attributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
+		checkbox.setFont(f.deriveFont(attributes));
 		checkbox.addActionListener(new ActionListener() {
 
 			@Override
@@ -40,12 +47,12 @@ public class QuestionGroup extends Question {
 				update();
 			}
 		});
-		
+
 		Box b = new Box(BoxLayout.Y_AXIS);
 		b.add(checkbox);
 		JSeparator seperator = new JSeparator(SwingConstants.HORIZONTAL);
-		seperator.setMaximumSize(new Dimension(Integer.MAX_VALUE, 1) );
-//		b.add(seperator);
+		seperator.setMaximumSize(new Dimension(Integer.MAX_VALUE, 1));
+		// b.add(seperator);
 		this.add(b, BorderLayout.NORTH);
 
 		pane = new JXCollapsiblePane();
@@ -55,13 +62,13 @@ public class QuestionGroup extends Question {
 			question.setAlignmentX(Component.LEFT_ALIGNMENT);
 			pane.add(question);
 		}
-		pane.setCollapsed(true);
-		
+		pane.setCollapsed(false);
+
 		this.add(pane, BorderLayout.CENTER);
-		
+
 		this.questions = questions;
 	}
-	
+
 	public Question[] getQuestions() {
 		return questions;
 	}
@@ -72,13 +79,13 @@ public class QuestionGroup extends Question {
 
 	@Override
 	public String getData() {
-		
+
 		String data = "";
-		
-		for (Question q :  questions) {
+
+		for (Question q : questions) {
 			data += q.getData();
 		}
-		
+
 		return data;
 	}
 
