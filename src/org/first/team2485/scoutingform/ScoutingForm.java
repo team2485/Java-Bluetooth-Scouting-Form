@@ -20,7 +20,6 @@ import org.first.team2485.scoutingform.gui.addons.GamePredictionPanel;
 import org.first.team2485.scoutingform.gui.addons.LookAndFeelSelector;
 import org.first.team2485.scoutingform.questions.CheckboxQuestion;
 import org.first.team2485.scoutingform.questions.FreeResponseQuestion;
-import org.first.team2485.scoutingform.questions.LocationQuestion;
 import org.first.team2485.scoutingform.questions.MultipleChoiceQuestion;
 import org.first.team2485.scoutingform.questions.Question;
 import org.first.team2485.scoutingform.questions.QuestionAligner;
@@ -84,11 +83,13 @@ public class ScoutingForm extends LockedSizeJPanel {
 		//@formatter:off
  
 		ScoutingFormTab robotScouting = new ScoutingFormTab("Robot Scouting",
-				new QuestionAligner(
-						new SpinnerQuestion("Match Number", "robotMatchNumber"),
-						new SpinnerQuestion("Team Number", "robotTeamNumber")
+				new QuestionGroup("Pre-Match",
+						new QuestionAligner(
+								new SpinnerQuestion("Match Number", "robotMatchNumber", 0, 9999, matchNumber),
+								new SpinnerQuestion("Team Number", "robotTeamNumber")
+						),
+						new CheckboxQuestion(new String[] {"No Show", "Check this box if you are sure you're robot is not in this match"}, "noShow", "")
 				),
-				new CheckboxQuestion(new String[] {"No Show", "Check this box if you are sure you're robot is not in this match"}, "noShow", ""),
 				new QuestionSeperator(),
 				new QuestionGroup("Automous",
 						new MultipleChoiceQuestion(new String[] {"Auto Gear", "Select what the robot did with it's gear in auto"}, "autoGear", false, "No Attempt", "Failed", "Success"),
@@ -117,16 +118,16 @@ public class ScoutingForm extends LockedSizeJPanel {
 						
 						new QuestionSeperator(),
 						
-						new MultipleChoiceQuestion("Climbing", "climbState", false, "No Attempt", "Failed", "Fell Off", "Success")
+						new MultipleChoiceQuestion("Climbing", "climbState", false, "No Attempt", "Ran Out Of Time", "Got Stuck", "Fell Off", "Success")
 				),
 				new QuestionSeperator(),
 				new FreeResponseQuestion("Comments", "comments")
 		);
 		
 		ScoutingFormTab pilotScouting = new ScoutingFormTab("Pilot Scouting",
-					new SpinnerQuestion("Match Number", "pilotMatchNumber"),
+					new SpinnerQuestion("Match Number", "pilotMatchNumber", 0, 9999, matchNumber),
 					new QuestionSeperator(),
-					new QuestionGroup("Pilot 1 Data",
+					new QuestionGroup("Pilot 1",
 							new SpinnerQuestion("Pilot Team Number", "pilot1Team"),
 							new QuestionAligner(
 									new SpinnerQuestion(new String[] {"Successes in Pulling Up Gear", 
@@ -136,14 +137,16 @@ public class ScoutingForm extends LockedSizeJPanel {
 									"Increment every time the pilot drops a gear from the hook" },
 											"pilot1Failures")	
 							),
-					new QuestionSeperator(),
-					new MultipleChoiceQuestion("Were the ropes deployed efficiently?", "ropesDeployed1", true, "Yes", "No")
-
+							new QuestionSeperator(),
+							new MultipleChoiceQuestion("Were the ropes deployed efficiently?", "ropesDeployed1", true, "Yes", "No"),
+							new MultipleChoiceQuestion("Pilot Skill", "blatantIncompetency1", true, "Blatantly Incompetent", "Average", "Godlike"),
+							new QuestionSeperator(),
+							new FreeResponseQuestion(new String[] {"Comments", "If you feel that there is additional information about the pilot that would be useful, put it here"} , "pilot1Comments")
 				),
 				
 				new QuestionSeperator(),
 				
-				new QuestionGroup("Pilot 2 Data", 
+				new QuestionGroup("Pilot 2", 
 						new SpinnerQuestion("Pilot Team Number", "pilot2Team"),
 						new QuestionAligner(
 								new SpinnerQuestion(new String[] {"Successes in Pulling Up Gear", 
@@ -153,10 +156,12 @@ public class ScoutingForm extends LockedSizeJPanel {
 								"Increment every time the pilot drops a gear from the hook" },
 										"pilot2Failures")
 						),
-					new QuestionSeperator(),
-					new MultipleChoiceQuestion("Were the ropes deployed efficiently?", "ropesDeployed2", true, "Yes", "No")
-				),	
-				new FreeResponseQuestion(new String[] {"Comments", "If you feel that there is additional information about the pilot that would be useful, put it here"} , "pilotComments")
+						new QuestionSeperator(),
+						new MultipleChoiceQuestion("Were the ropes deployed efficiently?", "ropesDeployed2", true, "Yes", "No"),
+						new MultipleChoiceQuestion("Pilot Skill", "blatantIncompetency1", true, "Blatantly Incompetent", "Average", "Godlike"),
+						new QuestionSeperator(),
+						new FreeResponseQuestion(new String[] {"Comments", "If you feel that there is additional information about the pilot that would be useful, put it here"} , "pilot2Comments")
+				)	
 		);
 		
 		//@formatter:on
@@ -296,15 +301,17 @@ public class ScoutingForm extends LockedSizeJPanel {
 		if (clearAndIncrement) {
 
 			Question q1 = superMegaQuestionFinder5000("robotMatchNumber");
-			System.out.println("Found: " + q1.getData());
-			String data = q1.getData();
-			int num = Integer.parseInt(data.substring(data.indexOf(",") + 1, data.lastIndexOf(",")));
-			System.out.println("Old match num: " + num);
-			matchNumber = num + 1;
+			Question q2 = superMegaQuestionFinder5000("pilotMatchNumber");
+
+			String data1 = q1.getData();
+			String data2 = q2.getData();
+
+			int num1 = Integer.parseInt(data1.substring(data1.indexOf(",") + 1, data1.lastIndexOf(",")));
+			int num2 = Integer.parseInt(data2.substring(data2.indexOf(",") + 1, data2.lastIndexOf(",")));
+
+			matchNumber = Math.max(num1, num2) + 1;
 
 			displayForm();
-
-			// GamePredictionPanel.predictionPanel.beginTimeoutForMatch(matchNumber);
 		} else {
 			new ScoutingForm(tabs.clone());
 		}

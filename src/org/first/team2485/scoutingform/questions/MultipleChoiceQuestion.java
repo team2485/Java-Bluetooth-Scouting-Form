@@ -1,5 +1,7 @@
 package org.first.team2485.scoutingform.questions;
 
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JLabel;
 import javax.swing.JRadioButton;
@@ -26,29 +28,23 @@ public class MultipleChoiceQuestion extends Question {
 
 		promptLabel = new JLabel(prompt);
 		this.add(promptLabel);
-
-		// this.add(Box.createRigidArea(new Dimension(10, 0)));
-		// this.add(Box.createHorizontalGlue());
-		// this.add(Box.createRigidArea(new Dimension(10, 0)));
-
+		
 		optionButtonGroup = new ButtonGroup();
+		Box bob = new Box(BoxLayout.X_AXIS);
 
 		optionButtons = new JRadioButton[options.length];
 		for (int i = 0; i < options.length; i++) {
 			optionButtons[i] = new JRadioButton(options[i]);
-			// optionButtons[i].setAlignmentX(Component.RIGHT_ALIGNMENT);
-			this.add(optionButtons[i]);
+			bob.add(optionButtons[i]);
+			bob.add(Box.createHorizontalStrut(5));
 			optionButtonGroup.add(optionButtons[i]);
 		}
+		this.add(bob);
 	}
 	
 	public MultipleChoiceQuestion(String[] promptAndTooltip, String internalName, boolean numerical, String... options) {
- 
 		this(promptAndTooltip[0],  internalName,  numerical, options);
-		
 		this.setToolTipText(promptAndTooltip[1]);
-
-	
 	}
 
 	public String getData() {
@@ -70,5 +66,4 @@ public class MultipleChoiceQuestion extends Question {
 	public void clear() {
 		optionButtonGroup.clearSelection();
 	}
-
 }

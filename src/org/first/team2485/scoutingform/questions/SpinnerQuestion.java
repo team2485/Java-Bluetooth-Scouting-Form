@@ -18,14 +18,12 @@ public class SpinnerQuestion extends Question {
 	private JSpinner spinner;
 	private int startValue;
 
-	private final int PADDING = 0;
-
 	public SpinnerQuestion(String prompt, String internalName) {
 		this(prompt, internalName, 0);
 	}
 
 	public SpinnerQuestion(String prompt, String internalName, int min) {
-		this(prompt, internalName, min, Integer.MAX_VALUE);
+		this(prompt, internalName, min, 9999);
 	}
 
 	public SpinnerQuestion(String prompt, String internalName, int min, int max) {
@@ -41,14 +39,12 @@ public class SpinnerQuestion extends Question {
 		spinner = new JSpinner(new SpinnerNumberModel(min, min, max, 1));
 		JSpinner.NumberEditor editor = new JSpinner.NumberEditor(spinner, "#");
 		spinner.setEditor(editor);
-		((DefaultEditor) spinner.getEditor()).getTextField().setColumns(4);
-
-		this.setBorder(new EmptyBorder(PADDING, 0, PADDING, 0));
+		((DefaultEditor) spinner.getEditor()).getTextField().setColumns((max + "").length());
 
 		spinner.setValue(startValue);
 
 		this.add(spinner);
-		
+
 		this.startValue = startValue;
 	}
 
@@ -59,7 +55,7 @@ public class SpinnerQuestion extends Question {
 	}
 
 	public SpinnerQuestion(String[] promptAndTooltip, String internalName) {
-		this(promptAndTooltip, internalName, 0, Integer.MAX_VALUE, 0);
+		this(promptAndTooltip, internalName, 0, 9999, 0);
 	}
 
 	public String getData() {

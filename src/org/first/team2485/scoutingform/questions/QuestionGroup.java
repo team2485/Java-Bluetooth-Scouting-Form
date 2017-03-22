@@ -29,6 +29,7 @@ public class QuestionGroup extends Question {
 	private final JCheckBox checkbox;
 	private final Question[] questions;
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public QuestionGroup(String title, Question... questions) {
 
 		super("");
@@ -52,12 +53,11 @@ public class QuestionGroup extends Question {
 		b.add(checkbox);
 		JSeparator seperator = new JSeparator(SwingConstants.HORIZONTAL);
 		seperator.setMaximumSize(new Dimension(Integer.MAX_VALUE, 1));
-		// b.add(seperator);
+		b.add(seperator);
 		this.add(b, BorderLayout.NORTH);
 
 		pane = new JXCollapsiblePane();
 		pane.setLayout(new BoxLayout(pane.getContentPane(), BoxLayout.Y_AXIS));
-		// pane.setLayout(new GridLayout(0, 1));
 		for (Question question : questions) {
 			question.setAlignmentX(Component.LEFT_ALIGNMENT);
 			pane.add(question);

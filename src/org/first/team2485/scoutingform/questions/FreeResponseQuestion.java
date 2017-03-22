@@ -1,4 +1,6 @@
 package org.first.team2485.scoutingform.questions;
+import java.awt.Insets;
+
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
 
@@ -21,6 +23,8 @@ public class FreeResponseQuestion extends Question {
 		this.add(promptLabel);
 		
 		area = new JTextArea(5, 50);
+		area.setMargin(new Insets(10,10,10,10));
+		area.setLineWrap(true);
 		this.add(area);
 	}
 	
