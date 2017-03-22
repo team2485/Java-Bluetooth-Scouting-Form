@@ -103,6 +103,7 @@ public class ScoutingForm extends LockedSizeJPanel {
 						new QuestionAligner(
 								new SpinnerQuestion("Gears Intook From Loading Station", "loadingStationGearIntake"),
 								new SpinnerQuestion("Gears Intook From Ground", "groundGearIntake"),
+								new SpinnerQuestion("Gears Dropped at Loading Station", "gearsDroppedLoadingStation"),
 								new SpinnerQuestion("Gears Hung On Lift", "gearsHung")
 						),
 						new QuestionSeperator(),
@@ -118,7 +119,13 @@ public class ScoutingForm extends LockedSizeJPanel {
 						
 						new QuestionSeperator(),
 						
-						new MultipleChoiceQuestion("Climbing", "climbState", false, "No Attempt", "Ran Out Of Time", "Got Stuck", "Fell Off", "Success")
+						new MultipleChoiceQuestion("Climbing", "climbState", false, "No Attempt", "Ran Out Of Time", "Got Stuck", "Fell Off", "Success"),
+						
+						new QuestionSeperator(),
+						
+						new MultipleChoiceQuestion("Driving", "driving", true, "1", "2", "3", "4", "5"),
+						new CheckboxQuestion("Did they have a yellow card at the end of the match?", "yellowCard", "Yes")
+
 				),
 				new QuestionSeperator(),
 				new FreeResponseQuestion("Comments", "comments")
@@ -139,7 +146,7 @@ public class ScoutingForm extends LockedSizeJPanel {
 							),
 							new QuestionSeperator(),
 							new MultipleChoiceQuestion("Were the ropes deployed efficiently?", "ropesDeployed1", true, "Yes", "No"),
-							new MultipleChoiceQuestion("Pilot Skill", "blatantIncompetency1", true, "Blatantly Incompetent", "Average", "Godlike"),
+							new MultipleChoiceQuestion("Pilot Skill", "pilotSkill1", true, "Incompetent", "Average", "Exceptional"),
 							new QuestionSeperator(),
 							new FreeResponseQuestion(new String[] {"Comments", "If you feel that there is additional information about the pilot that would be useful, put it here"} , "pilot1Comments")
 				),
@@ -158,7 +165,7 @@ public class ScoutingForm extends LockedSizeJPanel {
 						),
 						new QuestionSeperator(),
 						new MultipleChoiceQuestion("Were the ropes deployed efficiently?", "ropesDeployed2", true, "Yes", "No"),
-						new MultipleChoiceQuestion("Pilot Skill", "blatantIncompetency1", true, "Blatantly Incompetent", "Average", "Godlike"),
+						new MultipleChoiceQuestion("Pilot Skill", "pilotSkill2", true, "Incompetent", "Average", "Exceptional"),
 						new QuestionSeperator(),
 						new FreeResponseQuestion(new String[] {"Comments", "If you feel that there is additional information about the pilot that would be useful, put it here"} , "pilot2Comments")
 				)	
