@@ -20,6 +20,7 @@ import org.first.team2485.scoutingform.gui.addons.GamePredictionPanel;
 import org.first.team2485.scoutingform.gui.addons.LookAndFeelSelector;
 import org.first.team2485.scoutingform.questions.CheckboxQuestion;
 import org.first.team2485.scoutingform.questions.FreeResponseQuestion;
+import org.first.team2485.scoutingform.questions.LocationQuestion;
 import org.first.team2485.scoutingform.questions.MultipleChoiceQuestion;
 import org.first.team2485.scoutingform.questions.Question;
 import org.first.team2485.scoutingform.questions.QuestionAligner;
@@ -92,6 +93,8 @@ public class ScoutingForm extends LockedSizeJPanel {
 				),
 				new QuestionSeperator(),
 				new QuestionGroup("Automous",
+						new LocationQuestion("Where does this robot start auto?", "autoStartPos", "/field.png"),
+						new QuestionSeperator(),
 						new MultipleChoiceQuestion(new String[] {"Auto Gear", "Select what the robot did with it's gear in auto"}, "autoGear", false, "No Attempt", "Failed", "Success"),
 						new QuestionAligner(
 								new SpinnerQuestion(new String[] {"High Goals Made", "How many high goals did they make in auto"}, "autoHighGoals"),
@@ -123,9 +126,17 @@ public class ScoutingForm extends LockedSizeJPanel {
 						
 						new QuestionSeperator(),
 						
+<<<<<<< HEAD
 						new MultipleChoiceQuestion("Driving", "driving", true, "1", "2", "3", "4", "5"),
 						new MultipleChoiceQuestion("Did they play defense?", "defense", true, "Purposeful", "On the way", "None"),
 						new CheckboxQuestion("Did they have a yellow card at the end of the match?", "yellowCard", "Yes")
+=======
+						new MultipleChoiceQuestion("Driver Skill", "driving", true, "Terrible", "Bad", "Average", "Good", "Excelent"),
+						
+						new QuestionSeperator(),
+						
+						new CheckboxQuestion("Did they have a yellow card at the end of the match?", "yellowCard", "")
+>>>>>>> 9ec07f3e06abb71d9a3a33fe9a39e3f837b8803b
 
 				),
 				new QuestionSeperator(),
