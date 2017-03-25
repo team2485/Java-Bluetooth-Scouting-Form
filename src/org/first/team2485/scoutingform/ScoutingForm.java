@@ -116,6 +116,7 @@ public class ScoutingForm extends LockedSizeJPanel {
 						
 						new CheckboxQuestion("Fuel Intake", "fuelIntake", "Loading Station", "Hopper", "Ground"),
 						new SliderQuestion("Shooter Acccuracy", "shooterAccuracy", 0, 100, 0),
+						new CheckboxQuestion("Fuel Intake", "fuelIntake", "Loading Station", "Hopper", "Ground"),
 						
 						new QuestionSeperator(),
 						
@@ -124,6 +125,7 @@ public class ScoutingForm extends LockedSizeJPanel {
 						new QuestionSeperator(),
 						
 						new MultipleChoiceQuestion("Driving", "driving", true, "1", "2", "3", "4", "5"),
+						new MultipleChoiceQuestion("Did they play defense?", "defense", true, "Purposeful", "On the way", "None"),
 						new CheckboxQuestion("Did they have a yellow card at the end of the match?", "yellowCard", "Yes")
 
 				),
@@ -132,6 +134,7 @@ public class ScoutingForm extends LockedSizeJPanel {
 		);
 		
 		ScoutingFormTab pilotScouting = new ScoutingFormTab("Pilot Scouting",
+		ScoutingFormTab pilotScouting = new ScoutingFormTab("Airship Scouting",
 					new SpinnerQuestion("Match Number", "pilotMatchNumber", 0, 9999, matchNumber),
 					new QuestionSeperator(),
 					new QuestionGroup("Pilot 1",
