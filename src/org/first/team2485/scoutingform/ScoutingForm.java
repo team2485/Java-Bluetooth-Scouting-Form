@@ -114,7 +114,6 @@ public class ScoutingForm extends LockedSizeJPanel {
 						),
 						new QuestionSeperator(),
 						
-						new CheckboxQuestion("Fuel Intake", "fuelIntake", "Loading Station", "Hopper", "Ground"),
 						new SliderQuestion("Shooter Acccuracy", "shooterAccuracy", 0, 100, 0),
 						new CheckboxQuestion("Fuel Intake", "fuelIntake", "Loading Station", "Hopper", "Ground"),
 						
@@ -133,7 +132,6 @@ public class ScoutingForm extends LockedSizeJPanel {
 				new FreeResponseQuestion("Comments", "comments")
 		);
 		
-		ScoutingFormTab pilotScouting = new ScoutingFormTab("Pilot Scouting",
 		ScoutingFormTab pilotScouting = new ScoutingFormTab("Airship Scouting",
 					new SpinnerQuestion("Match Number", "pilotMatchNumber", 0, 9999, matchNumber),
 					new QuestionSeperator(),
