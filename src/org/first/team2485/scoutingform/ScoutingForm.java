@@ -120,7 +120,7 @@ public class ScoutingForm extends LockedSizeJPanel {
 								new SpinnerQuestion("Low Goals", "lowGoals")
 						),
 						new QuestionSeperator(),
-						
+
 						new CheckboxQuestion("Fuel Intake", "fuelIntake", "Loading Station", "Hopper", "Ground"),
 						new SliderQuestion("Shooter Acccuracy", "shooterAccuracy", "%", 1, 0, 100, 0, 25, 5),
 						
@@ -129,8 +129,9 @@ public class ScoutingForm extends LockedSizeJPanel {
 						new MultipleChoiceQuestion("Climbing", "climbState", false, "No Attempt", "Ran Out Of Time", "Got Stuck", "Fell Off", "Success"),
 						
 						new QuestionSeperator(),
-						
-						new SliderQuestion("Driver Skill", "driverSkill", "", 100, 1, 5, 1, 1, 0.25),
+
+						new MultipleChoiceQuestion("Did they play defense?", "defense", false, "None", "On the way", "Purposeful"),
+						new MultipleChoiceQuestion("Driver Skill", "driving", true, "Terrible", "Bad", "Average", "Good", "Excelent"),
 						
 						new QuestionSeperator(),
 						
@@ -141,7 +142,7 @@ public class ScoutingForm extends LockedSizeJPanel {
 				new FreeResponseQuestion("Comments", "comments")
 		);
 		
-		ScoutingFormTab pilotScouting = new ScoutingFormTab("Pilot Scouting",
+		ScoutingFormTab pilotScouting = new ScoutingFormTab("Airship Scouting",
 					new SpinnerQuestion("Match Number", "pilotMatchNumber", 0, 9999, matchNumber),
 					new QuestionSeperator(),
 					new QuestionGroup("Pilot 1",
