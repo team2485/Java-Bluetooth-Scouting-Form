@@ -9,6 +9,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import org.first.team2485.scoutingform.util.Logger;
+
 /**
  * 
  * @author Troy Appel
@@ -16,10 +18,10 @@ import javax.swing.JOptionPane;
  */
 @SuppressWarnings("serial")
 public class QuitButton extends JButton {
-	
+
 	public QuitButton(JFrame frame) {
 		super("Quit");
-		
+
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		frame.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
@@ -32,18 +34,18 @@ public class QuitButton extends JButton {
 				showConfirmation();
 			}
 		});
-		
+
 	}
-	private void showConfirmation () {
-		int status = JOptionPane.showConfirmDialog(null, "Are you sure you want to quit?", "Confirmation", JOptionPane.YES_NO_OPTION);
-		
+
+	private void showConfirmation() {
+		int status = JOptionPane.showConfirmDialog(null, "Are you sure you want to quit?", "Confirmation",
+				JOptionPane.YES_NO_OPTION);
+
 		if (status == JOptionPane.YES_OPTION) {
+			Logger.getInst().shutdownLogger();
 			System.exit(0);
-		}
-		else {
+		} else {
 			return;
 		}
 	}
-
-
 }

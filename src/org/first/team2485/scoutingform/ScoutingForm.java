@@ -3,7 +3,6 @@ package org.first.team2485.scoutingform;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.Font;
-
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -28,6 +27,7 @@ import org.first.team2485.scoutingform.questions.QuestionGroup;
 import org.first.team2485.scoutingform.questions.QuestionSeperator;
 import org.first.team2485.scoutingform.questions.SliderQuestion;
 import org.first.team2485.scoutingform.questions.SpinnerQuestion;
+import org.first.team2485.scoutingform.util.Logger;
 
 /**
  * @author Jeremy McCulloch
@@ -35,7 +35,7 @@ import org.first.team2485.scoutingform.questions.SpinnerQuestion;
  */
 @SuppressWarnings("serial")
 public class ScoutingForm extends LockedSizeJPanel {
-
+	
 	public static ScoutingForm scoutingForm;
 
 	private static int matchNumber;
@@ -47,6 +47,9 @@ public class ScoutingForm extends LockedSizeJPanel {
 	private static String scoutName;
 
 	public static void main(String[] args) {
+		
+		Logger.getInst().log("starting bluetooth scouting form");
+		
 		init();
 		displayForm();
 	}
@@ -62,6 +65,7 @@ public class ScoutingForm extends LockedSizeJPanel {
 			scoutName = JOptionPane.showInputDialog(null, "Enter your name", "Name", JOptionPane.QUESTION_MESSAGE);
 
 			if (scoutName == null) {
+				Logger.getInst().shutdownLogger();
 				System.exit(0);
 			}
 		}
@@ -118,7 +122,7 @@ public class ScoutingForm extends LockedSizeJPanel {
 						new QuestionSeperator(),
 						
 						new CheckboxQuestion("Fuel Intake", "fuelIntake", "Loading Station", "Hopper", "Ground"),
-						new SliderQuestion("Shooter Acccuracy", "shooterAccuracy", 0, 100, 0),
+						new SliderQuestion("Shooter Acccuracy", "shooterAccuracy", "%", 1, 0, 100, 0, 25, 5),
 						
 						new QuestionSeperator(),
 						
@@ -126,7 +130,7 @@ public class ScoutingForm extends LockedSizeJPanel {
 						
 						new QuestionSeperator(),
 						
-						new MultipleChoiceQuestion("Driver Skill", "driving", true, "Terrible", "Bad", "Average", "Good", "Excelent"),
+						new SliderQuestion("Driver Skill", "driverSkill", "", 100, 1, 5, 1, 1, 0.25),
 						
 						new QuestionSeperator(),
 						
