@@ -295,6 +295,8 @@ public class ScoutingForm extends LockedSizeJPanel {
 		for (ScoutingFormTab tab : tabs) {
 			output += tab.getData();
 		}
+		
+		output += "name," + scoutName;
 
 		return output;
 	}
