@@ -41,7 +41,7 @@ import org.first.team2485.scoutingform.util.Logger;
 @SuppressWarnings("serial")
 public class BluetoothPanel extends JPanel implements ListCellRenderer<ExpandedRemoteDevice> {
 
-	final public static String SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxeGy9zlXqqRcRvhShhR5W870y0JS2D4OwUMUi16lCHtikuyD6v/exec";
+	final public static String SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxdQigOa6DuajIWo7HWFyCAGS0hLCPkcB-HbfSkYuk29qEQqEq3/exec";
 	
 	private JFrame frame;
 

@@ -5,6 +5,7 @@ import java.io.DataOutputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLConnection;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -44,6 +45,8 @@ public class HTTPUtils {
 		URL obj = new URL(fullUrl);
 		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 		
+		con.setConnectTimeout(30000);
+		
 		// optional default is GET
 		con.setRequestMethod("GET");
 		
@@ -76,9 +79,19 @@ public class HTTPUtils {
 	public static String sendPost(String url, String[] headers, String[] params) throws Exception {
 				
 		URL obj = new URL(url);
-		HttpsURLConnection con = (HttpsURLConnection) obj.openConnection();
+		URLConnection tempCon = obj.openConnection();
 
-		//add reuqest header
+		System.out.println("here");
+		
+		tempCon.setConnectTimeout(30000);
+		
+		tempCon.setReadTimeout(30000);
+		
+		System.out.println("here");
+		
+		HttpsURLConnection con = ((HttpsURLConnection) tempCon);
+		
+		//add reuqest headeroi
 		con.setRequestMethod("POST");
 		con.setRequestProperty("User-Agent", USER_AGENT);
 		con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");

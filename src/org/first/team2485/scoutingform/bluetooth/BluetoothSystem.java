@@ -456,7 +456,10 @@ public class BluetoothSystem implements DiscoveryListener {
 		String[] param = { data };
 
 		try {
-			HTTPUtils.sendPost(BluetoothPanel.SCRIPT_URL, header, param);
+			String response = HTTPUtils.sendPost(BluetoothPanel.SCRIPT_URL, header, param);
+			if (!response.contains("START1END") || response.contains("START0END")) {
+				throw new Exception("Script failed to execute successfully.");
+			};
 			isBusy = false;
 			return true;
 		} catch (Exception e) {

@@ -30,7 +30,7 @@ public class SubmitButton extends JButton implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
-		String dataToSend = form.getScoutName() + "," + System.currentTimeMillis() + "," + form.submit();
+		String dataToSend = form.submit();
 		String fileName = "ScoutingData~" + form.getScoutName() + "^" + System.currentTimeMillis() + ".sfd";
 
 		System.out.println(dataToSend);

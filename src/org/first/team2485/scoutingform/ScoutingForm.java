@@ -3,6 +3,8 @@ package org.first.team2485.scoutingform;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.util.Date;
+
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -296,7 +298,7 @@ public class ScoutingForm extends LockedSizeJPanel {
 			output += tab.getData();
 		}
 		
-		output += "name," + scoutName;
+		output += "name," + scoutName +",timestamp," + System.currentTimeMillis() +",";
 
 		return output;
 	}
@@ -311,7 +313,7 @@ public class ScoutingForm extends LockedSizeJPanel {
 			SwingUtilities.updateComponentTreeUI(frame);
 			frame.pack();
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "Something went very wrong loading that theme");
+			JOptionPane.showMessageDialog(null, "Something went very wrong loading that theme.");
 		}
 	}
 
