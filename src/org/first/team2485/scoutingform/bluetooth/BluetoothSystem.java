@@ -56,14 +56,23 @@ public class BluetoothSystem implements DiscoveryListener {
 	}
 
 	public static void shutdown() {
-		Logger.getInst().log("Shuting down bluetooth system");
-		System.out.println("Shutting down bluetooth system...");
-		agent.cancelInquiry(getInstance());
-		agent.cancelServiceSearch(serviceSearchID);
+
+		try {
+
+			Logger.getInst().log("Shuting down bluetooth system");
+			System.out.println("Shutting down bluetooth system...");
+			agent.cancelInquiry(getInstance());
+			agent.cancelServiceSearch(serviceSearchID);
+			System.out.println("Bluetooth system shut down");
+			Logger.getInst().log("Bluetooth shut down");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			Logger.getInst().log("Bluetooth threw exception shutting down");
+		}
+
 		isBusy = false;
 		instance = null;
-		System.out.println("Bluetooth system shut down");
-		Logger.getInst().log("Bluetooth shut down");
 	}
 
 	public static ExpandedRemoteDevice[] pairedDevices() {
