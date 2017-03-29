@@ -42,7 +42,6 @@ public class QuitButton extends JButton {
 				JOptionPane.YES_NO_OPTION);
 
 		if (status == JOptionPane.YES_OPTION) {
-			Logger.getInst().shutdownLogger();
 			System.exit(0);
 		} else {
 			return;

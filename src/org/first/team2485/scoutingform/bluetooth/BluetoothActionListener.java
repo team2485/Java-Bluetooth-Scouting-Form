@@ -59,6 +59,8 @@ public class BluetoothActionListener implements ActionListener {
 		@Override
 		public void run() {
 
+			this.setName("SearchThread:local=" + local + ":" + hashCode());
+
 			if (local) {
 				bluetoothPanel.localScan();
 			} else {
@@ -73,6 +75,8 @@ public class BluetoothActionListener implements ActionListener {
 
 		@Override
 		public void run() {
+
+			this.setName("SendThread:" + hashCode());
 
 			if (bluetoothPanel.getSelectedDevice() == null
 					|| bluetoothPanel.getSelectedDevice().state != ExpandedRemoteDevice.OBEX_SUPPORTED) {
@@ -98,9 +102,11 @@ public class BluetoothActionListener implements ActionListener {
 
 		@Override
 		public void run() {
-			
+
+			this.setName("SendWiFiThread:" + hashCode());
+
 			System.out.println("Sending data via WiFi...");
-			
+
 			boolean result = BluetoothSystem.sendViaWiFi(bluetoothPanel.getDataToSend());
 
 			if (result) {
@@ -113,6 +119,8 @@ public class BluetoothActionListener implements ActionListener {
 
 		@Override
 		public void run() {
+
+			this.setName("ReturnThread:" + hashCode());
 
 			int result = JOptionPane.showConfirmDialog(null,
 					"Are you sure you want to go back to the form?\nThe current data will not be sent.",

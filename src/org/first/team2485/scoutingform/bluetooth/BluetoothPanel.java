@@ -30,6 +30,7 @@ import javax.swing.text.DefaultCaret;
 
 import org.first.team2485.scoutingform.QuitButton;
 import org.first.team2485.scoutingform.ScoutingForm;
+import org.first.team2485.scoutingform.util.Logger;
 
 /**
  * 
@@ -58,6 +59,8 @@ public class BluetoothPanel extends JPanel implements ListCellRenderer<ExpandedR
 	private boolean stop;
 
 	public BluetoothPanel(String fileName, String dataToSend) {
+		
+		Logger.getInst().log("initing the bluetooth panel");
 
 		oldPrintStream = System.out;
 		oldErrorStream = System.err;
@@ -72,6 +75,8 @@ public class BluetoothPanel extends JPanel implements ListCellRenderer<ExpandedR
 
 		System.setOut(consoleStream);
 		System.setErr(consoleStream);
+		
+		Logger.getInst().log("output streams transfered");
 
 		this.fileName = fileName;
 		this.dataToSend = dataToSend;
@@ -82,12 +87,18 @@ public class BluetoothPanel extends JPanel implements ListCellRenderer<ExpandedR
 
 		frame.pack();
 		frame.setVisible(true);
+		
+		Logger.getInst().log("frame set visible");
 
 		new PaintThread().start();
+		
+		Logger.getInst().log("starting a local scan");
 
 		BluetoothActionListener.startLocalScan();
 
 		System.out.println("Preparing local records");
+		
+		Logger.getInst().log("writing data to local records");
 
 		writeToScoutingRecords(fileName, dataToSend);
 	}
@@ -113,9 +124,16 @@ public class BluetoothPanel extends JPanel implements ListCellRenderer<ExpandedR
 	}
 
 	class PaintThread extends Thread {
+		
+		private PaintThread() {
+			setName("Bluetooth-Panel-Paint-Thread" + hashCode());
+			setDaemon(true);
+		}
 
 		@Override
 		public void run() {
+			
+			Logger.getInst().log("starting the bluetooth panel paint thread");
 
 			while (!stop) {
 
@@ -131,6 +149,8 @@ public class BluetoothPanel extends JPanel implements ListCellRenderer<ExpandedR
 
 				continue;
 			}
+			
+			Logger.getInst().log("exiting the bluetooth panel paint thread");
 		}
 	}
 
@@ -281,19 +301,29 @@ public class BluetoothPanel extends JPanel implements ListCellRenderer<ExpandedR
 	}
 
 	public void localScan() {
+		
+		Logger.getInst().log("starting the local scan");
 
 		System.out.println("About to scan");
+		
+		Logger.getInst().log("getting paired devices");
 
 		ExpandedRemoteDevice[] alreadyPaired = BluetoothSystem.pairedDevices();
 
+		Logger.getInst().log("got paired devices");
+		
 		if (alreadyPaired.length == 0) {
+			Logger.getInst().log("found no paired devices");
 			System.out.println("Not currently paired");
 			return;
 		}
 
 		if (stop) {
+			Logger.getInst().log("stop is true, aborting");
 			return;
 		}
+		
+		Logger.getInst().log("adding devices to list");
 
 		addToList(alreadyPaired);
 
@@ -303,10 +333,13 @@ public class BluetoothPanel extends JPanel implements ListCellRenderer<ExpandedR
 				"Bluetooth System", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null);
 
 		if (input == JOptionPane.YES_OPTION) {
+			
+			Logger.getInst().log("selected yes, preforming service search");
 
 			for (ExpandedRemoteDevice curDevice : alreadyPaired) {
 
 				if (stop) {
+					Logger.getInst().log("stop is true, aborting");
 					return;
 				}
 
@@ -314,6 +347,8 @@ public class BluetoothPanel extends JPanel implements ListCellRenderer<ExpandedR
 
 				System.out.println("Setting Values For: " + curDevice.getName());
 
+				Logger.getInst().log("setting values for device: " + curDevice.getName());
+				
 				BluetoothSystem.setValuesForDevice(curDevice, BluetoothSystem.OBEX);
 
 				System.out.println("Just updated values for: " + curDevice.getName());

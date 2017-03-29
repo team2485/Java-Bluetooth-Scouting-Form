@@ -28,6 +28,7 @@ import org.first.team2485.scoutingform.questions.QuestionSeperator;
 import org.first.team2485.scoutingform.questions.SliderQuestion;
 import org.first.team2485.scoutingform.questions.SpinnerQuestion;
 import org.first.team2485.scoutingform.util.Logger;
+import org.first.team2485.scoutingform.util.USBDriveDataPusher;
 
 /**
  * @author Jeremy McCulloch
@@ -50,6 +51,8 @@ public class ScoutingForm extends LockedSizeJPanel {
 		
 		Logger.getInst().log("starting bluetooth scouting form");
 		
+		USBDriveDataPusher.start();
+		
 		init();
 		displayForm();
 	}
@@ -65,7 +68,6 @@ public class ScoutingForm extends LockedSizeJPanel {
 			scoutName = JOptionPane.showInputDialog(null, "Enter your name", "Name", JOptionPane.QUESTION_MESSAGE);
 
 			if (scoutName == null) {
-				Logger.getInst().shutdownLogger();
 				System.exit(0);
 			}
 		}
@@ -293,8 +295,6 @@ public class ScoutingForm extends LockedSizeJPanel {
 		for (ScoutingFormTab tab : tabs) {
 			output += tab.getData();
 		}
-
-		System.out.println(output);
 
 		return output;
 	}
