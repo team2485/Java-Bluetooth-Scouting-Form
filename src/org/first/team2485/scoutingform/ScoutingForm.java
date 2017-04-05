@@ -135,7 +135,7 @@ public class ScoutingForm extends LockedSizeJPanel {
 						new QuestionSeperator(),
 
 						new MultipleChoiceQuestion("Did they play defense?", "defense", false, "None", "On the way", "Purposeful"),
-						new MultipleChoiceQuestion("Driver Skill", "driving", true, "Terrible", "Bad", "Average", "Good", "Excelent"),
+						new MultipleChoiceQuestion("Driver Skill", "driving", true, "Bad", "Average", "Excellent"),
 						
 						new QuestionSeperator(),
 						
@@ -161,7 +161,7 @@ public class ScoutingForm extends LockedSizeJPanel {
 							),
 							new QuestionSeperator(),
 							new MultipleChoiceQuestion("Were the ropes deployed efficiently?", "ropesDeployed1", true, "Yes", "No"),
-							new MultipleChoiceQuestion("Pilot Skill", "pilotSkill1", true, "Incompetent", "Average", "Exceptional"),
+							new MultipleChoiceQuestion("Pilot Skill", "pilotSkill1", false, "Incompetent", "Average", "Exceptional"),
 							new QuestionSeperator(),
 							new FreeResponseQuestion(new String[] {"Comments", "If you feel that there is additional information about the pilot that would be useful, put it here"} , "pilot1Comments")
 				),
@@ -180,7 +180,7 @@ public class ScoutingForm extends LockedSizeJPanel {
 						),
 						new QuestionSeperator(),
 						new MultipleChoiceQuestion("Were the ropes deployed efficiently?", "ropesDeployed2", true, "Yes", "No"),
-						new MultipleChoiceQuestion("Pilot Skill", "pilotSkill2", true, "Incompetent", "Average", "Exceptional"),
+						new MultipleChoiceQuestion("Pilot Skill", "pilotSkill2", false, "Incompetent", "Average", "Exceptional"),
 						new QuestionSeperator(),
 						new FreeResponseQuestion(new String[] {"Comments", "If you feel that there is additional information about the pilot that would be useful, put it here"} , "pilot2Comments")
 				)	
