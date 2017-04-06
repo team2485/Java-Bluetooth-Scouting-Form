@@ -139,7 +139,8 @@ public class ScoutingForm extends LockedSizeJPanel {
 						
 						new QuestionSeperator(),
 						
-						new CheckboxQuestion("Did they have a yellow card at the end of the match?", "yellowCard", "")
+						new CheckboxQuestion("Did they have a yellow card at the end of the match?", "yellowCard", ""),
+						new CheckboxQuestion("Did they break down?", "breakdown", "")
 
 				),
 				new QuestionSeperator(),

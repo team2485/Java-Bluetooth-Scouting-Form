@@ -80,14 +80,9 @@ public class HTTPUtils {
 				
 		URL obj = new URL(url);
 		URLConnection tempCon = obj.openConnection();
-
-		System.out.println("here");
 		
 		tempCon.setConnectTimeout(30000);
-		
 		tempCon.setReadTimeout(30000);
-		
-		System.out.println("here");
 		
 		HttpsURLConnection con = ((HttpsURLConnection) tempCon);
 		
